@@ -1,0 +1,28 @@
+{
+  "creditApp": {
+    "bankMsBankingEntity": {
+      "home": {
+        "title": "Banking Entities",
+        "createLabel": "Create a new Banking Entity",
+        "createOrEditLabel": "Create or edit a Banking Entity",
+        "notFound": "No Banking Entity found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Banking Entity {{ id }}?"
+      },
+      "detail": {
+        "title": "Banking Entity"
+      },
+      "mnemonic": "Mnemonic",
+      "name": "Name",
+      "description": "Description"
+    }
+  },
+  "bankMsApp": {
+    "bankMsBankingEntity": {
+      "created": "A new Banking Entity is created with identifier {{ param }}",
+      "updated": "A Banking Entity is updated with identifier {{ param }}",
+      "deleted": "A Banking Entity is deleted with identifier {{ param }}"
+    }
+  }
+}

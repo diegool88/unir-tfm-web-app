@@ -1,0 +1,10 @@
+{
+  "creditApp": {
+    "TransactionType": {
+      "null": "",
+      "DEPOSIT": "DEPOSIT",
+      "DEBIT": "DEBIT",
+      "WITHDRAWAL": "WITHDRAWAL"
+    }
+  }
+}

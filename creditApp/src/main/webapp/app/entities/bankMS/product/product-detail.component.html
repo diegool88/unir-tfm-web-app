@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="product">
+            <h2><span jhiTranslate="creditApp.bankMsProduct.detail.title">Product</span> {{product.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="creditApp.bankMsProduct.mnemonic">Mnemonic</span></dt>
+                <dd>
+                    <span>{{product.mnemonic}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsProduct.name">Name</span></dt>
+                <dd>
+                    <span>{{product.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsProduct.description">Description</span></dt>
+                <dd>
+                    <span>{{product.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsProduct.category">Category</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.ProductCategory.' + product.category}}">{{product.category}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsProduct.startDate">Start Date</span></dt>
+                <dd>
+                    <span>{{product.startDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsProduct.endDate">End Date</span></dt>
+                <dd>
+                    <span>{{product.endDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsProduct.state">State</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.Affirmation.' + product.state}}">{{product.state}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsProduct.interestRate">Interest Rate</span></dt>
+                <dd>
+                    <span>{{product.interestRate}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsProduct.bankingEntity">Banking Entity</span></dt>
+                <dd>
+                    <div *ngIf="product.bankingEntityId">
+                        <a [routerLink]="['/banking-entity', product.bankingEntityId, 'view']">{{product.bankingEntityId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/product', product.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

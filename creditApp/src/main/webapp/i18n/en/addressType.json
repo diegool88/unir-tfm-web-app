@@ -1,0 +1,10 @@
+{
+  "creditApp": {
+    "AddressType": {
+      "null": "",
+      "HOME": "HOME",
+      "WORK": "WORK",
+      "OTHER": "OTHER"
+    }
+  }
+}

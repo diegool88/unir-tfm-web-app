@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="loanProcess">
+            <h2><span jhiTranslate="creditApp.loanMsLoanProcess.detail.title">Loan Process</span> {{loanProcess.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.name">Name</span></dt>
+                <dd>
+                    <span>{{loanProcess.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.requestedAmount">Requested Amount</span></dt>
+                <dd>
+                    <span>{{loanProcess.requestedAmount}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.givenAmount">Given Amount</span></dt>
+                <dd>
+                    <span>{{loanProcess.givenAmount}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.loanPeriod">Loan Period</span></dt>
+                <dd>
+                    <span>{{loanProcess.loanPeriod}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.startDate">Start Date</span></dt>
+                <dd>
+                    <span>{{loanProcess.startDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.endDate">End Date</span></dt>
+                <dd>
+                    <span>{{loanProcess.endDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.justification">Justification</span></dt>
+                <dd>
+                    <span>{{loanProcess.justification}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.debtorIdentification">Debtor Identification</span></dt>
+                <dd>
+                    <span>{{loanProcess.debtorIdentification}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.debtorIdentificationType">Debtor Identification Type</span></dt>
+                <dd>
+                    <span>{{loanProcess.debtorIdentificationType}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.debtorCountry">Debtor Country</span></dt>
+                <dd>
+                    <span>{{loanProcess.debtorCountry}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.bankingEntityMnemonic">Banking Entity Mnemonic</span></dt>
+                <dd>
+                    <span>{{loanProcess.bankingEntityMnemonic}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.bankingProductMnemonic">Banking Product Mnemonic</span></dt>
+                <dd>
+                    <span>{{loanProcess.bankingProductMnemonic}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsLoanProcess.loanProcessStatus">Loan Process Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.LoanProcessStatus.' + loanProcess.loanProcessStatus}}">{{loanProcess.loanProcessStatus}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/loan-process', loanProcess.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

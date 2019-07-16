@@ -1,0 +1,42 @@
+{
+    "name": "StateProvince",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 30,
+            "fieldValidateRulesPattern": "[A-Za-z\\s]+"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "country",
+            "otherEntityRelationshipName": "stateProvince",
+            "relationshipValidateRules": "required",
+            "javadoc": "Relaciones Microservicio administracion clientes",
+            "relationshipName": "country",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190716234044",
+    "entityTableName": "state_province",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "creditApp",
+        "regionMS"
+    ],
+    "microserviceName": "regionMS"
+}

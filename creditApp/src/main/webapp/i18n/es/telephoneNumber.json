@@ -1,0 +1,25 @@
+{
+  "creditApp": {
+    "telephoneNumber": {
+      "home": {
+        "title": "Telephone Numbers",
+        "createLabel": "Crear nuevo Telephone Number",
+        "createOrEditLabel": "Crear o editar Telephone Number",
+        "notFound": "No Telephone Number found"
+      },
+      "created": "Un nuevo Telephone Number ha sido creado con el identificador {{ param }}",
+      "updated": "Un Telephone Number ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Telephone Number ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Telephone Number {{ id }}?"
+      },
+      "detail": {
+        "title": "Telephone Number"
+      },
+      "countryCode": "Country Code",
+      "regionCode": "Region Code",
+      "number": "Number",
+      "address": "Address"
+    }
+  }
+}

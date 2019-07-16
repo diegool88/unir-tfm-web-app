@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="customer">
+            <h2><span jhiTranslate="creditApp.customer.detail.title">Customer</span> {{customer.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="creditApp.customer.firstname">Firstname</span></dt>
+                <dd>
+                    <span>{{customer.firstname}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.secondName">Second Name</span></dt>
+                <dd>
+                    <span>{{customer.secondName}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.lastname">Lastname</span></dt>
+                <dd>
+                    <span>{{customer.lastname}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.secondLastname">Second Lastname</span></dt>
+                <dd>
+                    <span>{{customer.secondLastname}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.identificationType">Identification Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.IdentificationType.' + customer.identificationType}}">{{customer.identificationType}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.identificationNumber">Identification Number</span></dt>
+                <dd>
+                    <span>{{customer.identificationNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.genre">Genre</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.Genre.' + customer.genre}}">{{customer.genre}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.email">Email</span></dt>
+                <dd>
+                    <span>{{customer.email}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.birthDate">Birth Date</span></dt>
+                <dd>
+                    <span>{{customer.birthDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.country">Country</span></dt>
+                <dd>
+                    <span>{{customer.country}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.clientSince">Client Since</span></dt>
+                <dd>
+                    <span>{{customer.clientSince}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.customer.user">User</span></dt>
+                <dd>
+                    {{customer.userLogin}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/customer', customer.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

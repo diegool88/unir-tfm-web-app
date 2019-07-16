@@ -1,0 +1,30 @@
+{
+  "creditApp": {
+    "loanMsAmortizationTable": {
+      "home": {
+        "title": "Amortization Tables",
+        "createLabel": "Crear nuevo Amortization Table",
+        "createOrEditLabel": "Crear o editar Amortization Table",
+        "notFound": "No Amortization Table found"
+      },
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Amortization Table {{ id }}?"
+      },
+      "detail": {
+        "title": "Amortization Table"
+      },
+      "order": "Order",
+      "dueDate": "Due Date",
+      "amount": "Amount",
+      "interest": "Interest",
+      "loanProcess": "Loan Process"
+    }
+  },
+  "loanMsApp": {
+    "loanMsAmortizationTable": {
+      "created": "Un nuevo Amortization Table ha sido creado con el identificador {{ param }}",
+      "updated": "Un Amortization Table ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Amortization Table ha sido eliminado con el identificador {{ param }}"
+    }
+  }
+}

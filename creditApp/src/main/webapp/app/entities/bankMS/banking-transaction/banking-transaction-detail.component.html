@@ -1,0 +1,81 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bankingTransaction">
+            <h2><span jhiTranslate="creditApp.bankMsBankingTransaction.detail.title">Banking Transaction</span> {{bankingTransaction.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.number">Number</span></dt>
+                <dd>
+                    <span>{{bankingTransaction.number}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.date">Date</span></dt>
+                <dd>
+                    <span>{{bankingTransaction.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.ammount">Ammount</span></dt>
+                <dd>
+                    <span>{{bankingTransaction.ammount}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.transactionType">Transaction Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.TransactionType.' + bankingTransaction.transactionType}}">{{bankingTransaction.transactionType}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.extOriginAccount">Ext Origin Account</span></dt>
+                <dd>
+                    <span>{{bankingTransaction.extOriginAccount}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.extOriginAccountType">Ext Origin Account Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.AccountType.' + bankingTransaction.extOriginAccountType}}">{{bankingTransaction.extOriginAccountType}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.extOriginAccountBank">Ext Origin Account Bank</span></dt>
+                <dd>
+                    <span>{{bankingTransaction.extOriginAccountBank}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.extDestinationAccount">Ext Destination Account</span></dt>
+                <dd>
+                    <span>{{bankingTransaction.extDestinationAccount}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.extDestinationAccountType">Ext Destination Account Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.AccountType.' + bankingTransaction.extDestinationAccountType}}">{{bankingTransaction.extDestinationAccountType}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.extDestinationAccountBank">Ext Destination Account Bank</span></dt>
+                <dd>
+                    <span>{{bankingTransaction.extDestinationAccountBank}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.originAccount">Origin Account</span></dt>
+                <dd>
+                    <div *ngIf="bankingTransaction.originAccountId">
+                        <a [routerLink]="['/banking-account', bankingTransaction.originAccountId, 'view']">{{bankingTransaction.originAccountNumber}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.destinationAccount">Destination Account</span></dt>
+                <dd>
+                    <div *ngIf="bankingTransaction.destinationAccountId">
+                        <a [routerLink]="['/banking-account', bankingTransaction.destinationAccountId, 'view']">{{bankingTransaction.destinationAccountNumber}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingTransaction.bankingEntity">Banking Entity</span></dt>
+                <dd>
+                    <div *ngIf="bankingTransaction.bankingEntityId">
+                        <a [routerLink]="['/banking-entity', bankingTransaction.bankingEntityId, 'view']">{{bankingTransaction.bankingEntityId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/banking-transaction', bankingTransaction.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+{
+    "name": "Address",
+    "fields": [
+        {
+            "fieldName": "mainStreet",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 5,
+            "fieldValidateRulesMaxlength": 40,
+            "fieldValidateRulesPattern": "[A-Za-z0-9\\s]+"
+        },
+        {
+            "fieldName": "secondaryStreet",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 5,
+            "fieldValidateRulesMaxlength": 40,
+            "fieldValidateRulesPattern": "[A-Za-z0-9\\s]+"
+        },
+        {
+            "fieldName": "number",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 15,
+            "fieldValidateRulesPattern": "[A-Za-z0-9]+"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 30,
+            "fieldValidateRulesPattern": "[A-Za-z\\s]+"
+        },
+        {
+            "fieldName": "province",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 30,
+            "fieldValidateRulesPattern": "[A-Za-z\\s]+"
+        },
+        {
+            "fieldName": "country",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 30,
+            "fieldValidateRulesPattern": "[A-Za-z\\s]+"
+        },
+        {
+            "fieldName": "postalCode",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "addressType",
+            "fieldType": "AddressType",
+            "fieldValues": "HOME,WORK,OTHER",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "customer",
+            "otherEntityRelationshipName": "address",
+            "relationshipValidateRules": "required",
+            "relationshipName": "customer",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190716234048",
+    "entityTableName": "address",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "creditApp"
+    ]
+}

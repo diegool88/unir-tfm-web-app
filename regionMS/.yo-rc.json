@@ -1,0 +1,42 @@
+{
+  "generator-jhipster": {
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "jhiPrefix": "jhi",
+    "languages": [
+      "en",
+      "es"
+    ],
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "packageName": "com.dfgtech.tfm.regionms",
+    "packageFolder": "com/dfgtech/tfm/regionms",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
+    "skipClient": true,
+    "testFrameworks": [],
+    "websocket": false,
+    "baseName": "regionMS",
+    "applicationType": "microservice",
+    "buildTool": "maven",
+    "authenticationType": "jwt",
+    "serverPort": "8083",
+    "skipUserManagement": true,
+    "jhipsterVersion": "6.1.2",
+    "clientPackageManager": "npm",
+    "cacheProvider": "hazelcast",
+    "jwtSecretKey": "ODRkOGMyMTYyNjU2ZGU4ZTM2Yjg4MWIxMWMxZTZjYmI5MjJjOTY1Y2MwYjg5NGNlYzA1ZmYwMjU3N2EyMjZkZjgwYzUzZDA3MjJlNjgxYTI1ZjQwNjBhNTZhNDA4MmQ0NmZmYWJjMjM3YmI0NTFjNmQ1NDE3NTVlMGI2MTNmZmM=",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": []
+  },
+  "entities": [
+    "Country",
+    "StateProvince",
+    "City"
+  ]
+}

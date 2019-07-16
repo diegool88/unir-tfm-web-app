@@ -1,0 +1,104 @@
+{
+    "name": "Product",
+    "fields": [
+        {
+            "fieldName": "mnemonic",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMaxlength": 10,
+            "fieldValidateRulesPattern": "[A-Z0-9]+"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 30,
+            "fieldValidateRulesPattern": "[A-Za-z0-9\\s]+"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "category",
+            "fieldType": "ProductCategory",
+            "fieldValues": "CREDIT,PORTFOLIO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "state",
+            "fieldType": "Affirmation",
+            "fieldValues": "YES,NO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "interestRate",
+            "fieldType": "Double"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "bankingEntity",
+            "otherEntityRelationshipName": "product",
+            "relationshipValidateRules": "required",
+            "javadoc": "Relaciones Microservicio administracion financiera",
+            "relationshipName": "bankingEntity",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "fee",
+            "otherEntityRelationshipName": "product",
+            "relationshipName": "fees",
+            "otherEntityField": "id",
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "currency",
+            "otherEntityRelationshipName": "product",
+            "relationshipName": "currencies",
+            "otherEntityField": "id",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190716234037",
+    "entityTableName": "product",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "creditApp",
+        "bankMS"
+    ],
+    "microserviceName": "bankMS"
+}

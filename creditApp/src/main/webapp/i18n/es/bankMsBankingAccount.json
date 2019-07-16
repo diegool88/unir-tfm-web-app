@@ -1,0 +1,32 @@
+{
+  "creditApp": {
+    "bankMsBankingAccount": {
+      "home": {
+        "title": "Banking Accounts",
+        "createLabel": "Crear nuevo Banking Account",
+        "createOrEditLabel": "Crear o editar Banking Account",
+        "notFound": "No Banking Account found"
+      },
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Banking Account {{ id }}?"
+      },
+      "detail": {
+        "title": "Banking Account"
+      },
+      "number": "Number",
+      "accountType": "Account Type",
+      "currentBalance": "Current Balance",
+      "availableBalance": "Available Balance",
+      "customerIdentification": "Customer Identification",
+      "customerIdentificationType": "Customer Identification Type",
+      "customerCountry": "Customer Country"
+    }
+  },
+  "bankMsApp": {
+    "bankMsBankingAccount": {
+      "created": "Un nuevo Banking Account ha sido creado con el identificador {{ param }}",
+      "updated": "Un Banking Account ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Banking Account ha sido eliminado con el identificador {{ param }}"
+    }
+  }
+}

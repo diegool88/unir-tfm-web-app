@@ -1,0 +1,145 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-banking-transaction-heading" jhiTranslate="creditApp.bankMsBankingTransaction.home.createOrEditLabel">Create or edit a Banking Transaction</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.number" for="field_number">Number</label>
+                    <input type="number" class="form-control" name="number" id="field_number"
+                           formControlName="number"/>
+                    <div *ngIf="editForm.get('number').invalid && (editForm.get('number').dirty || editForm.get('number').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('number').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('number')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.date" for="field_date">Date</label>
+                    <div class="d-flex">
+                        <input id="field_date" type="datetime-local" class="form-control" name="date" formControlName="date" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                    <div *ngIf="editForm.get('date').invalid && (editForm.get('date').dirty || editForm.get('date').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('date').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('date').errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.ammount" for="field_ammount">Ammount</label>
+                    <input type="number" class="form-control" name="ammount" id="field_ammount"
+                           formControlName="ammount"/>
+                    <div *ngIf="editForm.get('ammount').invalid && (editForm.get('ammount').dirty || editForm.get('ammount').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('ammount').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('ammount')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.transactionType" for="field_transactionType">Transaction Type</label>
+                    <select class="form-control" name="transactionType" formControlName="transactionType" id="field_transactionType">
+                        <option value="DEPOSIT">{{'creditApp.TransactionType.DEPOSIT' | translate}}</option>
+                        <option value="DEBIT">{{'creditApp.TransactionType.DEBIT' | translate}}</option>
+                        <option value="WITHDRAWAL">{{'creditApp.TransactionType.WITHDRAWAL' | translate}}</option>
+                    </select>
+                    <div *ngIf="editForm.get('transactionType').invalid && (editForm.get('transactionType').dirty || editForm.get('transactionType').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('transactionType').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.extOriginAccount" for="field_extOriginAccount">Ext Origin Account</label>
+                    <input type="number" class="form-control" name="extOriginAccount" id="field_extOriginAccount"
+                           formControlName="extOriginAccount"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.extOriginAccountType" for="field_extOriginAccountType">Ext Origin Account Type</label>
+                    <select class="form-control" name="extOriginAccountType" formControlName="extOriginAccountType" id="field_extOriginAccountType">
+                        <option value="SAVINGS">{{'creditApp.AccountType.SAVINGS' | translate}}</option>
+                        <option value="CHECKING">{{'creditApp.AccountType.CHECKING' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.extOriginAccountBank" for="field_extOriginAccountBank">Ext Origin Account Bank</label>
+                    <input type="text" class="form-control" name="extOriginAccountBank" id="field_extOriginAccountBank"
+                           formControlName="extOriginAccountBank"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.extDestinationAccount" for="field_extDestinationAccount">Ext Destination Account</label>
+                    <input type="number" class="form-control" name="extDestinationAccount" id="field_extDestinationAccount"
+                           formControlName="extDestinationAccount"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.extDestinationAccountType" for="field_extDestinationAccountType">Ext Destination Account Type</label>
+                    <select class="form-control" name="extDestinationAccountType" formControlName="extDestinationAccountType" id="field_extDestinationAccountType">
+                        <option value="SAVINGS">{{'creditApp.AccountType.SAVINGS' | translate}}</option>
+                        <option value="CHECKING">{{'creditApp.AccountType.CHECKING' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.extDestinationAccountBank" for="field_extDestinationAccountBank">Ext Destination Account Bank</label>
+                    <input type="text" class="form-control" name="extDestinationAccountBank" id="field_extDestinationAccountBank"
+                           formControlName="extDestinationAccountBank"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.originAccount" for="field_originAccount">Origin Account</label>
+                    <select class="form-control" id="field_originAccount" name="originAccount" formControlName="originAccountId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="bankingAccountOption.id" *ngFor="let bankingAccountOption of bankingaccounts; trackBy: trackBankingAccountById">{{bankingAccountOption.number}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.destinationAccount" for="field_destinationAccount">Destination Account</label>
+                    <select class="form-control" id="field_destinationAccount" name="destinationAccount" formControlName="destinationAccountId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="bankingAccountOption.id" *ngFor="let bankingAccountOption of bankingaccounts; trackBy: trackBankingAccountById">{{bankingAccountOption.number}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingTransaction.bankingEntity" for="field_bankingEntity">Banking Entity</label>
+                    <select class="form-control" id="field_bankingEntity" name="bankingEntity" formControlName="bankingEntityId">
+                        <option *ngIf="!editForm.get('bankingEntityId').value" [ngValue]="null" selected></option>
+                        <option [ngValue]="bankingEntityOption.id" *ngFor="let bankingEntityOption of bankingentities; trackBy: trackBankingEntityById">{{bankingEntityOption.id}}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('bankingEntityId').invalid && (editForm.get('bankingEntityId').dirty || editForm.get('bankingEntityId').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('bankingEntityId').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

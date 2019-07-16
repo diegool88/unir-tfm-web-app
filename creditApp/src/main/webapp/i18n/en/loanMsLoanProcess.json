@@ -1,0 +1,39 @@
+{
+  "creditApp": {
+    "loanMsLoanProcess": {
+      "home": {
+        "title": "Loan Processes",
+        "createLabel": "Create a new Loan Process",
+        "createOrEditLabel": "Create or edit a Loan Process",
+        "notFound": "No Loan Process found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Loan Process {{ id }}?"
+      },
+      "detail": {
+        "title": "Loan Process"
+      },
+      "name": "Name",
+      "requestedAmount": "Requested Amount",
+      "givenAmount": "Given Amount",
+      "loanPeriod": "Loan Period",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "justification": "Justification",
+      "debtorIdentification": "Debtor Identification",
+      "debtorIdentificationType": "Debtor Identification Type",
+      "debtorCountry": "Debtor Country",
+      "bankingEntityMnemonic": "Banking Entity Mnemonic",
+      "bankingProductMnemonic": "Banking Product Mnemonic",
+      "loanProcessStatus": "Loan Process Status",
+      "warranties": "Warranties"
+    }
+  },
+  "loanMsApp": {
+    "loanMsLoanProcess": {
+      "created": "A new Loan Process is created with identifier {{ param }}",
+      "updated": "A Loan Process is updated with identifier {{ param }}",
+      "deleted": "A Loan Process is deleted with identifier {{ param }}"
+    }
+  }
+}

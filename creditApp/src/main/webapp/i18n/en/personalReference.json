@@ -1,0 +1,28 @@
+{
+  "creditApp": {
+    "personalReference": {
+      "home": {
+        "title": "Personal References",
+        "createLabel": "Create a new Personal Reference",
+        "createOrEditLabel": "Create or edit a Personal Reference",
+        "notFound": "No Personal Reference found"
+      },
+      "created": "A new Personal Reference is created with identifier {{ param }}",
+      "updated": "A Personal Reference is updated with identifier {{ param }}",
+      "deleted": "A Personal Reference is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Personal Reference {{ id }}?"
+      },
+      "detail": {
+        "title": "Personal Reference"
+      },
+      "name": "Name",
+      "lastname": "Lastname",
+      "genre": "Genre",
+      "email": "Email",
+      "birthDate": "Birth Date",
+      "relation": "Relation",
+      "customer": "Customer"
+    }
+  }
+}

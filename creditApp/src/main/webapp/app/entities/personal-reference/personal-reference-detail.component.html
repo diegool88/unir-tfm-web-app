@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="personalReference">
+            <h2><span jhiTranslate="creditApp.personalReference.detail.title">Personal Reference</span> {{personalReference.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="creditApp.personalReference.name">Name</span></dt>
+                <dd>
+                    <span>{{personalReference.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.personalReference.lastname">Lastname</span></dt>
+                <dd>
+                    <span>{{personalReference.lastname}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.personalReference.genre">Genre</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.Genre.' + personalReference.genre}}">{{personalReference.genre}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.personalReference.email">Email</span></dt>
+                <dd>
+                    <span>{{personalReference.email}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.personalReference.birthDate">Birth Date</span></dt>
+                <dd>
+                    <span>{{personalReference.birthDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.personalReference.relation">Relation</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.Relation.' + personalReference.relation}}">{{personalReference.relation}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.personalReference.customer">Customer</span></dt>
+                <dd>
+                    <div *ngIf="personalReference.customerId">
+                        <a [routerLink]="['/customer', personalReference.customerId, 'view']">{{personalReference.customerId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/personal-reference', personalReference.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

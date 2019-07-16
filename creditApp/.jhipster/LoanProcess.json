@@ -1,0 +1,126 @@
+{
+    "name": "LoanProcess",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 30,
+            "fieldValidateRulesPattern": "[A-Za-z0-9\\s]+"
+        },
+        {
+            "fieldName": "requestedAmount",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "givenAmount",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "loanPeriod",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "justification",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 255,
+            "fieldValidateRulesPattern": "[A-Za-z\\s]+"
+        },
+        {
+            "fieldName": "debtorIdentification",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "debtorIdentificationType",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "debtorCountry",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "bankingEntityMnemonic",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "bankingProductMnemonic",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "loanProcessStatus",
+            "fieldType": "LoanProcessStatus",
+            "fieldValues": "APPROVED,DENIED"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "warranty",
+            "otherEntityRelationshipName": "loanProcess",
+            "relationshipName": "warranties",
+            "otherEntityField": "id",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190716234036",
+    "entityTableName": "loan_process",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "creditApp",
+        "loanMS"
+    ],
+    "microserviceName": "loanMS"
+}

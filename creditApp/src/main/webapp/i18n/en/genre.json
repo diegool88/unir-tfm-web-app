@@ -1,0 +1,9 @@
+{
+  "creditApp": {
+    "Genre": {
+      "null": "",
+      "MALE": "MALE",
+      "FEMALE": "FEMALE"
+    }
+  }
+}

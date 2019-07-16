@@ -1,0 +1,47 @@
+{
+    "name": "TelephoneNumber",
+    "fields": [
+        {
+            "fieldName": "countryCode",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "regionCode",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "number",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "address",
+            "otherEntityRelationshipName": "telephoneNumber",
+            "relationshipValidateRules": "required",
+            "relationshipName": "address",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190716234049",
+    "entityTableName": "telephone_number",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "creditApp"
+    ]
+}

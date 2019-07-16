@@ -1,0 +1,142 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-personal-reference-heading" jhiTranslate="creditApp.personalReference.home.createOrEditLabel">Create or edit a Personal Reference</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.personalReference.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                    <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+                        This field is required to be at least 1 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 30 }">
+                        This field cannot be longer than 30 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Name' }">
+                            This field should follow pattern for "Name".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.personalReference.lastname" for="field_lastname">Lastname</label>
+                    <input type="text" class="form-control" name="lastname" id="field_lastname"
+                           formControlName="lastname"/>
+                    <div *ngIf="editForm.get('lastname').invalid && (editForm.get('lastname').dirty || editForm.get('lastname').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastname').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastname').errors.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+                        This field is required to be at least 1 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastname').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 30 }">
+                        This field cannot be longer than 30 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastname').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Lastname' }">
+                            This field should follow pattern for "Lastname".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.personalReference.genre" for="field_genre">Genre</label>
+                    <select class="form-control" name="genre" formControlName="genre" id="field_genre">
+                        <option value="MALE">{{'creditApp.Genre.MALE' | translate}}</option>
+                        <option value="FEMALE">{{'creditApp.Genre.FEMALE' | translate}}</option>
+                    </select>
+                    <div *ngIf="editForm.get('genre').invalid && (editForm.get('genre').dirty || editForm.get('genre').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('genre').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.personalReference.email" for="field_email">Email</label>
+                    <input type="text" class="form-control" name="email" id="field_email"
+                           formControlName="email"/>
+                    <div *ngIf="editForm.get('email').invalid && (editForm.get('email').dirty || editForm.get('email').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Email' }">
+                            This field should follow pattern for "Email".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.personalReference.birthDate" for="field_birthDate">Birth Date</label>
+                    <div class="input-group">
+                        <input id="field_birthDate" type="text" class="form-control" name="birthDate" ngbDatepicker  #birthDateDp="ngbDatepicker" formControlName="birthDate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="birthDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div *ngIf="editForm.get('birthDate').invalid && (editForm.get('birthDate').dirty || editForm.get('birthDate').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('birthDate').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.personalReference.relation" for="field_relation">Relation</label>
+                    <select class="form-control" name="relation" formControlName="relation" id="field_relation">
+                        <option value="FRIEND">{{'creditApp.Relation.FRIEND' | translate}}</option>
+                        <option value="EMPLOYEER">{{'creditApp.Relation.EMPLOYEER' | translate}}</option>
+                        <option value="SPOUSE">{{'creditApp.Relation.SPOUSE' | translate}}</option>
+                        <option value="PARTNER">{{'creditApp.Relation.PARTNER' | translate}}</option>
+                        <option value="RELATIVE">{{'creditApp.Relation.RELATIVE' | translate}}</option>
+                    </select>
+                    <div *ngIf="editForm.get('relation').invalid && (editForm.get('relation').dirty || editForm.get('relation').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('relation').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.personalReference.customer" for="field_customer">Customer</label>
+                    <select class="form-control" id="field_customer" name="customer" formControlName="customerId">
+                        <option *ngIf="!editForm.get('customerId').value" [ngValue]="null" selected></option>
+                        <option [ngValue]="customerOption.id" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.id}}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('customerId').invalid && (editForm.get('customerId').dirty || editForm.get('customerId').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('customerId').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+{
+  "generator-jhipster": {
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "jhiPrefix": "jhi",
+    "languages": [
+      "en",
+      "es"
+    ],
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "packageName": "com.dfgtech.tfm.bankms",
+    "packageFolder": "com/dfgtech/tfm/bankms",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
+    "skipClient": true,
+    "testFrameworks": [],
+    "websocket": false,
+    "baseName": "bankMS",
+    "applicationType": "microservice",
+    "buildTool": "maven",
+    "authenticationType": "jwt",
+    "serverPort": "8081",
+    "skipUserManagement": true,
+    "jhipsterVersion": "6.1.2",
+    "clientPackageManager": "npm",
+    "cacheProvider": "hazelcast",
+    "jwtSecretKey": "MTcxOTMzOWM1M2NlZDczNTExZjVlNmUyMDMzYTBmODhjMDYyM2U5NDRmYjJiN2I1Y2JkMzhiZDBmY2FhMDFjNGFmMGQ1ZTlhZjk3MDI2ZjJlY2FmMjg5OTAxNWY4ZDI0NzMxNDgwMTMxMDY2MGNhODg1MDlmOTc4Nzk2ZDUzMzg=",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": []
+  },
+  "entities": [
+    "Product",
+    "Fee",
+    "Currency",
+    "BankingEntity",
+    "BankingAccount",
+    "BankingTransaction"
+  ]
+}

@@ -1,0 +1,140 @@
+{
+    "name": "Customer",
+    "fields": [
+        {
+            "fieldName": "firstname",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 30,
+            "fieldValidateRulesPattern": "[A-Za-z\\s]+"
+        },
+        {
+            "fieldName": "secondName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 30,
+            "fieldValidateRulesPattern": "[A-Za-z\\s]+"
+        },
+        {
+            "fieldName": "lastname",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 30,
+            "fieldValidateRulesPattern": "[A-Za-z\\s]+"
+        },
+        {
+            "fieldName": "secondLastname",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 30,
+            "fieldValidateRulesPattern": "[A-Za-z\\s]+"
+        },
+        {
+            "fieldName": "identificationType",
+            "fieldType": "IdentificationType",
+            "fieldValues": "ID,PASSPORT"
+        },
+        {
+            "fieldName": "identificationNumber",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 20,
+            "fieldValidateRulesPattern": "[A-Z0-9]+"
+        },
+        {
+            "fieldName": "genre",
+            "fieldType": "Genre",
+            "fieldValues": "MALE,FEMALE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}"
+        },
+        {
+            "fieldName": "birthDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "country",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 1,
+            "fieldValidateRulesMaxlength": 20,
+            "fieldValidateRulesPattern": "[A-Za-z\\s]+"
+        },
+        {
+            "fieldName": "clientSince",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "customer",
+            "relationshipValidateRules": "required",
+            "javadoc": "Relaciones Microservicio administracion clientes",
+            "relationshipName": "user",
+            "otherEntityField": "login",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20190716234046",
+    "entityTableName": "customer",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "creditApp"
+    ]
+}
