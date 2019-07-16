@@ -1,0 +1,295 @@
+/** Configuracion de la aplicacion **/
+/* Gateway con servicio principal de clientes */
+application {
+	config {
+        baseName creditApp,
+        applicationType gateway,
+        packageName com.dfgtech.tfm.creditapp,
+        serviceDiscoveryType eureka,
+        authenticationType jwt,
+        serverPort 8080,
+        prodDatabaseType mariadb,
+        cacheProvider hazelcast,
+        buildTool maven,
+        clientFramework angularX,
+        useSass true,
+        languages [en, es],
+        testFrameworks [protractor]
+    }
+    entities *
+}
+
+/* Micro servicio de administracion financiera */
+application{
+	config {
+    	baseName bankMS,
+        applicationType microservice,
+        prodDatabaseType mariadb,
+        buildTool maven,
+        packageName com.dfgtech.tfm.bankms,
+        serviceDiscoveryType eureka,
+        authenticationType jwt,
+        serverPort 8081,
+        languages [en, es],
+        skipUserManagement true
+    }
+    entities Product, Fee, Currency, BankingEntity, BankingAccount, BankingTransaction
+}
+
+/* Micro servicio de credito */
+application{
+	config {
+    	baseName loanMS,
+        applicationType microservice,
+        prodDatabaseType mariadb,
+        buildTool maven,
+        packageName com.dfgtech.tfm.loanms,
+        serviceDiscoveryType eureka,
+        authenticationType jwt,
+        serverPort 8082,
+        languages [en, es],
+        skipUserManagement true
+    }
+    entities Warranty, LoanProcess, AmortizationTable
+}
+
+/* Micro servicio de administracion regional */
+application{
+	config {
+    	baseName regionMS,
+        applicationType microservice,
+        prodDatabaseType mariadb,
+        buildTool maven,
+        packageName com.dfgtech.tfm.regionms,
+        serviceDiscoveryType eureka,
+        authenticationType jwt,
+        serverPort 8083,
+        languages [en, es],
+        skipUserManagement true
+    }
+    entities Country, StateProvince, City
+}
+
+/** Entidades **/
+/* Entidades de microservicio de creadito */
+entity Warranty {
+	name String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/),
+    description String,
+    value Double required,
+    document ImageBlob,
+    debtorIdentification String required,
+    debtorIdentificationType String required,
+    debtorCountry String required
+}
+
+entity AmortizationTable {
+	order Integer required,
+    dueDate LocalDate required,
+    amount Double required,
+    interest Double required 
+}
+
+entity LoanProcess {
+	name String required minlength(1) maxlength(30) pattern(/[A-Za-z0-9\s]+/),
+    requestedAmount Double required,
+    givenAmount Double,
+    loanPeriod Integer required,
+    startDate LocalDate required,
+    endDate LocalDate required,
+    justification String required minlength(1) maxlength(255) pattern(/[A-Za-z\s]+/),
+    debtorIdentification String required,
+    debtorIdentificationType String required,
+    debtorCountry String required,
+    bankingEntityMnemonic String required,
+    bankingProductMnemonic String required,
+    loanProcessStatus LoanProcessStatus
+}
+
+/* Entidades de microservicio de administracion financiera */
+entity Product {
+	mnemonic String required maxlength(10) pattern(/[A-Z0-9]+/),
+    name String required minlength(1) maxlength(30) pattern(/[A-Za-z0-9\s]+/),
+    description String,
+    category ProductCategory required,
+    startDate LocalDate required,
+    endDate LocalDate,
+    state Affirmation required,
+    interestRate Double
+}
+
+entity Fee {
+	mnemonic String required maxlength(10) pattern(/[A-Z0-9]+/),
+	name String required minlength(1) maxlength(30) pattern(/[A-Za-z0-9\s]+/),
+    description String,
+    interestRate Double,
+    uniqueValue Double
+}
+
+entity Currency {
+	name String required minlength(1) maxlength(30) pattern(/[A-Za-z]+/),
+    sign String required maxlength(1)
+}
+
+entity BankingEntity {
+	mnemonic String required maxlength(10) pattern(/[A-Z0-9]+/),
+	name String required minlength(5) maxlength(40) pattern(/[A-Za-z0-9\s]+/),
+    description String minlength(5) maxlength(60) pattern(/[A-Za-z0-9\s]+/)
+}
+
+entity BankingAccount {
+	number Integer required,
+    accountType AccountType required,
+    currentBalance Double required,
+    availableBalance Double required,
+    customerIdentification String required,
+    customerIdentificationType String required,
+    customerCountry String required
+}
+
+entity BankingTransaction {
+	number Integer required,
+    date Instant required,
+    ammount Double required,
+    transactionType TransactionType required,
+    extOriginAccount Integer,
+    extOriginAccountType AccountType,
+    extOriginAccountBank String,
+    extDestinationAccount Integer,
+    extDestinationAccountType AccountType,
+    extDestinationAccountBank String
+}
+
+/* Entidades de administracion de regiones */
+entity Country {
+	mnemonic String required minlength(2) maxlength(10) pattern(/[A-Z]+/)
+    name String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/)
+}
+
+entity StateProvince {
+	name String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/)
+}
+
+entity City {
+	name String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/)
+}
+
+/* Entidades de servicio principal de administracion de clientes */
+entity Customer {
+	firstname String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/),
+    secondName String minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/),
+    lastname String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/),
+    secondLastname String minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/),
+    identificationType IdentificationType,
+    identificationNumber String required minlength(1) maxlength(20) pattern(/[A-Z0-9]+/),
+    genre Genre required,
+    email String required pattern(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}/),
+    birthDate LocalDate required,
+    country String required minlength(1) maxlength(20) pattern(/[A-Za-z\s]+/),
+    clientSince LocalDate required
+}
+
+entity PersonalReference {
+	name String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/),
+    lastname String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/),
+    genre Genre required,
+    email String required pattern(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}/),
+    birthDate LocalDate required,
+    relation Relation required
+}
+
+entity Address {
+	mainStreet String required minlength(5) maxlength(40) pattern(/[A-Za-z0-9\s]+/),
+    secondaryStreet String minlength(5) maxlength(40) pattern(/[A-Za-z0-9\s]+/),
+    number String required minlength(1) maxlength(15) pattern(/[A-Za-z0-9]+/),
+    city String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/),
+    province String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/),
+    country String required minlength(1) maxlength(30) pattern(/[A-Za-z\s]+/),
+    postalCode Integer required,
+    addressType AddressType required
+}
+
+entity TelephoneNumber {
+	countryCode Integer required,
+    regionCode Integer required,
+    number Integer required
+}
+
+/** Enumeraciones **/
+enum IdentificationType {
+	ID, PASSPORT
+}
+
+enum Genre {
+	MALE, FEMALE
+}
+
+enum Relation {
+	FRIEND, EMPLOYEER, SPOUSE, PARTNER, RELATIVE
+}
+
+enum Affirmation {
+	YES, NO
+}
+
+enum ProductCategory {
+	CREDIT, PORTFOLIO
+}
+
+enum AddressType {
+	HOME, WORK, OTHER
+}
+
+enum AccountType {
+	SAVINGS, CHECKING
+}
+
+enum TransactionType {
+	DEPOSIT, DEBIT, WITHDRAWAL
+}
+
+enum LoanProcessStatus {
+	APPROVED, DENIED
+}
+
+/** Relaciones **/
+relationship ManyToOne {
+	/** Relaciones Microservicio administracion financiera **/
+    Product{bankingEntity required} to BankingEntity,
+    BankingTransaction{originAccount(number)} to BankingAccount,
+    BankingTransaction{destinationAccount(number)} to BankingAccount,
+    BankingTransaction{bankingEntity required} to BankingEntity,
+    /** Relaciones Microservicio de credito **/
+    AmortizationTable{loanProcess required} to LoanProcess,
+	/** Relaciones Microservicio administracion clientes **/
+    PersonalReference{customer required} to Customer,
+    Address{customer required} to Customer,
+    TelephoneNumber{address required} to Address
+    /** Relaciones Microservicio administracion clientes **/
+    StateProvince{country required} to Country,
+    City{state required} to StateProvince
+}
+
+relationship ManyToMany {
+	/** Relaciones Microservicio de credito **/	
+	Warranty{loanProcess required} to LoanProcess{warranties},
+    /** Relaciones Microservicio administracion financiera **/
+    Fee{product required} to Product{fees},
+	Currency{product required} to Product{currencies}
+}
+
+relationship OneToOne {
+	/** Relaciones Microservicio administracion clientes **/
+    Customer{user(login) required} to User
+}
+
+/** Configuraciones de la aplicacion **/
+dto * with mapstruct
+service Customer, PersonalReference, Address, TelephoneNumber with serviceClass
+service BankingAccount, BankingTransaction with serviceClass
+microservice Product, Fee, Currency, BankingEntity, BankingAccount, BankingTransaction with bankMS
+service Warranty, LoanProcess, AmortizationTable with serviceClass
+microservice Warranty, LoanProcess, AmortizationTable with loanMS
+service Country, StateProvince, City with serviceClass
+microservice Country, StateProvince, City with regionMS
+paginate all with pagination except Warranty, LoanProcess, AmortizationTable, BankingAccount, BankingTransaction, Customer
+
