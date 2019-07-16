@@ -1,0 +1,15 @@
+package com.dfgtech.tfm.regionms.repository;
+
+import com.dfgtech.tfm.regionms.domain.Country;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.Repository;
+
+
+/**
+ * Spring Data  repository for the Country entity.
+ */
+@SuppressWarnings("unused")
+@Repository
+public interface CountryRepository extends JpaRepository<Country, Long> {
+
+}

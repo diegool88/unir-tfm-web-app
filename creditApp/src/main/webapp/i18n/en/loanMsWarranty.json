@@ -1,0 +1,33 @@
+{
+  "creditApp": {
+    "loanMsWarranty": {
+      "home": {
+        "title": "Warranties",
+        "createLabel": "Create a new Warranty",
+        "createOrEditLabel": "Create or edit a Warranty",
+        "notFound": "No Warranty found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Warranty {{ id }}?"
+      },
+      "detail": {
+        "title": "Warranty"
+      },
+      "name": "Name",
+      "description": "Description",
+      "value": "Value",
+      "document": "Document",
+      "debtorIdentification": "Debtor Identification",
+      "debtorIdentificationType": "Debtor Identification Type",
+      "debtorCountry": "Debtor Country",
+      "loanProcess": "Loan Process"
+    }
+  },
+  "loanMsApp": {
+    "loanMsWarranty": {
+      "created": "A new Warranty is created with identifier {{ param }}",
+      "updated": "A Warranty is updated with identifier {{ param }}",
+      "deleted": "A Warranty is deleted with identifier {{ param }}"
+    }
+  }
+}

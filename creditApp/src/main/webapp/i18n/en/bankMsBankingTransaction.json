@@ -1,0 +1,38 @@
+{
+  "creditApp": {
+    "bankMsBankingTransaction": {
+      "home": {
+        "title": "Banking Transactions",
+        "createLabel": "Create a new Banking Transaction",
+        "createOrEditLabel": "Create or edit a Banking Transaction",
+        "notFound": "No Banking Transaction found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Banking Transaction {{ id }}?"
+      },
+      "detail": {
+        "title": "Banking Transaction"
+      },
+      "number": "Number",
+      "date": "Date",
+      "ammount": "Ammount",
+      "transactionType": "Transaction Type",
+      "extOriginAccount": "Ext Origin Account",
+      "extOriginAccountType": "Ext Origin Account Type",
+      "extOriginAccountBank": "Ext Origin Account Bank",
+      "extDestinationAccount": "Ext Destination Account",
+      "extDestinationAccountType": "Ext Destination Account Type",
+      "extDestinationAccountBank": "Ext Destination Account Bank",
+      "originAccount": "Origin Account",
+      "destinationAccount": "Destination Account",
+      "bankingEntity": "Banking Entity"
+    }
+  },
+  "bankMsApp": {
+    "bankMsBankingTransaction": {
+      "created": "A new Banking Transaction is created with identifier {{ param }}",
+      "updated": "A Banking Transaction is updated with identifier {{ param }}",
+      "deleted": "A Banking Transaction is deleted with identifier {{ param }}"
+    }
+  }
+}

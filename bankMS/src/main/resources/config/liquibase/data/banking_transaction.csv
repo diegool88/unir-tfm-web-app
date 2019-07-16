@@ -1,0 +1,11 @@
+id;number;date;ammount;transaction_type;ext_origin_account;ext_origin_account_type;ext_origin_account_bank;ext_destination_account;ext_destination_account_type;ext_destination_account_bank;banking_entity_id
+1;96930;2019-07-16T21:52:28;52309;DEPOSIT;69574;CHECKING;Naira iterate;73710;CHECKING;Brand Regional Court;7
+2;33566;2019-07-16T17:01:40;16967;WITHDRAWAL;38826;CHECKING;Engineer Architect;69816;SAVINGS;schemas;7
+3;68473;2019-07-16T17:10:55;16261;DEBIT;82253;SAVINGS;Unbranded SCSI;55158;CHECKING;drive online;10
+4;98528;2019-07-16T20:04:30;37673;WITHDRAWAL;82916;CHECKING;Ergonomic Fresh Chicken;81290;CHECKING;Rhode Island capacitor;8
+5;84964;2019-07-16T14:37:00;24734;DEBIT;12915;CHECKING;white SMTP;75699;CHECKING;Kyrgyz Republic transmit;6
+6;30777;2019-07-16T03:13:58;81638;DEPOSIT;79181;SAVINGS;transmit Credit Card Account;70407;SAVINGS;Home Loan Account withdrawal;6
+7;43747;2019-07-16T21:30:03;90415;WITHDRAWAL;39654;CHECKING;CFP Franc back-end Via;84209;SAVINGS;Berkshire concept;7
+8;57964;2019-07-16T17:55:17;34156;DEBIT;46011;CHECKING;Metal deposit;18188;SAVINGS;Officer Savings Account Automated;9
+9;16893;2019-07-16T15:24:11;27859;WITHDRAWAL;12063;SAVINGS;Granite open architecture;32158;SAVINGS;Credit Card Account Sleek;9
+10;15697;2019-07-16T01:35:03;37728;DEBIT;86830;CHECKING;cultivate Bedfordshire;61825;SAVINGS;Concrete;2

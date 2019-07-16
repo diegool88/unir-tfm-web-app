@@ -1,0 +1,197 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-loan-process-heading" jhiTranslate="creditApp.loanMsLoanProcess.home.createOrEditLabel">Create or edit a Loan Process</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                    <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+                        This field is required to be at least 1 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 30 }">
+                        This field cannot be longer than 30 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Name' }">
+                            This field should follow pattern for "Name".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.requestedAmount" for="field_requestedAmount">Requested Amount</label>
+                    <input type="number" class="form-control" name="requestedAmount" id="field_requestedAmount"
+                           formControlName="requestedAmount"/>
+                    <div *ngIf="editForm.get('requestedAmount').invalid && (editForm.get('requestedAmount').dirty || editForm.get('requestedAmount').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('requestedAmount').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('requestedAmount')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.givenAmount" for="field_givenAmount">Given Amount</label>
+                    <input type="number" class="form-control" name="givenAmount" id="field_givenAmount"
+                           formControlName="givenAmount"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.loanPeriod" for="field_loanPeriod">Loan Period</label>
+                    <input type="number" class="form-control" name="loanPeriod" id="field_loanPeriod"
+                           formControlName="loanPeriod"/>
+                    <div *ngIf="editForm.get('loanPeriod').invalid && (editForm.get('loanPeriod').dirty || editForm.get('loanPeriod').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('loanPeriod').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('loanPeriod')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.startDate" for="field_startDate">Start Date</label>
+                    <div class="input-group">
+                        <input id="field_startDate" type="text" class="form-control" name="startDate" ngbDatepicker  #startDateDp="ngbDatepicker" formControlName="startDate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="startDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div *ngIf="editForm.get('startDate').invalid && (editForm.get('startDate').dirty || editForm.get('startDate').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('startDate').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.endDate" for="field_endDate">End Date</label>
+                    <div class="input-group">
+                        <input id="field_endDate" type="text" class="form-control" name="endDate" ngbDatepicker  #endDateDp="ngbDatepicker" formControlName="endDate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="endDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div *ngIf="editForm.get('endDate').invalid && (editForm.get('endDate').dirty || editForm.get('endDate').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('endDate').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.justification" for="field_justification">Justification</label>
+                    <input type="text" class="form-control" name="justification" id="field_justification"
+                           formControlName="justification"/>
+                    <div *ngIf="editForm.get('justification').invalid && (editForm.get('justification').dirty || editForm.get('justification').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('justification').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('justification').errors.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+                        This field is required to be at least 1 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('justification').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 255 }">
+                        This field cannot be longer than 255 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('justification').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Justification' }">
+                            This field should follow pattern for "Justification".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.debtorIdentification" for="field_debtorIdentification">Debtor Identification</label>
+                    <input type="text" class="form-control" name="debtorIdentification" id="field_debtorIdentification"
+                           formControlName="debtorIdentification"/>
+                    <div *ngIf="editForm.get('debtorIdentification').invalid && (editForm.get('debtorIdentification').dirty || editForm.get('debtorIdentification').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('debtorIdentification').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.debtorIdentificationType" for="field_debtorIdentificationType">Debtor Identification Type</label>
+                    <input type="text" class="form-control" name="debtorIdentificationType" id="field_debtorIdentificationType"
+                           formControlName="debtorIdentificationType"/>
+                    <div *ngIf="editForm.get('debtorIdentificationType').invalid && (editForm.get('debtorIdentificationType').dirty || editForm.get('debtorIdentificationType').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('debtorIdentificationType').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.debtorCountry" for="field_debtorCountry">Debtor Country</label>
+                    <input type="text" class="form-control" name="debtorCountry" id="field_debtorCountry"
+                           formControlName="debtorCountry"/>
+                    <div *ngIf="editForm.get('debtorCountry').invalid && (editForm.get('debtorCountry').dirty || editForm.get('debtorCountry').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('debtorCountry').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingEntityMnemonic" for="field_bankingEntityMnemonic">Banking Entity Mnemonic</label>
+                    <input type="text" class="form-control" name="bankingEntityMnemonic" id="field_bankingEntityMnemonic"
+                           formControlName="bankingEntityMnemonic"/>
+                    <div *ngIf="editForm.get('bankingEntityMnemonic').invalid && (editForm.get('bankingEntityMnemonic').dirty || editForm.get('bankingEntityMnemonic').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankingEntityMnemonic').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingProductMnemonic" for="field_bankingProductMnemonic">Banking Product Mnemonic</label>
+                    <input type="text" class="form-control" name="bankingProductMnemonic" id="field_bankingProductMnemonic"
+                           formControlName="bankingProductMnemonic"/>
+                    <div *ngIf="editForm.get('bankingProductMnemonic').invalid && (editForm.get('bankingProductMnemonic').dirty || editForm.get('bankingProductMnemonic').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankingProductMnemonic').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.loanProcessStatus" for="field_loanProcessStatus">Loan Process Status</label>
+                    <select class="form-control" name="loanProcessStatus" formControlName="loanProcessStatus" id="field_loanProcessStatus">
+                        <option value="APPROVED">{{'creditApp.LoanProcessStatus.APPROVED' | translate}}</option>
+                        <option value="DENIED">{{'creditApp.LoanProcessStatus.DENIED' | translate}}</option>
+                    </select>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

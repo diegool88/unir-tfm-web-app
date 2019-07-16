@@ -1,0 +1,55 @@
+{
+    "name": "BankingEntity",
+    "fields": [
+        {
+            "fieldName": "mnemonic",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMaxlength": 10,
+            "fieldValidateRulesPattern": "[A-Z0-9]+"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 5,
+            "fieldValidateRulesMaxlength": 40,
+            "fieldValidateRulesPattern": "[A-Za-z0-9\\s]+"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "minlength",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMinlength": 5,
+            "fieldValidateRulesMaxlength": 60,
+            "fieldValidateRulesPattern": "[A-Za-z0-9\\s]+"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190716234040",
+    "entityTableName": "banking_entity",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "creditApp",
+        "bankMS"
+    ],
+    "microserviceName": "bankMS"
+}

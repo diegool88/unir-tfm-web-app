@@ -1,0 +1,57 @@
+{
+    "name": "AmortizationTable",
+    "fields": [
+        {
+            "fieldName": "order",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dueDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "interest",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "loanProcess",
+            "otherEntityRelationshipName": "amortizationTable",
+            "relationshipValidateRules": "required",
+            "javadoc": "Relaciones Microservicio de credito",
+            "relationshipName": "loanProcess",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190716234035",
+    "entityTableName": "amortization_table",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "creditApp",
+        "loanMS"
+    ],
+    "microserviceName": "loanMS"
+}

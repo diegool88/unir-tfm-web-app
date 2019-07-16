@@ -1,0 +1,97 @@
+{
+    "name": "BankingTransaction",
+    "fields": [
+        {
+            "fieldName": "number",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "ammount",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "transactionType",
+            "fieldType": "TransactionType",
+            "fieldValues": "DEPOSIT,DEBIT,WITHDRAWAL",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "extOriginAccount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "extOriginAccountType",
+            "fieldType": "AccountType",
+            "fieldValues": "SAVINGS,CHECKING"
+        },
+        {
+            "fieldName": "extOriginAccountBank",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "extDestinationAccount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "extDestinationAccountType",
+            "fieldType": "AccountType",
+            "fieldValues": "SAVINGS,CHECKING"
+        },
+        {
+            "fieldName": "extDestinationAccountBank",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "bankingAccount",
+            "otherEntityRelationshipName": "bankingTransaction",
+            "relationshipName": "originAccount",
+            "otherEntityField": "number"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "bankingAccount",
+            "otherEntityRelationshipName": "bankingTransaction",
+            "relationshipName": "destinationAccount",
+            "otherEntityField": "number"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "bankingEntity",
+            "otherEntityRelationshipName": "bankingTransaction",
+            "relationshipValidateRules": "required",
+            "relationshipName": "bankingEntity",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190716234042",
+    "entityTableName": "banking_transaction",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "creditApp",
+        "bankMS"
+    ],
+    "microserviceName": "bankMS"
+}

@@ -1,0 +1,232 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-customer-heading" jhiTranslate="creditApp.customer.home.createOrEditLabel">Create or edit a Customer</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.firstname" for="field_firstname">Firstname</label>
+                    <input type="text" class="form-control" name="firstname" id="field_firstname"
+                           formControlName="firstname"/>
+                    <div *ngIf="editForm.get('firstname').invalid && (editForm.get('firstname').dirty || editForm.get('firstname').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('firstname').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('firstname').errors.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+                        This field is required to be at least 1 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('firstname').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 30 }">
+                        This field cannot be longer than 30 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('firstname').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Firstname' }">
+                            This field should follow pattern for "Firstname".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.secondName" for="field_secondName">Second Name</label>
+                    <input type="text" class="form-control" name="secondName" id="field_secondName"
+                           formControlName="secondName"/>
+                    <div *ngIf="editForm.get('secondName').invalid && (editForm.get('secondName').dirty || editForm.get('secondName').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('secondName').errors.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+                        This field is required to be at least 1 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('secondName').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 30 }">
+                        This field cannot be longer than 30 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('secondName').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Second Name' }">
+                            This field should follow pattern for "Second Name".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.lastname" for="field_lastname">Lastname</label>
+                    <input type="text" class="form-control" name="lastname" id="field_lastname"
+                           formControlName="lastname"/>
+                    <div *ngIf="editForm.get('lastname').invalid && (editForm.get('lastname').dirty || editForm.get('lastname').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastname').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastname').errors.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+                        This field is required to be at least 1 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastname').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 30 }">
+                        This field cannot be longer than 30 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastname').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Lastname' }">
+                            This field should follow pattern for "Lastname".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.secondLastname" for="field_secondLastname">Second Lastname</label>
+                    <input type="text" class="form-control" name="secondLastname" id="field_secondLastname"
+                           formControlName="secondLastname"/>
+                    <div *ngIf="editForm.get('secondLastname').invalid && (editForm.get('secondLastname').dirty || editForm.get('secondLastname').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('secondLastname').errors.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+                        This field is required to be at least 1 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('secondLastname').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 30 }">
+                        This field cannot be longer than 30 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('secondLastname').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Second Lastname' }">
+                            This field should follow pattern for "Second Lastname".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.identificationType" for="field_identificationType">Identification Type</label>
+                    <select class="form-control" name="identificationType" formControlName="identificationType" id="field_identificationType">
+                        <option value="ID">{{'creditApp.IdentificationType.ID' | translate}}</option>
+                        <option value="PASSPORT">{{'creditApp.IdentificationType.PASSPORT' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.identificationNumber" for="field_identificationNumber">Identification Number</label>
+                    <input type="text" class="form-control" name="identificationNumber" id="field_identificationNumber"
+                           formControlName="identificationNumber"/>
+                    <div *ngIf="editForm.get('identificationNumber').invalid && (editForm.get('identificationNumber').dirty || editForm.get('identificationNumber').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('identificationNumber').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('identificationNumber').errors.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+                        This field is required to be at least 1 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('identificationNumber').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 20 }">
+                        This field cannot be longer than 20 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('identificationNumber').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Identification Number' }">
+                            This field should follow pattern for "Identification Number".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.genre" for="field_genre">Genre</label>
+                    <select class="form-control" name="genre" formControlName="genre" id="field_genre">
+                        <option value="MALE">{{'creditApp.Genre.MALE' | translate}}</option>
+                        <option value="FEMALE">{{'creditApp.Genre.FEMALE' | translate}}</option>
+                    </select>
+                    <div *ngIf="editForm.get('genre').invalid && (editForm.get('genre').dirty || editForm.get('genre').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('genre').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.email" for="field_email">Email</label>
+                    <input type="text" class="form-control" name="email" id="field_email"
+                           formControlName="email"/>
+                    <div *ngIf="editForm.get('email').invalid && (editForm.get('email').dirty || editForm.get('email').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Email' }">
+                            This field should follow pattern for "Email".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.birthDate" for="field_birthDate">Birth Date</label>
+                    <div class="input-group">
+                        <input id="field_birthDate" type="text" class="form-control" name="birthDate" ngbDatepicker  #birthDateDp="ngbDatepicker" formControlName="birthDate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="birthDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div *ngIf="editForm.get('birthDate').invalid && (editForm.get('birthDate').dirty || editForm.get('birthDate').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('birthDate').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.country" for="field_country">Country</label>
+                    <input type="text" class="form-control" name="country" id="field_country"
+                           formControlName="country"/>
+                    <div *ngIf="editForm.get('country').invalid && (editForm.get('country').dirty || editForm.get('country').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('country').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('country').errors.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 1 }">
+                        This field is required to be at least 1 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('country').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 20 }">
+                        This field cannot be longer than 20 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('country').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Country' }">
+                            This field should follow pattern for "Country".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.clientSince" for="field_clientSince">Client Since</label>
+                    <div class="input-group">
+                        <input id="field_clientSince" type="text" class="form-control" name="clientSince" ngbDatepicker  #clientSinceDp="ngbDatepicker" formControlName="clientSince"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="clientSinceDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div *ngIf="editForm.get('clientSince').invalid && (editForm.get('clientSince').dirty || editForm.get('clientSince').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('clientSince').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" formControlName="userId">
+                        <option *ngIf="!editForm.get('userId').value" [ngValue]="null" selected></option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('userId').invalid && (editForm.get('userId').dirty || editForm.get('userId').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('userId').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

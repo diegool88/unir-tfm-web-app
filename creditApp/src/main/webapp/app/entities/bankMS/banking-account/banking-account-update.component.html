@@ -1,0 +1,115 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-banking-account-heading" jhiTranslate="creditApp.bankMsBankingAccount.home.createOrEditLabel">Create or edit a Banking Account</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.number" for="field_number">Number</label>
+                    <input type="number" class="form-control" name="number" id="field_number"
+                           formControlName="number"/>
+                    <div *ngIf="editForm.get('number').invalid && (editForm.get('number').dirty || editForm.get('number').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('number').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('number')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.accountType" for="field_accountType">Account Type</label>
+                    <select class="form-control" name="accountType" formControlName="accountType" id="field_accountType">
+                        <option value="SAVINGS">{{'creditApp.AccountType.SAVINGS' | translate}}</option>
+                        <option value="CHECKING">{{'creditApp.AccountType.CHECKING' | translate}}</option>
+                    </select>
+                    <div *ngIf="editForm.get('accountType').invalid && (editForm.get('accountType').dirty || editForm.get('accountType').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('accountType').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.currentBalance" for="field_currentBalance">Current Balance</label>
+                    <input type="number" class="form-control" name="currentBalance" id="field_currentBalance"
+                           formControlName="currentBalance"/>
+                    <div *ngIf="editForm.get('currentBalance').invalid && (editForm.get('currentBalance').dirty || editForm.get('currentBalance').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('currentBalance').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('currentBalance')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.availableBalance" for="field_availableBalance">Available Balance</label>
+                    <input type="number" class="form-control" name="availableBalance" id="field_availableBalance"
+                           formControlName="availableBalance"/>
+                    <div *ngIf="editForm.get('availableBalance').invalid && (editForm.get('availableBalance').dirty || editForm.get('availableBalance').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('availableBalance').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('availableBalance')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.customerIdentification" for="field_customerIdentification">Customer Identification</label>
+                    <input type="text" class="form-control" name="customerIdentification" id="field_customerIdentification"
+                           formControlName="customerIdentification"/>
+                    <div *ngIf="editForm.get('customerIdentification').invalid && (editForm.get('customerIdentification').dirty || editForm.get('customerIdentification').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('customerIdentification').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.customerIdentificationType" for="field_customerIdentificationType">Customer Identification Type</label>
+                    <input type="text" class="form-control" name="customerIdentificationType" id="field_customerIdentificationType"
+                           formControlName="customerIdentificationType"/>
+                    <div *ngIf="editForm.get('customerIdentificationType').invalid && (editForm.get('customerIdentificationType').dirty || editForm.get('customerIdentificationType').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('customerIdentificationType').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.customerCountry" for="field_customerCountry">Customer Country</label>
+                    <input type="text" class="form-control" name="customerCountry" id="field_customerCountry"
+                           formControlName="customerCountry"/>
+                    <div *ngIf="editForm.get('customerCountry').invalid && (editForm.get('customerCountry').dirty || editForm.get('customerCountry').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('customerCountry').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

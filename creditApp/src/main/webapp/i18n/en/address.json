@@ -1,0 +1,30 @@
+{
+  "creditApp": {
+    "address": {
+      "home": {
+        "title": "Addresses",
+        "createLabel": "Create a new Address",
+        "createOrEditLabel": "Create or edit a Address",
+        "notFound": "No Address found"
+      },
+      "created": "A new Address is created with identifier {{ param }}",
+      "updated": "A Address is updated with identifier {{ param }}",
+      "deleted": "A Address is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Address {{ id }}?"
+      },
+      "detail": {
+        "title": "Address"
+      },
+      "mainStreet": "Main Street",
+      "secondaryStreet": "Secondary Street",
+      "number": "Number",
+      "city": "City",
+      "province": "Province",
+      "country": "Country",
+      "postalCode": "Postal Code",
+      "addressType": "Address Type",
+      "customer": "Customer"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="address">
+            <h2><span jhiTranslate="creditApp.address.detail.title">Address</span> {{address.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="creditApp.address.mainStreet">Main Street</span></dt>
+                <dd>
+                    <span>{{address.mainStreet}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.address.secondaryStreet">Secondary Street</span></dt>
+                <dd>
+                    <span>{{address.secondaryStreet}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.address.number">Number</span></dt>
+                <dd>
+                    <span>{{address.number}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.address.city">City</span></dt>
+                <dd>
+                    <span>{{address.city}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.address.province">Province</span></dt>
+                <dd>
+                    <span>{{address.province}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.address.country">Country</span></dt>
+                <dd>
+                    <span>{{address.country}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.address.postalCode">Postal Code</span></dt>
+                <dd>
+                    <span>{{address.postalCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.address.addressType">Address Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.AddressType.' + address.addressType}}">{{address.addressType}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.address.customer">Customer</span></dt>
+                <dd>
+                    <div *ngIf="address.customerId">
+                        <a [routerLink]="['/customer', address.customerId, 'view']">{{address.customerId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/address', address.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

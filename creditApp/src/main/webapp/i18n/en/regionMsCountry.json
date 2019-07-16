@@ -1,0 +1,27 @@
+{
+  "creditApp": {
+    "regionMsCountry": {
+      "home": {
+        "title": "Countries",
+        "createLabel": "Create a new Country",
+        "createOrEditLabel": "Create or edit a Country",
+        "notFound": "No Country found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Country {{ id }}?"
+      },
+      "detail": {
+        "title": "Country"
+      },
+      "mnemonic": "Mnemonic",
+      "name": "Name"
+    }
+  },
+  "regionMsApp": {
+    "regionMsCountry": {
+      "created": "A new Country is created with identifier {{ param }}",
+      "updated": "A Country is updated with identifier {{ param }}",
+      "deleted": "A Country is deleted with identifier {{ param }}"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "creditApp": {
+    "LoanProcessStatus": {
+      "null": "",
+      "APPROVED": "APPROVED",
+      "DENIED": "DENIED"
+    }
+  }
+}

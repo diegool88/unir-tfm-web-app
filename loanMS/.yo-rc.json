@@ -1,0 +1,42 @@
+{
+  "generator-jhipster": {
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "jhiPrefix": "jhi",
+    "languages": [
+      "en",
+      "es"
+    ],
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "packageName": "com.dfgtech.tfm.loanms",
+    "packageFolder": "com/dfgtech/tfm/loanms",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
+    "skipClient": true,
+    "testFrameworks": [],
+    "websocket": false,
+    "baseName": "loanMS",
+    "applicationType": "microservice",
+    "buildTool": "maven",
+    "authenticationType": "jwt",
+    "serverPort": "8082",
+    "skipUserManagement": true,
+    "jhipsterVersion": "6.1.2",
+    "clientPackageManager": "npm",
+    "cacheProvider": "hazelcast",
+    "jwtSecretKey": "ZDQwNmJkYjE4ZTcxNzk4NzhjMDIwOWM5MWY0YjZlN2I1NmFmYjlmYTdmODIxZTFiNDAxZTM3YWY1YWE2MTk5YjE1ZDA3ZDFiYTk5ZmIyZTc0MjBkMGJmYTlmZjY2OWMxN2I5M2M3NDc5MWNmNDFmMWMxYWE2MWY2NzdlMWVkMWQ=",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": []
+  },
+  "entities": [
+    "Warranty",
+    "LoanProcess",
+    "AmortizationTable"
+  ]
+}

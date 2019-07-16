@@ -1,0 +1,12 @@
+{
+  "creditApp": {
+    "Relation": {
+      "null": "",
+      "FRIEND": "FRIEND",
+      "EMPLOYEER": "EMPLOYEER",
+      "SPOUSE": "SPOUSE",
+      "PARTNER": "PARTNER",
+      "RELATIVE": "RELATIVE"
+    }
+  }
+}

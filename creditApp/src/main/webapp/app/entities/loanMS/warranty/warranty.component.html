@@ -1,0 +1,80 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="creditApp.loanMsWarranty.home.title">Warranties</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-warranty" [routerLink]="['/warranty/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="creditApp.loanMsWarranty.home.createLabel">
+            Create new Warranty
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="warranties?.length === 0">
+        <span jhiTranslate="creditApp.loanMsWarranty.home.notFound">No warranties found</span>
+    </div>
+    <div class="table-responsive" *ngIf="warranties?.length > 0">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="creditApp.loanMsWarranty.name">Name</span></th>
+            <th><span jhiTranslate="creditApp.loanMsWarranty.description">Description</span></th>
+            <th><span jhiTranslate="creditApp.loanMsWarranty.value">Value</span></th>
+            <th><span jhiTranslate="creditApp.loanMsWarranty.document">Document</span></th>
+            <th><span jhiTranslate="creditApp.loanMsWarranty.debtorIdentification">Debtor Identification</span></th>
+            <th><span jhiTranslate="creditApp.loanMsWarranty.debtorIdentificationType">Debtor Identification Type</span></th>
+            <th><span jhiTranslate="creditApp.loanMsWarranty.debtorCountry">Debtor Country</span></th>
+            <th><span jhiTranslate="creditApp.loanMsWarranty.loanProcess">Loan Process</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let warranty of warranties ;trackBy: trackId">
+                <td><a [routerLink]="['/warranty', warranty.id, 'view' ]">{{warranty.id}}</a></td>
+                <td>{{warranty.name}}</td>
+                <td>{{warranty.description}}</td>
+                <td>{{warranty.value}}</td>
+                <td>
+                    <a *ngIf="warranty.document" (click)="openFile(warranty.documentContentType, warranty.document)">
+                        <img [src]="'data:' + warranty.documentContentType + ';base64,' + warranty.document" style="max-height: 30px;" alt="warranty image"/>
+                    </a>
+                    <span *ngIf="warranty.document">{{warranty.documentContentType}}, {{byteSize(warranty.document)}}</span>
+                </td>
+                <td>{{warranty.debtorIdentification}}</td>
+                <td>{{warranty.debtorIdentificationType}}</td>
+                <td>{{warranty.debtorCountry}}</td>
+                <td>
+                    <span *ngFor="let loanProcess of warranty.loanProcesses; let last = last">
+                            <a class="form-control-static" [routerLink]="['../loan-process', loanProcess?.id, 'view' ]">{{loanProcess.id}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/warranty', warranty.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/warranty', warranty.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'warranty', { outlets: { popup: warranty.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

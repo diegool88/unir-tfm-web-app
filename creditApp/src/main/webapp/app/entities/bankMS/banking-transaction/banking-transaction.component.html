@@ -1,0 +1,93 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="creditApp.bankMsBankingTransaction.home.title">Banking Transactions</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-banking-transaction" [routerLink]="['/banking-transaction/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="creditApp.bankMsBankingTransaction.home.createLabel">
+            Create new Banking Transaction
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="bankingTransactions?.length === 0">
+        <span jhiTranslate="creditApp.bankMsBankingTransaction.home.notFound">No bankingTransactions found</span>
+    </div>
+    <div class="table-responsive" *ngIf="bankingTransactions?.length > 0">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.number">Number</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.date">Date</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.ammount">Ammount</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.transactionType">Transaction Type</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.extOriginAccount">Ext Origin Account</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.extOriginAccountType">Ext Origin Account Type</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.extOriginAccountBank">Ext Origin Account Bank</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.extDestinationAccount">Ext Destination Account</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.extDestinationAccountType">Ext Destination Account Type</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.extDestinationAccountBank">Ext Destination Account Bank</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.originAccount">Origin Account</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.destinationAccount">Destination Account</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingTransaction.bankingEntity">Banking Entity</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let bankingTransaction of bankingTransactions ;trackBy: trackId">
+                <td><a [routerLink]="['/banking-transaction', bankingTransaction.id, 'view' ]">{{bankingTransaction.id}}</a></td>
+                <td>{{bankingTransaction.number}}</td>
+                <td>{{bankingTransaction.date | date:'medium'}}</td>
+                <td>{{bankingTransaction.ammount}}</td>
+                <td jhiTranslate="{{'creditApp.TransactionType.' + bankingTransaction.transactionType}}">{{bankingTransaction.transactionType}}</td>
+                <td>{{bankingTransaction.extOriginAccount}}</td>
+                <td jhiTranslate="{{'creditApp.AccountType.' + bankingTransaction.extOriginAccountType}}">{{bankingTransaction.extOriginAccountType}}</td>
+                <td>{{bankingTransaction.extOriginAccountBank}}</td>
+                <td>{{bankingTransaction.extDestinationAccount}}</td>
+                <td jhiTranslate="{{'creditApp.AccountType.' + bankingTransaction.extDestinationAccountType}}">{{bankingTransaction.extDestinationAccountType}}</td>
+                <td>{{bankingTransaction.extDestinationAccountBank}}</td>
+                <td>
+                    <div *ngIf="bankingTransaction.originAccountId">
+                        <a [routerLink]="['../banking-account', bankingTransaction.originAccountId , 'view' ]" >{{bankingTransaction.originAccountNumber}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="bankingTransaction.destinationAccountId">
+                        <a [routerLink]="['../banking-account', bankingTransaction.destinationAccountId , 'view' ]" >{{bankingTransaction.destinationAccountNumber}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="bankingTransaction.bankingEntityId">
+                        <a [routerLink]="['../banking-entity', bankingTransaction.bankingEntityId , 'view' ]" >{{bankingTransaction.bankingEntityId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/banking-transaction', bankingTransaction.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/banking-transaction', bankingTransaction.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'banking-transaction', { outlets: { popup: bankingTransaction.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

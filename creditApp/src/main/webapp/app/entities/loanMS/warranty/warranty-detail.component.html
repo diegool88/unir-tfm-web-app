@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="warranty">
+            <h2><span jhiTranslate="creditApp.loanMsWarranty.detail.title">Warranty</span> {{warranty.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="creditApp.loanMsWarranty.name">Name</span></dt>
+                <dd>
+                    <span>{{warranty.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsWarranty.description">Description</span></dt>
+                <dd>
+                    <span>{{warranty.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsWarranty.value">Value</span></dt>
+                <dd>
+                    <span>{{warranty.value}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsWarranty.document">Document</span></dt>
+                <dd>
+                    <div *ngIf="warranty.document">
+                        <a (click)="openFile(warranty.documentContentType, warranty.document)">
+                            <img [src]="'data:' + warranty.documentContentType + ';base64,' + warranty.document" style="max-width: 100%;" alt="warranty image"/>
+                        </a>
+                        {{warranty.documentContentType}}, {{byteSize(warranty.document)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsWarranty.debtorIdentification">Debtor Identification</span></dt>
+                <dd>
+                    <span>{{warranty.debtorIdentification}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsWarranty.debtorIdentificationType">Debtor Identification Type</span></dt>
+                <dd>
+                    <span>{{warranty.debtorIdentificationType}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsWarranty.debtorCountry">Debtor Country</span></dt>
+                <dd>
+                    <span>{{warranty.debtorCountry}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.loanMsWarranty.loanProcess">Loan Process</span></dt>
+                <dd>
+                    <span *ngFor="let loanProcess of warranty.loanProcesses; let last = last">
+                        <a [routerLink]="['/loan-process', loanProcess?.id, 'view' ]">{{loanProcess.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/warranty', warranty.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

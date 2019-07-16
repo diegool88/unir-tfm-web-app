@@ -1,0 +1,28 @@
+{
+  "creditApp": {
+    "bankMsCurrency": {
+      "home": {
+        "title": "Currencies",
+        "createLabel": "Crear nuevo Currency",
+        "createOrEditLabel": "Crear o editar Currency",
+        "notFound": "No Currency found"
+      },
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Currency {{ id }}?"
+      },
+      "detail": {
+        "title": "Currency"
+      },
+      "name": "Name",
+      "sign": "Sign",
+      "product": "Product"
+    }
+  },
+  "bankMsApp": {
+    "bankMsCurrency": {
+      "created": "Un nuevo Currency ha sido creado con el identificador {{ param }}",
+      "updated": "Un Currency ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Currency ha sido eliminado con el identificador {{ param }}"
+    }
+  }
+}

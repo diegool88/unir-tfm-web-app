@@ -1,0 +1,81 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="creditApp.loanMsLoanProcess.home.title">Loan Processes</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-loan-process" [routerLink]="['/loan-process/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="creditApp.loanMsLoanProcess.home.createLabel">
+            Create new Loan Process
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="loanProcesses?.length === 0">
+        <span jhiTranslate="creditApp.loanMsLoanProcess.home.notFound">No loanProcesses found</span>
+    </div>
+    <div class="table-responsive" *ngIf="loanProcesses?.length > 0">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.name">Name</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.requestedAmount">Requested Amount</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.givenAmount">Given Amount</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.loanPeriod">Loan Period</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.startDate">Start Date</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.endDate">End Date</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.justification">Justification</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.debtorIdentification">Debtor Identification</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.debtorIdentificationType">Debtor Identification Type</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.debtorCountry">Debtor Country</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.bankingEntityMnemonic">Banking Entity Mnemonic</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.bankingProductMnemonic">Banking Product Mnemonic</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.loanProcessStatus">Loan Process Status</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let loanProcess of loanProcesses ;trackBy: trackId">
+                <td><a [routerLink]="['/loan-process', loanProcess.id, 'view' ]">{{loanProcess.id}}</a></td>
+                <td>{{loanProcess.name}}</td>
+                <td>{{loanProcess.requestedAmount}}</td>
+                <td>{{loanProcess.givenAmount}}</td>
+                <td>{{loanProcess.loanPeriod}}</td>
+                <td>{{loanProcess.startDate | date:'mediumDate'}}</td>
+                <td>{{loanProcess.endDate | date:'mediumDate'}}</td>
+                <td>{{loanProcess.justification}}</td>
+                <td>{{loanProcess.debtorIdentification}}</td>
+                <td>{{loanProcess.debtorIdentificationType}}</td>
+                <td>{{loanProcess.debtorCountry}}</td>
+                <td>{{loanProcess.bankingEntityMnemonic}}</td>
+                <td>{{loanProcess.bankingProductMnemonic}}</td>
+                <td jhiTranslate="{{'creditApp.LoanProcessStatus.' + loanProcess.loanProcessStatus}}">{{loanProcess.loanProcessStatus}}</td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/loan-process', loanProcess.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/loan-process', loanProcess.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'loan-process', { outlets: { popup: loanProcess.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

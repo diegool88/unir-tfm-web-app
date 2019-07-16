@@ -1,0 +1,9 @@
+{
+  "creditApp": {
+    "IdentificationType": {
+      "null": "",
+      "ID": "ID",
+      "PASSPORT": "PASSPORT"
+    }
+  }
+}

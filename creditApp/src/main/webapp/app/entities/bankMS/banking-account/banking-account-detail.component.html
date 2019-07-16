@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="bankingAccount">
+            <h2><span jhiTranslate="creditApp.bankMsBankingAccount.detail.title">Banking Account</span> {{bankingAccount.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="creditApp.bankMsBankingAccount.number">Number</span></dt>
+                <dd>
+                    <span>{{bankingAccount.number}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingAccount.accountType">Account Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'creditApp.AccountType.' + bankingAccount.accountType}}">{{bankingAccount.accountType}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingAccount.currentBalance">Current Balance</span></dt>
+                <dd>
+                    <span>{{bankingAccount.currentBalance}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingAccount.availableBalance">Available Balance</span></dt>
+                <dd>
+                    <span>{{bankingAccount.availableBalance}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingAccount.customerIdentification">Customer Identification</span></dt>
+                <dd>
+                    <span>{{bankingAccount.customerIdentification}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingAccount.customerIdentificationType">Customer Identification Type</span></dt>
+                <dd>
+                    <span>{{bankingAccount.customerIdentificationType}}</span>
+                </dd>
+                <dt><span jhiTranslate="creditApp.bankMsBankingAccount.customerCountry">Customer Country</span></dt>
+                <dd>
+                    <span>{{bankingAccount.customerCountry}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/banking-account', bankingAccount.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

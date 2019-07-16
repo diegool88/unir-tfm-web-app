@@ -1,0 +1,36 @@
+{
+  "creditApp": {
+    "bankMsProduct": {
+      "home": {
+        "title": "Products",
+        "createLabel": "Crear nuevo Product",
+        "createOrEditLabel": "Crear o editar Product",
+        "notFound": "No Product found"
+      },
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Product {{ id }}?"
+      },
+      "detail": {
+        "title": "Product"
+      },
+      "mnemonic": "Mnemonic",
+      "name": "Name",
+      "description": "Description",
+      "category": "Category",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "state": "State",
+      "interestRate": "Interest Rate",
+      "bankingEntity": "Banking Entity",
+      "fees": "Fees",
+      "currencies": "Currencies"
+    }
+  },
+  "bankMsApp": {
+    "bankMsProduct": {
+      "created": "Un nuevo Product ha sido creado con el identificador {{ param }}",
+      "updated": "Un Product ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Product ha sido eliminado con el identificador {{ param }}"
+    }
+  }
+}

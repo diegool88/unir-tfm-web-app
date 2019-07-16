@@ -1,0 +1,9 @@
+{
+  "creditApp": {
+    "ProductCategory": {
+      "null": "",
+      "CREDIT": "CREDIT",
+      "PORTFOLIO": "PORTFOLIO"
+    }
+  }
+}

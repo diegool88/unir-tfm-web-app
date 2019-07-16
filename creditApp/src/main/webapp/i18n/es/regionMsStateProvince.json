@@ -1,0 +1,27 @@
+{
+  "creditApp": {
+    "regionMsStateProvince": {
+      "home": {
+        "title": "State Provinces",
+        "createLabel": "Crear nuevo State Province",
+        "createOrEditLabel": "Crear o editar State Province",
+        "notFound": "No State Province found"
+      },
+      "delete": {
+        "question": "¿Seguro que quiere eliminar State Province {{ id }}?"
+      },
+      "detail": {
+        "title": "State Province"
+      },
+      "name": "Name",
+      "country": "Country"
+    }
+  },
+  "regionMsApp": {
+    "regionMsStateProvince": {
+      "created": "Un nuevo State Province ha sido creado con el identificador {{ param }}",
+      "updated": "Un State Province ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un State Province ha sido eliminado con el identificador {{ param }}"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "creditApp": {
+    "bankMsFee": {
+      "home": {
+        "title": "Fees",
+        "createLabel": "Create a new Fee",
+        "createOrEditLabel": "Create or edit a Fee",
+        "notFound": "No Fee found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Fee {{ id }}?"
+      },
+      "detail": {
+        "title": "Fee"
+      },
+      "mnemonic": "Mnemonic",
+      "name": "Name",
+      "description": "Description",
+      "interestRate": "Interest Rate",
+      "uniqueValue": "Unique Value",
+      "product": "Product"
+    }
+  },
+  "bankMsApp": {
+    "bankMsFee": {
+      "created": "A new Fee is created with identifier {{ param }}",
+      "updated": "A Fee is updated with identifier {{ param }}",
+      "deleted": "A Fee is deleted with identifier {{ param }}"
+    }
+  }
+}
