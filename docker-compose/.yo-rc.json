@@ -1,0 +1,15 @@
+{
+  "generator-jhipster": {
+    "appsFolders": [
+      "bankMS",
+      "creditApp",
+      "loanMS",
+      "regionMS"
+    ],
+    "directoryPath": "../",
+    "gatewayType": "zuul",
+    "monitoring": "no",
+    "serviceDiscoveryType": "eureka",
+    "jwtSecretKey": "NGUxNWQ2YjFiYmE0ODUxYzA1OTFhYjRkNWVlMjlmMWVmZjEyOGRmZmJiYjdhMzI5YmU3ZWY1Mjk0MDEwODQyMjk2Y2I3MGE2MWI0YTFiYzBlNTI1MmYzYzIzZjFlMGYyN2U5OQ=="
+  }
+}
