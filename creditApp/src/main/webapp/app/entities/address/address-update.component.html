@@ -177,7 +177,7 @@
                     <label class="form-control-label" jhiTranslate="creditApp.address.customer" for="field_customer">Customer</label>
                     <select class="form-control" id="field_customer" name="customer" formControlName="customerId">
                         <option *ngIf="!editForm.get('customerId').value" [ngValue]="null" selected></option>
-                        <option [ngValue]="customerOption.id" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.id}}</option>
+                        <option [ngValue]="customerOption.id" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.firstname + ' ' + customerOption.lastname}}</option>
                     </select>
                 </div>
                 <div *ngIf="editForm.get('customerId').invalid && (editForm.get('customerId').dirty || editForm.get('customerId').touched)">

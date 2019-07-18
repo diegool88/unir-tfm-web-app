@@ -10,6 +10,7 @@ import { AccountService } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { PersonalReferenceService } from './personal-reference.service';
+import { CustomerService } from './../customer/customer.service';
 
 @Component({
   selector: 'jhi-personal-reference',
