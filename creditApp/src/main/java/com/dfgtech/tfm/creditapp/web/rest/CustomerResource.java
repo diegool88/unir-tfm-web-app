@@ -1,6 +1,7 @@
 package com.dfgtech.tfm.creditapp.web.rest;
 
 import com.dfgtech.tfm.creditapp.service.CustomerService;
+import com.dfgtech.tfm.creditapp.service.UserService;
 import com.dfgtech.tfm.creditapp.web.rest.errors.BadRequestAlertException;
 import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
 
@@ -34,9 +35,16 @@ public class CustomerResource {
     private String applicationName;
 
     private final CustomerService customerService;
+    private final UserService userService;
 
+    /*
     public CustomerResource(CustomerService customerService) {
         this.customerService = customerService;
+    }*/
+    
+    public CustomerResource(CustomerService customerService, UserService userService) {
+        this.customerService = customerService;
+        this.userService = userService;
     }
 
     /**
@@ -100,6 +108,19 @@ public class CustomerResource {
     public ResponseEntity<CustomerDTO> getCustomer(@PathVariable Long id) {
         log.debug("REST request to get Customer : {}", id);
         Optional<CustomerDTO> customerDTO = customerService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(customerDTO);
+    }
+    
+    /**
+     * {@code GET  /customers/:id} : get the "id" customer.
+     *
+     * @param id the id of the customerDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/customers/login")
+    public ResponseEntity<CustomerDTO> getCustomerByLogin() {
+        log.debug("REST request to get Customer by login: {}");
+        Optional<CustomerDTO> customerDTO = customerService.findByUserLogin(userService.getUserWithAuthorities());
         return ResponseUtil.wrapOrNotFound(customerDTO);
     }
 

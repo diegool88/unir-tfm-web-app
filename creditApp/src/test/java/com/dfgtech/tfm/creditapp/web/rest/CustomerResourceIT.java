@@ -5,6 +5,7 @@ import com.dfgtech.tfm.creditapp.domain.Customer;
 import com.dfgtech.tfm.creditapp.domain.User;
 import com.dfgtech.tfm.creditapp.repository.CustomerRepository;
 import com.dfgtech.tfm.creditapp.service.CustomerService;
+import com.dfgtech.tfm.creditapp.service.UserService;
 import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
 import com.dfgtech.tfm.creditapp.service.mapper.CustomerMapper;
 import com.dfgtech.tfm.creditapp.web.rest.errors.ExceptionTranslator;
@@ -82,6 +83,9 @@ public class CustomerResourceIT {
 
     @Autowired
     private CustomerService customerService;
+    
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -105,7 +109,7 @@ public class CustomerResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CustomerResource customerResource = new CustomerResource(customerService);
+        final CustomerResource customerResource = new CustomerResource(customerService, userService);
         this.restCustomerMockMvc = MockMvcBuilders.standaloneSetup(customerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

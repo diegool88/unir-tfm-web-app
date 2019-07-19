@@ -16,6 +16,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
   customers: ICustomer[];
   currentAccount: any;
   eventSubscriber: Subscription;
+  customer: ICustomer;
 
   constructor(
     protected customerService: CustomerService,
@@ -36,6 +37,20 @@ export class CustomerComponent implements OnInit, OnDestroy {
           this.customers = res;
         },
         (res: HttpErrorResponse) => this.onError(res.message)
+      );
+  }
+  
+  loadCustomerByLogin(){
+      this.customerService
+      .findByLogin()
+      .pipe(
+         filter((res: HttpResponse<ICustomer>) => res.ok),
+         map((res: HttpResponse<ICustomer>) => res.body)
+      ).subscribe(
+         (res: ICustomer) => {
+           this.customer = res;
+         },
+         (res: HttpErrorResponse) => this.onError(res.message)
       );
   }
 

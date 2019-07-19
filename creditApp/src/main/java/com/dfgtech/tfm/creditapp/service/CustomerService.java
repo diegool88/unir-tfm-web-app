@@ -1,6 +1,7 @@
 package com.dfgtech.tfm.creditapp.service;
 
 import com.dfgtech.tfm.creditapp.domain.Customer;
+import com.dfgtech.tfm.creditapp.domain.User;
 import com.dfgtech.tfm.creditapp.repository.CustomerRepository;
 import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
 import com.dfgtech.tfm.creditapp.service.mapper.CustomerMapper;
@@ -71,6 +72,19 @@ public class CustomerService {
         log.debug("Request to get Customer : {}", id);
         return customerRepository.findById(id)
             .map(customerMapper::toDto);
+    }
+    
+    /**
+     * Get one customer by user login.
+     *
+     * @param user the login of the current authenticated user.
+     * @return the entity.
+     */
+    @Transactional(readOnly = true)
+    public Optional<CustomerDTO> findByUserLogin(Optional<User> user) {
+        log.debug("Request to get Customer : {}", user);
+        return customerRepository.findByUserLogin(user)
+        		.map(customerMapper::toDto);
     }
 
     /**
