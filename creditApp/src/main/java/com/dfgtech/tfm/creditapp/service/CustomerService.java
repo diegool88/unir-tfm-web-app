@@ -3,6 +3,7 @@ package com.dfgtech.tfm.creditapp.service;
 import com.dfgtech.tfm.creditapp.domain.Customer;
 import com.dfgtech.tfm.creditapp.domain.User;
 import com.dfgtech.tfm.creditapp.repository.CustomerRepository;
+import com.dfgtech.tfm.creditapp.security.SecurityUtils;
 import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
 import com.dfgtech.tfm.creditapp.service.mapper.CustomerMapper;
 import org.slf4j.Logger;
@@ -81,9 +82,9 @@ public class CustomerService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<CustomerDTO> findByUserLogin(Optional<User> user) {
-        log.debug("Request to get Customer : {}", user);
-        return customerRepository.findByUserLogin(user)
+    public Optional<CustomerDTO> findByUserLogin(String login) {
+        log.debug("Request to get Customer : {}", login);
+        return customerRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().get())
         		.map(customerMapper::toDto);
     }
 

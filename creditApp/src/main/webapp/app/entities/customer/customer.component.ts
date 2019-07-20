@@ -23,7 +23,11 @@ export class CustomerComponent implements OnInit, OnDestroy {
     protected jhiAlertService: JhiAlertService,
     protected eventManager: JhiEventManager,
     protected accountService: AccountService
-  ) {}
+  ) {
+      this.accountService.identity().then(account => {
+        this.currentAccount = account;
+      });
+  }
 
   loadAll() {
     this.customerService
@@ -39,26 +43,9 @@ export class CustomerComponent implements OnInit, OnDestroy {
         (res: HttpErrorResponse) => this.onError(res.message)
       );
   }
-  
-  loadCustomerByLogin(){
-      this.customerService
-      .findByLogin()
-      .pipe(
-         filter((res: HttpResponse<ICustomer>) => res.ok),
-         map((res: HttpResponse<ICustomer>) => res.body)
-      ).subscribe(
-         (res: ICustomer) => {
-           this.customer = res;
-         },
-         (res: HttpErrorResponse) => this.onError(res.message)
-      );
-  }
 
   ngOnInit() {
     this.loadAll();
-    this.accountService.identity().then(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInCustomers();
   }
 

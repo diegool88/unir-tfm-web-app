@@ -8,7 +8,7 @@ import * as moment from 'moment';
 import { JhiAlertService } from 'ng-jhipster';
 import { ICustomer, Customer } from 'app/shared/model/customer.model';
 import { CustomerService } from './customer.service';
-import { IUser, UserService } from 'app/core';
+import { IUser, UserService, AccountService } from 'app/core';
 
 @Component({
   selector: 'jhi-customer-update',
@@ -20,6 +20,7 @@ export class CustomerUpdateComponent implements OnInit {
   users: IUser[];
   birthDateDp: any;
   clientSinceDp: any;
+  currentAccount: any;
 
   editForm = this.fb.group({
     id: [],
@@ -41,22 +42,38 @@ export class CustomerUpdateComponent implements OnInit {
     protected jhiAlertService: JhiAlertService,
     protected customerService: CustomerService,
     protected userService: UserService,
+    protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
-  ) {}
+  ) {
+      this.accountService.identity().then(account => {
+        this.currentAccount = account;
+      });
+  }
 
   ngOnInit() {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ customer }) => {
       this.updateForm(customer);
     });
-    this.userService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IUser[]>) => response.body)
-      )
-      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
+    if (this.currentAccount.authorities.includes('ROLE_ADMIN')) {
+        this.userService
+        .query()
+        .pipe(
+          filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+          map((response: HttpResponse<IUser[]>) => response.body)
+        )
+        .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
+    } else {
+        this.userService
+        .find(this.currentAccount.login)
+        .pipe(
+          filter((mayBeOk: HttpResponse<IUser>) => mayBeOk.ok),
+          map((response: HttpResponse<IUser>) => response.body) 
+        )
+        .subscribe((res: IUser) => (this.users = [res]), (res: HttpErrorResponse) => this.onError(res.message));
+    }
+    
   }
 
   updateForm(customer: ICustomer) {

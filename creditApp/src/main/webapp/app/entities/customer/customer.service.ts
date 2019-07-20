@@ -38,9 +38,9 @@ export class CustomerService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
   
-  findByLogin(req?: any): Observable<EntityResponseType> {
+  findByLogin(login: string): Observable<EntityResponseType> {
       return this.http
-        .get<ICustomer>(`${this.resourceUrl}/login`, { observe: 'response' })
+        .get<ICustomer>(`${this.resourceUrl}/login/${login}`, { observe: 'response' })
         .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 

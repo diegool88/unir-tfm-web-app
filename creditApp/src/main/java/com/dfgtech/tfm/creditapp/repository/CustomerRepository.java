@@ -1,12 +1,11 @@
 package com.dfgtech.tfm.creditapp.repository;
 
-import com.dfgtech.tfm.creditapp.domain.Customer;
-import com.dfgtech.tfm.creditapp.domain.User;
-
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.dfgtech.tfm.creditapp.domain.Customer;
 
 
 /**
@@ -15,5 +14,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-	Optional<Customer> findByUserLogin(Optional<User> user);
+	Optional<Customer> findByUserLogin(String login);
 }
