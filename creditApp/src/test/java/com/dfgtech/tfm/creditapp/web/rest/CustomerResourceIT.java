@@ -1,14 +1,21 @@
 package com.dfgtech.tfm.creditapp.web.rest;
 
-import com.dfgtech.tfm.creditapp.CreditApp;
-import com.dfgtech.tfm.creditapp.domain.Customer;
-import com.dfgtech.tfm.creditapp.domain.User;
-import com.dfgtech.tfm.creditapp.repository.CustomerRepository;
-import com.dfgtech.tfm.creditapp.service.CustomerService;
-import com.dfgtech.tfm.creditapp.service.UserService;
-import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
-import com.dfgtech.tfm.creditapp.service.mapper.CustomerMapper;
-import com.dfgtech.tfm.creditapp.web.rest.errors.ExceptionTranslator;
+import static com.dfgtech.tfm.creditapp.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,19 +30,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.dfgtech.tfm.creditapp.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.dfgtech.tfm.creditapp.domain.enumeration.IdentificationType;
+import com.dfgtech.tfm.creditapp.CreditApp;
+import com.dfgtech.tfm.creditapp.domain.Customer;
+import com.dfgtech.tfm.creditapp.domain.User;
 import com.dfgtech.tfm.creditapp.domain.enumeration.Genre;
+import com.dfgtech.tfm.creditapp.domain.enumeration.IdentificationType;
+import com.dfgtech.tfm.creditapp.repository.CustomerRepository;
+import com.dfgtech.tfm.creditapp.service.CustomerService;
+import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
+import com.dfgtech.tfm.creditapp.service.mapper.CustomerMapper;
+import com.dfgtech.tfm.creditapp.web.rest.errors.ExceptionTranslator;
 /**
  * Integration tests for the {@Link CustomerResource} REST controller.
  */
@@ -83,9 +87,6 @@ public class CustomerResourceIT {
 
     @Autowired
     private CustomerService customerService;
-    
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -109,7 +110,7 @@ public class CustomerResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CustomerResource customerResource = new CustomerResource(customerService, userService);
+        final CustomerResource customerResource = new CustomerResource(customerService);
         this.restCustomerMockMvc = MockMvcBuilders.standaloneSetup(customerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

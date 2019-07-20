@@ -20,6 +20,7 @@ import { CreditAppEntityModule } from './entities/entity.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
+import { WizardComponent } from './layouts/wizard/wizard.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
     CreditAppEntityModule,
     CreditAppAppRoutingModule
   ],
-  declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent, WizardComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
