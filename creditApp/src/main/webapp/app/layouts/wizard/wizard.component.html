@@ -1,3 +1,17 @@
-<p>
-  wizard works!
-</p>
+<div>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="jumbotron">
+	  <h1 class="display-4">Loan Process</h1>
+	  <p jhiTranslate="creditApp.wizard.mainMessage" class="lead">You are about to start a new loan request, if you are know what you're doing, feel free to continue with the first step of the wizard.</p>
+	  <hr class="my-4">
+	  <p class="lead">
+	  	<button class="btn btn-primary btn-lg" [routerLink]="['/customer', customer.id, 'edit']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="creditApp.wizard.home.continueLabel">
+            Begin New Loan Process
+            </span>
+        </button>
+	  </p>
+	</div>
+</div>

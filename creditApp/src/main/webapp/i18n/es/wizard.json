@@ -1,0 +1,12 @@
+{
+  "creditApp": {
+    "wizard": {
+      "home": {
+        "title": "Proceso de crédito",
+        "continueLabel": "Empezar nuevo proceso de crédito",
+        "notFound": "No se encontró ningún cliente"
+      },
+      "mainMessage": "Usted está apunto de empezar un nueva solicitud de crédito, si usted sabe lo que está haciendo, siéntase libre de continuar con el primer paso de la solicitud."
+    }
+  }
+}
