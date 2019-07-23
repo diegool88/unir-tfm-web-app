@@ -1,7 +1,11 @@
 package com.dfgtech.tfm.creditapp.web.rest;
 
+import com.dfgtech.tfm.creditapp.security.AuthoritiesConstants;
+import com.dfgtech.tfm.creditapp.security.SecurityUtils;
+import com.dfgtech.tfm.creditapp.service.CustomerService;
 import com.dfgtech.tfm.creditapp.service.TelephoneNumberService;
 import com.dfgtech.tfm.creditapp.web.rest.errors.BadRequestAlertException;
+import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
 import com.dfgtech.tfm.creditapp.service.dto.TelephoneNumberDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -9,6 +13,7 @@ import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +46,9 @@ public class TelephoneNumberResource {
     private String applicationName;
 
     private final TelephoneNumberService telephoneNumberService;
+    
+    @Autowired
+    private CustomerService customerService;
 
     public TelephoneNumberResource(TelephoneNumberService telephoneNumberService) {
         this.telephoneNumberService = telephoneNumberService;
@@ -97,9 +105,16 @@ public class TelephoneNumberResource {
     @GetMapping("/telephone-numbers")
     public ResponseEntity<List<TelephoneNumberDTO>> getAllTelephoneNumbers(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get a page of TelephoneNumbers");
-        Page<TelephoneNumberDTO> page = telephoneNumberService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+	        Page<TelephoneNumberDTO> page = telephoneNumberService.findAll(pageable);
+	        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+	        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        } else {
+        	Optional<CustomerDTO> customerDTO = customerService.findByUserLogin(SecurityUtils.getCurrentUserLogin().get());
+        	Page<TelephoneNumberDTO> page = customerDTO.isPresent() ? telephoneNumberService.findAllByCustomer(customerDTO.get().getId(), pageable) : Page.empty();
+	        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+	        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        }
     }
 
     /**

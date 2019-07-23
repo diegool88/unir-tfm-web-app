@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../entities/customer/customer.service';
-import { ICustomer } from 'app/shared/model/customer.model';
+import { ICustomer, Customer } from 'app/shared/model/customer.model';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -15,7 +15,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 export class WizardComponent implements OnInit {
 
   currentAccount: any;
-  customer: ICustomer;
+  customer?: ICustomer = new Customer();
 
   constructor(
           protected customerService: CustomerService,
@@ -34,7 +34,7 @@ export class WizardComponent implements OnInit {
             )
             .subscribe(
               (res: ICustomer[]) => {
-                this.customer = res[0];
+                this.customer = res.length > 0 ? res[0] : new Customer() ;
               },
               (res: HttpErrorResponse) => this.onError(res.message)
             );

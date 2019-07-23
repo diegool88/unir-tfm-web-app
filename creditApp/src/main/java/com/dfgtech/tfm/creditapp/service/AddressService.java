@@ -57,6 +57,19 @@ public class AddressService {
         return addressRepository.findAll(pageable)
             .map(addressMapper::toDto);
     }
+    
+    /**
+     * Get all the addresses by customer Id.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public Page<AddressDTO> findAllByCustomer(Long customer, Pageable pageable) {
+        log.debug("Request to get all Addresses by Customer");
+        return addressRepository.findByCustomerId(customer, pageable)
+            .map(addressMapper::toDto);
+    }
 
 
     /**

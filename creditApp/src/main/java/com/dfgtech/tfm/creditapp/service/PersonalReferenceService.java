@@ -57,6 +57,19 @@ public class PersonalReferenceService {
         return personalReferenceRepository.findAll(pageable)
             .map(personalReferenceMapper::toDto);
     }
+    
+    /**
+     * Get all the personalReferences.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public Page<PersonalReferenceDTO> findAllByCustomer(Long customer, Pageable pageable) {
+        log.debug("Request to get all PersonalReferences By Customer");
+        return personalReferenceRepository.findByCustomerId(customer, pageable)
+            .map(personalReferenceMapper::toDto);
+    }
 
 
     /**

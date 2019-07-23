@@ -59,7 +59,7 @@
                     <label class="form-control-label" jhiTranslate="creditApp.telephoneNumber.address" for="field_address">Address</label>
                     <select class="form-control" id="field_address" name="address" formControlName="addressId">
                         <option *ngIf="!editForm.get('addressId').value" [ngValue]="null" selected></option>
-                        <option [ngValue]="addressOption.id" *ngFor="let addressOption of addresses; trackBy: trackAddressById">{{addressOption.id}}</option>
+                        <option [ngValue]="addressOption.id" *ngFor="let addressOption of addresses; trackBy: trackAddressById">{{addressOption.id + ' - ' + addressOption.mainStreet + ' ' + addressOption.secondaryStreet }}</option>
                     </select>
                 </div>
                 <div *ngIf="editForm.get('addressId').invalid && (editForm.get('addressId').dirty || editForm.get('addressId').touched)">

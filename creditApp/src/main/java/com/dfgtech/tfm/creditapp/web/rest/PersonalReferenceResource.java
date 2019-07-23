@@ -1,7 +1,11 @@
 package com.dfgtech.tfm.creditapp.web.rest;
 
+import com.dfgtech.tfm.creditapp.security.AuthoritiesConstants;
+import com.dfgtech.tfm.creditapp.security.SecurityUtils;
+import com.dfgtech.tfm.creditapp.service.CustomerService;
 import com.dfgtech.tfm.creditapp.service.PersonalReferenceService;
 import com.dfgtech.tfm.creditapp.web.rest.errors.BadRequestAlertException;
+import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
 import com.dfgtech.tfm.creditapp.service.dto.PersonalReferenceDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -9,6 +13,7 @@ import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +46,9 @@ public class PersonalReferenceResource {
     private String applicationName;
 
     private final PersonalReferenceService personalReferenceService;
+    
+    @Autowired
+    private CustomerService customerService;
 
     public PersonalReferenceResource(PersonalReferenceService personalReferenceService) {
         this.personalReferenceService = personalReferenceService;
@@ -97,9 +105,16 @@ public class PersonalReferenceResource {
     @GetMapping("/personal-references")
     public ResponseEntity<List<PersonalReferenceDTO>> getAllPersonalReferences(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get a page of PersonalReferences");
-        Page<PersonalReferenceDTO> page = personalReferenceService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+	        Page<PersonalReferenceDTO> page = personalReferenceService.findAll(pageable);
+	        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+	        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        } else {
+        	Optional<CustomerDTO> customerDTO = customerService.findByUserLogin(SecurityUtils.getCurrentUserLogin().get());
+        	Page<PersonalReferenceDTO> page = customerDTO.isPresent() ? personalReferenceService.findAllByCustomer(customerDTO.get().getId(), pageable) : Page.empty();
+	        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+	        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        }
     }
 
     /**
