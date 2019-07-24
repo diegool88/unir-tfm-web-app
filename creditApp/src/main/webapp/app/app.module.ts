@@ -17,12 +17,13 @@ import { CreditAppAppRoutingModule } from './app-routing.module';
 import { CreditAppHomeModule } from './home/home.module';
 import { CreditAppAccountModule } from './account/account.module';
 import { CreditAppEntityModule } from './entities/entity.module';
+import { CreditAppWizardModule } from './layouts/wizard/wizard.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
-import { WizardComponent } from './layouts/wizard/wizard.component';
-import { WizardNavbarComponent } from './layouts/wizard/wizard-navbar/wizard-navbar.component';
-import { WizardMainComponent } from './layouts/wizard/wizard-main/wizard-main.component';
+//import { WizardComponent } from './layouts/wizard/wizard.component';
+//import { WizardNavbarComponent } from './layouts/wizard/wizard-navbar/wizard-navbar.component';
+//import { WizardMainComponent } from './layouts/wizard/wizard-main/wizard-main.component';
 
 @NgModule({
   imports: [
@@ -41,9 +42,10 @@ import { WizardMainComponent } from './layouts/wizard/wizard-main/wizard-main.co
     CreditAppAccountModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     CreditAppEntityModule,
-    CreditAppAppRoutingModule
+    CreditAppAppRoutingModule,
+    CreditAppWizardModule
   ],
-  declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent, WizardComponent, WizardNavbarComponent, WizardMainComponent],
+  declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],//, WizardComponent, WizardNavbarComponent, WizardMainComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

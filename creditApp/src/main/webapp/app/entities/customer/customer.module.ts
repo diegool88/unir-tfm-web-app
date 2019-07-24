@@ -27,7 +27,8 @@ const ENTITY_STATES = [...customerRoute, ...customerPopupRoute];
   ],
   entryComponents: [CustomerComponent, CustomerUpdateComponent, CustomerDeleteDialogComponent, CustomerDeletePopupComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [ CustomerComponent, CustomerDetailComponent, CustomerUpdateComponent, CustomerDeleteDialogComponent, CustomerDeletePopupComponent]
 })
 export class CreditAppCustomerModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
