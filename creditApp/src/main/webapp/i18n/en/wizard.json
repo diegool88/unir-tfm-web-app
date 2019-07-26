@@ -6,7 +6,13 @@
         "continueLabel": "Begin New Loan Process",
         "notFound": "No Customer found"
       },
-      "mainMessage": "You are about to start a new loan request, if you are know what you're doing, feel free to continue with the first step of the wizard."
+      "mainMessage": "You are about to start a new loan request, if you are know what you're doing, feel free to continue with the first step of the wizard.",
+      "button": {
+      	"first": "Go to first Step",
+      	"last": "Go to last Step",
+      	"back": "Back",
+      	"next": "Next"
+      }
     }
   }
 }

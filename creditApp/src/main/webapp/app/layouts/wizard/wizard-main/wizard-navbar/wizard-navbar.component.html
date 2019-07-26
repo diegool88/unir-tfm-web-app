@@ -1,38 +1,36 @@
-<nav class="navbar navbar-dark navbar-expand-md bg-dark">
-    <div class="navbar-collapse collapse" id="navbarResponsiveWizard">
-        <ul class="navbar-nav">
-            <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="/customer/new">
-                    <span>
-                        <fa-icon icon="user"></fa-icon>
-                        <span jhiTranslate="creditApp.customer.detail.title">Customer</span>
-                    </span>
-                </a>
-            </li>
-            <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="/customer/new">
-                    <span>
-                        <fa-icon icon="home"></fa-icon>
-                        <span jhiTranslate="creditApp.address.home.title">Addresses</span>
-                    </span>
-                </a>
-            </li>
-            <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="/customer/new">
-                    <span>
-                        <fa-icon icon="phone"></fa-icon>
-                        <span jhiTranslate="creditApp.telephoneNumber.home.title">Telephones</span>
-                    </span>
-                </a>
-            </li>
-            <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="/customer/new">
-                    <span>
-                        <fa-icon icon="person-booth"></fa-icon>
-                        <span jhiTranslate="creditApp.personalReference.home.title">Personal References</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
-    </div>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[ 'customer/new' ]">
+      	<span>
+            <fa-icon icon="user"></fa-icon>
+            <span jhiTranslate="creditApp.customer.detail.title">Customer</span>
+        </span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/', { outlets: { step: 'customer/new'} }]">
+      	<span>
+            <fa-icon icon="home"></fa-icon>
+            <span jhiTranslate="creditApp.address.home.title">Addresses</span>
+        </span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/', { outlets: { step: 'customer/new'} }]">
+      	<span>
+            <fa-icon icon="phone"></fa-icon>
+            <span jhiTranslate="creditApp.telephoneNumber.home.title">Telephones</span>
+        </span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/', { outlets: { step: 'customer/new'} }]">
+      	<span>
+            <fa-icon icon="person-booth"></fa-icon>
+            <span jhiTranslate="creditApp.personalReference.home.title">Personal References</span>
+        </span>
+      </a>
+    </li>
+  </ul>
 </nav>

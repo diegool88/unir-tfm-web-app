@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { WizardComponent } from './wizard.component';
+import { WizardMainComponent } from './wizard-main/wizard-main.component';
 import { WizardNavbarComponent } from './wizard-main/wizard-navbar/wizard-navbar.component';
 
 /*Nuevos tomados de customer*/
@@ -16,6 +17,7 @@ import { CustomerComponent } from 'app/entities/customer/customer.component';
 import { CustomerDetailComponent } from 'app/entities/customer/customer-detail.component';
 import { CustomerUpdateComponent } from 'app/entities/customer/customer-update.component';
 import { CustomerDeletePopupComponent } from 'app/entities/customer/customer-delete-dialog.component';
+import { customerRoute, customerPopupRoute } from 'app/entities/customer/customer.route';
 import { ICustomer } from 'app/shared/model/customer.model';
 
 
@@ -48,8 +50,21 @@ export const wizardRoute: Routes = [
     component: WizardNavbarComponent,
     data: {
       authorities: ['ROLE_USER']
-    },
-    outlet: 'wizard'
+    }
+  },
+  {
+    path: 'wizard-main',
+    component: WizardMainComponent,
+    children: [
+      {
+          path: 'customer/new',
+          component: CustomerUpdateComponent,
+          resolve: {
+            customer: WizardResolve
+          }
+      }
+    ],
+    canActivate: [UserRouteAccessService]
   },
   {
     path: 'wizard-main/wizard-main-c-n',

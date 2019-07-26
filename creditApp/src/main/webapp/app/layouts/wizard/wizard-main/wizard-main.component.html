@@ -1,15 +1,7 @@
-<section style="background:#efefe9;">
-    <div class="container">
-        <div class="board">
-            <!-- Navigation Area (Circular Tabs) -->
-            <jhi-wizard-navbar></jhi-wizard-navbar>
-            <!-- End Navigation Area (Circular Tabs) -->
-            <!-- Content Area -->
-            <div class="tab-content">
-                <!-- Routed view  -->
-                <router-outlet name="wizard"></router-outlet>
-            </div>
-            <!-- End Content Area -->
-        </div>
+<div class="container-fluid">
+    <div class="card jh-card">
+    	<jhi-wizard-navbar></jhi-wizard-navbar>
+    	<router-outlet></router-outlet>
+    	<jhi-wizard-footer></jhi-wizard-footer>
     </div>
-</section>
+</div>
