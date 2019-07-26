@@ -1,46 +1,38 @@
-<div class="board-inner" id="status-buttons">
-    <ul class="nav nav-tabs" id="myTab">
-        <div class="liner"></div>
-                    
-        <!-- circular user icon -->
-        <li>
-            <a routerLink="/customer/new" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" data-toggle="tab" title="personal">
-                <span class="round-tabs one">
-                    <fa-icon icon="user"></fa-icon>
-                </span>
-            </a>
-        </li>
- 
-        <!-- circular tasks icon -->
-         <li>
-            <a routerLink="/customer/new" routerLinkActive="active" data-toggle="tab" title="work">
-                <span class="round-tabs two">
-                    <fa-icon icon="home"></fa-icon>
-                </span> 
-            </a>
-        </li>
- 
-        <!-- circular home icon -->
-        <li>
-            <a routerLink="/customer/new" routerLinkActive="active" data-toggle="tab" title="address">    
-                <span class="round-tabs three">
-                    <fa-icon icon="phone"></fa-icon>
-                </span>
-            </a>
-        </li>
- 
-        <!-- circular ok icon -->
-        <li>
-            <a routerLink="/customer/new" routerLinkActive="active" data-toggle="tab" title="completed">
-                <span class="round-tabs four">
-                    <fa-icon icon="person-booth"></fa-icon>
-                </span>
-            </a>
-        </li>
-                
-    </ul>
-    <div class="clearfix"></div>
-</div>
- 
-<!-- Close the Splash screen -->
-<script src="content/js/loading-bars.js"></script>
+<nav class="navbar navbar-dark navbar-expand-md bg-dark">
+    <div class="navbar-collapse collapse" id="navbarResponsiveWizard">
+        <ul class="navbar-nav">
+            <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="/customer/new">
+                    <span>
+                        <fa-icon icon="user"></fa-icon>
+                        <span jhiTranslate="creditApp.customer.detail.title">Customer</span>
+                    </span>
+                </a>
+            </li>
+            <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="/customer/new">
+                    <span>
+                        <fa-icon icon="home"></fa-icon>
+                        <span jhiTranslate="creditApp.address.home.title">Addresses</span>
+                    </span>
+                </a>
+            </li>
+            <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="/customer/new">
+                    <span>
+                        <fa-icon icon="phone"></fa-icon>
+                        <span jhiTranslate="creditApp.telephoneNumber.home.title">Telephones</span>
+                    </span>
+                </a>
+            </li>
+            <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="/customer/new">
+                    <span>
+                        <fa-icon icon="person-booth"></fa-icon>
+                        <span jhiTranslate="creditApp.personalReference.home.title">Personal References</span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
