@@ -32,7 +32,8 @@ const ENTITY_STATES = [...personalReferenceRoute, ...personalReferencePopupRoute
     PersonalReferenceDeletePopupComponent
   ],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [ PersonalReferenceComponent, PersonalReferenceDetailComponent, PersonalReferenceUpdateComponent, PersonalReferenceDeleteDialogComponent, PersonalReferenceDeletePopupComponent ]
 })
 export class CreditAppPersonalReferenceModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {

@@ -5,6 +5,9 @@ import { JhiLanguageHelper } from 'app/core';
 
 import { CreditAppSharedModule } from 'app/shared';
 import { CreditAppCustomerModule } from 'app/entities/customer/customer.module';
+import { CreditAppAddressModule } from 'app/entities/address/address.module';
+import { CreditAppTelephoneNumberModule } from 'app/entities/telephone-number/telephone-number.module';
+import { CreditAppPersonalReferenceModule } from 'app/entities/personal-reference/personal-reference.module';
 import { WizardComponent } from './wizard.component';
 import { wizardRoute  } from './wizard.route';
 import { WizardMainComponent } from './wizard-main/wizard-main.component';
@@ -14,7 +17,7 @@ import { WizardFooterComponent } from './wizard-main/wizard-footer/wizard-footer
 const ENTITY_STATES = [ ...wizardRoute ];
 
 @NgModule({
-  imports: [CreditAppSharedModule, CreditAppCustomerModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [CreditAppSharedModule, CreditAppCustomerModule, CreditAppAddressModule, CreditAppTelephoneNumberModule, CreditAppPersonalReferenceModule, RouterModule.forChild(ENTITY_STATES)],
   declarations: [
     WizardComponent,
     WizardMainComponent,

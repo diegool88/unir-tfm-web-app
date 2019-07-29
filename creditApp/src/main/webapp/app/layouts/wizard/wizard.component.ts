@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { AccountService } from 'app/core';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { WizardService } from "app/layouts/wizard/wizard.service";
 
 @Component({
   selector: 'jhi-wizard',
@@ -20,7 +21,8 @@ export class WizardComponent implements OnInit {
   constructor(
           protected customerService: CustomerService,
           protected accountService: AccountService,
-          protected jhiAlertService: JhiAlertService
+          protected jhiAlertService: JhiAlertService,
+          protected wizardService: WizardService
           ) { }
 
   ngOnInit() {
@@ -35,6 +37,7 @@ export class WizardComponent implements OnInit {
             .subscribe(
               (res: ICustomer[]) => {
                 this.customer = res.length > 0 ? res[0] : new Customer() ;
+                this.wizardService.setCustomer(this.customer);
               },
               (res: HttpErrorResponse) => this.onError(res.message)
             );

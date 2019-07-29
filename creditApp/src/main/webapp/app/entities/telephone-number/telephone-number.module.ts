@@ -32,7 +32,8 @@ const ENTITY_STATES = [...telephoneNumberRoute, ...telephoneNumberPopupRoute];
     TelephoneNumberDeletePopupComponent
   ],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [ TelephoneNumberComponent, TelephoneNumberDetailComponent, TelephoneNumberUpdateComponent, TelephoneNumberDeleteDialogComponent, TelephoneNumberDeletePopupComponent]
 })
 export class CreditAppTelephoneNumberModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {

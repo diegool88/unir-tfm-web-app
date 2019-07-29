@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { WizardService } from "app/layouts/wizard/wizard.service";
 
 @Component({
   selector: 'jhi-wizard-navbar',
@@ -8,19 +9,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class WizardNavbarComponent implements OnInit {
 
-    isLinear = false;
-    firstFormGroup: FormGroup;
-    secondFormGroup: FormGroup;
+  steps: any[];
     
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder, private wizardService: WizardService) { }
 
   ngOnInit() {
-      this.firstFormGroup = this._formBuilder.group({
-          firstCtrl: ['', Validators.required]
-        });
-        this.secondFormGroup = this._formBuilder.group({
-          secondCtrl: ['', Validators.required]
-        });
+      this.steps = this.wizardService.getSteps();
   }
 
 }
