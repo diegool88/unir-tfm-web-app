@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <ul class="navbar-nav">
-  	<li class="nav-item" *ngFor="let step of steps">
+  	<li class="nav-item" *ngFor="let step of steps" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
       <a class="nav-link" [routerLink]="step.path">
       	<span>
             <fa-icon [icon]="step.icon"></fa-icon>

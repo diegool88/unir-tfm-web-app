@@ -28,10 +28,13 @@ export class WizardService {
   }
   
   getSteps(): any[] {
-      return [{ index: 1, label: "creditApp.customer.detail.title", path: ['customer', this.customer.id, 'edit'], icon: "user" },
-              { index: 2, label: "creditApp.address.home.title", path: ['address'], icon: "home" },
-              { index: 3, label: "creditApp.telephoneNumber.home.title", path: ['telephone-number'], icon: "phone" },
-              { index: 4, label: "creditApp.personalReference.home.title", path: ['personal-reference'], icon: "users" }];
+      if(this.steps === undefined || this.steps.length === 0){
+          this.steps = [{ index: 1, label: "creditApp.customer.detail.title", path: ['customer', this.customer.id, 'edit'], icon: "user" },
+                        { index: 2, label: "creditApp.address.home.title", path: ['address'], icon: "home" },
+                        { index: 3, label: "creditApp.telephoneNumber.home.title", path: ['telephone-number'], icon: "phone" },
+                        { index: 4, label: "creditApp.personalReference.home.title", path: ['personal-reference'], icon: "users" }];
+      }
+      return this.steps;
   }
   
   setCustomer(customer: ICustomer){

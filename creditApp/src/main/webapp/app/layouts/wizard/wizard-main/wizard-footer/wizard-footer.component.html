@@ -1,4 +1,8 @@
-<div class=".btn-group-justified" role="group" aria-label="Navigation Buttons">
-  <button jhiTranslate="creditApp.wizard.button.back" type="button" class="btn btn-secondary">Back</button>
-  <button jhiTranslate="creditApp.wizard.button.next" type="button" class="btn btn-secondary">Next</button>
+<div class="row">
+  <div class="col-md-12 text-center">
+	<div class="btn-group btn-group-lg" role="group" aria-label="Navigation Buttons">
+	  <button [disabled]="!enableBackBtn" jhiTranslate="creditApp.wizard.button.back" type="button" class="btn btn-primary" (click)="previousTask()">Back</button>
+	  <button [disabled]="!enableNextBtn" jhiTranslate="creditApp.wizard.button.next" type="button" class="btn btn-primary" (click)="nextTask()">Next</button>
+	</div>
+  </div>
 </div>
