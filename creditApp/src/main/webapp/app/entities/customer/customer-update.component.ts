@@ -9,7 +9,7 @@ import { JhiAlertService } from 'ng-jhipster';
 import { ICustomer, Customer } from 'app/shared/model/customer.model';
 import { CustomerService } from './customer.service';
 import { IUser, UserService, AccountService } from 'app/core';
-import { WizardFooterService } from "app/layouts/wizard/wizard-footer.service";
+import { WizardFooterService } from 'app/layouts/wizard/wizard-footer.service';
 
 @Component({
   selector: 'jhi-customer-update',
@@ -49,9 +49,9 @@ export class CustomerUpdateComponent implements OnInit {
     private fb: FormBuilder,
     private wizardFooterService: WizardFooterService
   ) {
-      this.accountService.identity().then(account => {
-        this.currentAccount = account;
-      });
+    this.accountService.identity().then(account => {
+      this.currentAccount = account;
+    });
   }
 
   ngOnInit() {
@@ -60,16 +60,15 @@ export class CustomerUpdateComponent implements OnInit {
       this.updateForm(customer);
     });
     this.activatedRoute.queryParams.subscribe(queryParams => {
-        if(queryParams && queryParams.mode){
-            this.mode = queryParams.mode;
-            if(this.mode === "wizard"){
-               this.wizardFooterService.setFormValid(false);
-            }
+      if (queryParams && queryParams.mode) {
+        this.mode = queryParams.mode;
+        if (this.mode === 'wizard') {
+          this.wizardFooterService.setFormValid(false);
         }
-        
+      }
     });
     if (this.currentAccount.authorities.includes('ROLE_ADMIN')) {
-        this.userService
+      this.userService
         .query()
         .pipe(
           filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
@@ -77,15 +76,14 @@ export class CustomerUpdateComponent implements OnInit {
         )
         .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
     } else {
-        this.userService
+      this.userService
         .find(this.currentAccount.login)
         .pipe(
           filter((mayBeOk: HttpResponse<IUser>) => mayBeOk.ok),
-          map((response: HttpResponse<IUser>) => response.body) 
+          map((response: HttpResponse<IUser>) => response.body)
         )
         .subscribe((res: IUser) => (this.users = [res]), (res: HttpErrorResponse) => this.onError(res.message));
     }
-    
   }
 
   updateForm(customer: ICustomer) {
@@ -145,7 +143,11 @@ export class CustomerUpdateComponent implements OnInit {
 
   protected onSaveSuccess() {
     this.isSaving = false;
-    this.previousState();
+    if (this.mode !== 'wizard') {
+      this.previousState();
+    } else {
+      this.wizardFooterService.setFormValid(true);
+    }
   }
 
   protected onSaveError() {
