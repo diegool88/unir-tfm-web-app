@@ -9,6 +9,7 @@ import { JhiAlertService } from 'ng-jhipster';
 import { ICustomer, Customer } from 'app/shared/model/customer.model';
 import { CustomerService } from './customer.service';
 import { IUser, UserService, AccountService } from 'app/core';
+import { WizardFooterService } from "app/layouts/wizard/wizard-footer.service";
 
 @Component({
   selector: 'jhi-customer-update',
@@ -21,6 +22,7 @@ export class CustomerUpdateComponent implements OnInit {
   birthDateDp: any;
   clientSinceDp: any;
   currentAccount: any;
+  mode: any;
 
   editForm = this.fb.group({
     id: [],
@@ -44,7 +46,8 @@ export class CustomerUpdateComponent implements OnInit {
     protected userService: UserService,
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private wizardFooterService: WizardFooterService
   ) {
       this.accountService.identity().then(account => {
         this.currentAccount = account;
@@ -55,6 +58,15 @@ export class CustomerUpdateComponent implements OnInit {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ customer }) => {
       this.updateForm(customer);
+    });
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+        if(queryParams && queryParams.mode){
+            this.mode = queryParams.mode;
+            if(this.mode === "wizard"){
+               this.wizardFooterService.setFormValid(false);
+            }
+        }
+        
     });
     if (this.currentAccount.authorities.includes('ROLE_ADMIN')) {
         this.userService

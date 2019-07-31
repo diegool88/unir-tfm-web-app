@@ -6,6 +6,7 @@ import { AccountService } from "app/core";
 import { filter, map } from "rxjs/operators";
 import { HttpResponse, HttpErrorResponse } from "@angular/common/http";
 import { JhiAlertService } from "ng-jhipster";
+import { Observable, Subject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,7 @@ import { JhiAlertService } from "ng-jhipster";
 export class WizardService {
   formArray: FormGroup[];
   customer?: ICustomer = new Customer();
-  
   steps: any[];
-  
   currentStep?: any;
   
   constructor(protected customerService: CustomerService,
@@ -29,7 +28,7 @@ export class WizardService {
   
   getSteps(): any[] {
       if(this.steps === undefined || this.steps.length === 0){
-          this.steps = [{ index: 1, label: "creditApp.customer.detail.title", path: ['customer', this.customer.id, 'edit'], icon: "user" },
+          this.steps = [{ index: 1, label: "creditApp.customer.detail.title", path: ['customer', this.customer.id, 'edit'], queryParams: { mode: 'wizard' }, icon: "user" },
                         { index: 2, label: "creditApp.address.home.title", path: ['address'], icon: "home" },
                         { index: 3, label: "creditApp.telephoneNumber.home.title", path: ['telephone-number'], icon: "phone" },
                         { index: 4, label: "creditApp.personalReference.home.title", path: ['personal-reference'], icon: "users" }];
@@ -42,7 +41,8 @@ export class WizardService {
   }
   
   getCurrentStep(){
-      return this.currentStep;
+      this.getSteps();
+      return this.currentStep !== undefined ? this.currentStep : this.steps[0];
   }
   
   setCurrentStep(step: any){

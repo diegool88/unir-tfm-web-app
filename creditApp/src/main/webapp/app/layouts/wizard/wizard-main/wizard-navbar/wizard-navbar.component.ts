@@ -10,11 +10,17 @@ import { WizardService } from "app/layouts/wizard/wizard.service";
 export class WizardNavbarComponent implements OnInit {
 
   steps: any[];
+  currentStep?: any;
     
   constructor(private _formBuilder: FormBuilder, private wizardService: WizardService) { }
 
   ngOnInit() {
       this.steps = this.wizardService.getSteps();
+      this.currentStep = this.wizardService.getCurrentStep();
+  }
+  
+  updateStep(step: any){
+      this.wizardService.setCurrentStep(step);
   }
 
 }
