@@ -52,6 +52,7 @@
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', 'telephone-number', { outlets: { popup: telephoneNumber.id + '/delete'} }]"
+                                [queryParams]="{ mode: mode }"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
