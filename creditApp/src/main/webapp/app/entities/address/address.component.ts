@@ -10,6 +10,7 @@ import { AccountService } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { AddressService } from './address.service';
+import { WizardFooterService } from "app/layouts/wizard/wizard-footer.service";
 
 @Component({
   selector: 'jhi-address',
@@ -29,6 +30,7 @@ export class AddressComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  mode: any = "";
 
   constructor(
     protected addressService: AddressService,
@@ -37,7 +39,8 @@ export class AddressComponent implements OnInit, OnDestroy {
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected eventManager: JhiEventManager
+    protected eventManager: JhiEventManager,
+    protected wizardFooterService: WizardFooterService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -56,7 +59,22 @@ export class AddressComponent implements OnInit, OnDestroy {
         sort: this.sort()
       })
       .subscribe(
-        (res: HttpResponse<IAddress[]>) => this.paginateAddresses(res.body, res.headers),
+        (res: HttpResponse<IAddress[]>) => { 
+            this.paginateAddresses(res.body, res.headers);
+            //Wizard
+            this.activatedRoute.queryParams.subscribe(queryParams => {
+              if (queryParams && queryParams.mode) {
+                this.mode = queryParams.mode;
+                if (this.mode === 'wizard') {
+                  if(this.addresses.length > 0){
+                      this.wizardFooterService.setFormValid(true);
+                  } else {
+                      this.wizardFooterService.setFormValid(false);
+                  }
+                }
+              }
+            });
+        },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
   }

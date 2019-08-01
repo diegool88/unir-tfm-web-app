@@ -46,8 +46,8 @@ export class CustomerUpdateComponent implements OnInit {
     protected userService: UserService,
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder,
-    private wizardFooterService: WizardFooterService
+    protected fb: FormBuilder,
+    protected wizardFooterService: WizardFooterService
   ) {
     this.accountService.identity().then(account => {
       this.currentAccount = account;

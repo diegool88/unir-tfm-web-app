@@ -45,7 +45,7 @@ export class WizardFooterComponent implements OnInit, OnDestroy {
   
   nextTask(){
       if((this.index + 1) <= this.steps.length - 1){
-          this.router.navigate(this.steps[++this.index].path, { relativeTo: this.route });
+          this.router.navigate(this.steps[++this.index].path, { relativeTo: this.route, queryParams: this.steps[this.index].queryParams });
           this.wizardService.setCurrentStep(this.steps[this.index]);
           this.processButtonAvailability();
       }
@@ -53,7 +53,7 @@ export class WizardFooterComponent implements OnInit, OnDestroy {
   
   previousTask(){
       if((this.index - 1) >= 0){
-          this.router.navigate(this.steps[--this.index].path, { relativeTo: this.route });
+          this.router.navigate(this.steps[--this.index].path, { relativeTo: this.route, queryParams: this.steps[this.index].queryParams });
           this.wizardService.setCurrentStep(this.steps[this.index]);
           this.processButtonAvailability();
       }

@@ -37,21 +37,34 @@ export class AddressDeleteDialogComponent {
 })
 export class AddressDeletePopupComponent implements OnInit, OnDestroy {
   protected ngbModalRef: NgbModalRef;
+  mode: any;
 
   constructor(protected activatedRoute: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {}
 
   ngOnInit() {
+    //Wizard
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+        if (queryParams && queryParams.mode) {
+            this.mode = queryParams.mode;
+        }
+    });
     this.activatedRoute.data.subscribe(({ address }) => {
       setTimeout(() => {
         this.ngbModalRef = this.modalService.open(AddressDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
         this.ngbModalRef.componentInstance.address = address;
         this.ngbModalRef.result.then(
           result => {
-            this.router.navigate(['/address', { outlets: { popup: null } }]);
+            if (this.mode !== 'wizard')
+                this.router.navigate(['/address', { outlets: { popup: null } }]);
+            else
+                this.router.navigate(['/wizard-main/address', { outlets: { popup: null } }]);
             this.ngbModalRef = null;
           },
           reason => {
-            this.router.navigate(['/address', { outlets: { popup: null } }]);
+            if (this.mode !== 'wizard')
+                this.router.navigate(['/address', { outlets: { popup: null } }]);
+            else
+                this.router.navigate(['/wizard-main/address', { outlets: { popup: null } }]);
             this.ngbModalRef = null;
           }
         );
