@@ -11,6 +11,7 @@ import { AccountService } from 'app/core';
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { PersonalReferenceService } from './personal-reference.service';
 import { CustomerService } from './../customer/customer.service';
+import { WizardFooterService } from 'app/layouts/wizard/wizard-footer.service';
 
 @Component({
   selector: 'jhi-personal-reference',
@@ -30,6 +31,7 @@ export class PersonalReferenceComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  mode: any = '';
 
   constructor(
     protected personalReferenceService: PersonalReferenceService,
@@ -38,7 +40,8 @@ export class PersonalReferenceComponent implements OnInit, OnDestroy {
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected eventManager: JhiEventManager
+    protected eventManager: JhiEventManager,
+    protected wizardFooterService: WizardFooterService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -57,7 +60,22 @@ export class PersonalReferenceComponent implements OnInit, OnDestroy {
         sort: this.sort()
       })
       .subscribe(
-        (res: HttpResponse<IPersonalReference[]>) => this.paginatePersonalReferences(res.body, res.headers),
+        (res: HttpResponse<IPersonalReference[]>) => {
+          this.paginatePersonalReferences(res.body, res.headers);
+          //Wizard
+          this.activatedRoute.queryParams.subscribe(queryParams => {
+            if (queryParams && queryParams.mode) {
+              this.mode = queryParams.mode;
+              if (this.mode === 'wizard') {
+                if (this.personalReferences.length > 0) {
+                  this.wizardFooterService.setFormValid(true);
+                } else {
+                  this.wizardFooterService.setFormValid(false);
+                }
+              }
+            }
+          });
+        },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
   }

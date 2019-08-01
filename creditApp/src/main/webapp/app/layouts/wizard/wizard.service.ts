@@ -75,6 +75,10 @@ export class WizardService {
     return this.customer;
   }
 
+  clearSteps() {
+    this.steps = [];
+  }
+
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
   }

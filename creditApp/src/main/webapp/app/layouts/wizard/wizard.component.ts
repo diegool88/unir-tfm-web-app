@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { AccountService } from 'app/core';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-import { WizardService } from "app/layouts/wizard/wizard.service";
+import { WizardService } from 'app/layouts/wizard/wizard.service';
 
 @Component({
   selector: 'jhi-wizard',
@@ -14,39 +14,39 @@ import { WizardService } from "app/layouts/wizard/wizard.service";
   styleUrls: ['./wizard.component.scss']
 })
 export class WizardComponent implements OnInit {
-
   currentAccount: any;
   customer?: ICustomer = new Customer();
 
   constructor(
-          protected customerService: CustomerService,
-          protected accountService: AccountService,
-          protected jhiAlertService: JhiAlertService,
-          protected wizardService: WizardService
-          ) { }
+    protected customerService: CustomerService,
+    protected accountService: AccountService,
+    protected jhiAlertService: JhiAlertService,
+    protected wizardService: WizardService
+  ) {}
 
   ngOnInit() {
-      this.accountService.identity().then(account => {
-        if(account.authorities.includes('ROLE_USER') && !account.authorities.includes('ROLE_ADMIN')){
-            this.customerService
-            .query()
-            .pipe(
-              filter((res: HttpResponse<ICustomer[]>) => res.ok),
-              map((res: HttpResponse<ICustomer[]>) => res.body)
-            )
-            .subscribe(
-              (res: ICustomer[]) => {
-                this.customer = res.length > 0 ? res[0] : new Customer() ;
-                this.wizardService.setCustomer(this.customer);
-              },
-              (res: HttpErrorResponse) => this.onError(res.message)
-            );
-        }
-      });
+    this.wizardService.setCustomer(undefined);
+    this.wizardService.clearSteps();
+    this.accountService.identity().then(account => {
+      if (account.authorities.includes('ROLE_USER') && !account.authorities.includes('ROLE_ADMIN')) {
+        this.customerService
+          .query()
+          .pipe(
+            filter((res: HttpResponse<ICustomer[]>) => res.ok),
+            map((res: HttpResponse<ICustomer[]>) => res.body)
+          )
+          .subscribe(
+            (res: ICustomer[]) => {
+              this.customer = res.length > 0 ? res[0] : new Customer();
+              this.wizardService.setCustomer(this.customer);
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+          );
+      }
+    });
   }
-  
+
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
   }
-
 }
