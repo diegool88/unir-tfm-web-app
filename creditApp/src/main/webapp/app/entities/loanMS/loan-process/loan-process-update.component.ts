@@ -12,6 +12,8 @@ import { IWarranty } from 'app/shared/model/loanMS/warranty.model';
 import { WarrantyService } from 'app/entities/loanMS/warranty';
 import { BankingEntityService } from 'app/entities/bankMS/banking-entity/banking-entity.service';
 import { IBankingEntity } from 'app/shared/model/bankMS/banking-entity.model';
+import { ProductService } from 'app/entities/bankMS/product/product.service';
+import { IProduct } from 'app/shared/model/bankMS/product.model';
 
 @Component({
   selector: 'jhi-loan-process-update',
@@ -23,7 +25,8 @@ export class LoanProcessUpdateComponent implements OnInit {
   warranties: IWarranty[];
   startDateDp: any;
   endDateDp: any;
-  bankingEntities: IBankingEntity[]; 
+  bankingEntities: IBankingEntity[];
+  products: IProduct[];
 
   editForm = this.fb.group({
     id: [],
@@ -48,7 +51,8 @@ export class LoanProcessUpdateComponent implements OnInit {
     protected warrantyService: WarrantyService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    protected bankingEntityService: BankingEntityService
+    protected bankingEntityService: BankingEntityService,
+    protected productService: ProductService
   ) {}
 
   ngOnInit() {

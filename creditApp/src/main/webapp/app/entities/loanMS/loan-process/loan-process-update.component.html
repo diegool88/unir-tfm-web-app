@@ -12,11 +12,23 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingEntityMnemonic" for="field_bankingEntityMnemonic">Banking Entity Mnemonic</label>
                     <select class="form-control" name="bankingEntityMnemonic" formControlName="bankingEntityMnemonic" id="field_bankingEntityMnemonic">
-                        <option *ngFor="let bankingEntity of bankingEntities" [value]="bankingEntity.mnemonic">{{ bankingEntity.name }}</option>
+                        <option *ngFor="let bankingEntity of bankingEntities" [value]="bankingEntity.id">{{ bankingEntity.mnemonic + ' - ' + bankingEntity.name }}</option>
                     </select>
                     <div *ngIf="editForm.get('bankingEntityMnemonic').invalid && (editForm.get('bankingEntityMnemonic').dirty || editForm.get('bankingEntityMnemonic').touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('bankingEntityMnemonic').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingProductMnemonic" for="field_bankingProductMnemonic">Banking Product Mnemonic</label>
+                    <select class="form-control" name="bankingProductMnemonic" formControlName="bankingProductMnemonic" id="field_bankingProductMnemonic">
+                        <option *ngFor="let product of products" [value]="product.id">{{ product.mnemonic + ' - ' + product.name }}</option>
+                    </select>
+                    <div *ngIf="editForm.get('bankingProductMnemonic').invalid && (editForm.get('bankingProductMnemonic').dirty || editForm.get('bankingProductMnemonic').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankingProductMnemonic').errors.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                     </div>
@@ -176,7 +188,7 @@
                         </small>
                     </div>
                 </div-->
-                <div class="form-group">
+                <!--div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingProductMnemonic" for="field_bankingProductMnemonic">Banking Product Mnemonic</label>
                     <input type="text" class="form-control" name="bankingProductMnemonic" id="field_bankingProductMnemonic"
                            formControlName="bankingProductMnemonic"/>
@@ -186,7 +198,7 @@
                         This field is required.
                         </small>
                     </div>
-                </div>
+                </div-->
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.loanProcessStatus" for="field_loanProcessStatus">Loan Process Status</label>
                     <select class="form-control" name="loanProcessStatus" formControlName="loanProcessStatus" id="field_loanProcessStatus">

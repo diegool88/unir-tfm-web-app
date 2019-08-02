@@ -57,6 +57,19 @@ public class ProductService {
         return productRepository.findAll(pageable)
             .map(productMapper::toDto);
     }
+    
+    /**
+     * Get all the products by entity id.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> findAllByBankingEntity(Long bankingEntity, Pageable pageable) {
+        log.debug("Request to get all Products by banking entity");
+        return productRepository.findByBankingEntity(bankingEntity, pageable)
+            .map(productMapper::toDto);
+    }
 
 
     /**
