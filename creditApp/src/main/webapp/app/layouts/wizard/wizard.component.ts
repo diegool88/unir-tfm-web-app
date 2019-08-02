@@ -26,6 +26,7 @@ export class WizardComponent implements OnInit {
 
   ngOnInit() {
     this.wizardService.setCustomer(undefined);
+    this.wizardService.setCurrentStep(undefined);
     this.wizardService.clearSteps();
     this.accountService.identity().then(account => {
       if (account.authorities.includes('ROLE_USER') && !account.authorities.includes('ROLE_ADMIN')) {

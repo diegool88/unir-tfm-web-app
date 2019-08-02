@@ -10,6 +10,8 @@ import { ILoanProcess, LoanProcess } from 'app/shared/model/loanMS/loan-process.
 import { LoanProcessService } from './loan-process.service';
 import { IWarranty } from 'app/shared/model/loanMS/warranty.model';
 import { WarrantyService } from 'app/entities/loanMS/warranty';
+import { BankingEntityService } from 'app/entities/bankMS/banking-entity/banking-entity.service';
+import { IBankingEntity } from 'app/shared/model/bankMS/banking-entity.model';
 
 @Component({
   selector: 'jhi-loan-process-update',
@@ -21,6 +23,7 @@ export class LoanProcessUpdateComponent implements OnInit {
   warranties: IWarranty[];
   startDateDp: any;
   endDateDp: any;
+  bankingEntities: IBankingEntity[]; 
 
   editForm = this.fb.group({
     id: [],
@@ -44,7 +47,8 @@ export class LoanProcessUpdateComponent implements OnInit {
     protected loanProcessService: LoanProcessService,
     protected warrantyService: WarrantyService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    protected bankingEntityService: BankingEntityService
   ) {}
 
   ngOnInit() {
@@ -59,6 +63,16 @@ export class LoanProcessUpdateComponent implements OnInit {
         map((response: HttpResponse<IWarranty[]>) => response.body)
       )
       .subscribe((res: IWarranty[]) => (this.warranties = res), (res: HttpErrorResponse) => this.onError(res.message));
+    this.bankingEntityService
+    .query()
+    .pipe(
+      filter((mayBeOk: HttpResponse<IBankingEntity[]>) => mayBeOk.ok),
+      map((response: HttpResponse<IBankingEntity[]>) => response.body)
+    )
+    .subscribe(
+      (res: IBankingEntity[]) => (this.bankingEntities = res),
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
   }
 
   updateForm(loanProcess: ILoanProcess) {
