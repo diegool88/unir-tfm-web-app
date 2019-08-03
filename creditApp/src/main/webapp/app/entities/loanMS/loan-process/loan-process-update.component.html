@@ -11,7 +11,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingEntityMnemonic" for="field_bankingEntityMnemonic">Banking Entity Mnemonic</label>
-                    <select class="form-control" name="bankingEntityMnemonic" formControlName="bankingEntityMnemonic" id="field_bankingEntityMnemonic">
+                    <select class="form-control" #bankingEntityId name="bankingEntityMnemonic" (change)="queryProductByBankEntity(bankingEntityId.value)" formControlName="bankingEntityMnemonic" id="field_bankingEntityMnemonic">
                         <option *ngFor="let bankingEntity of bankingEntities" [value]="bankingEntity.id">{{ bankingEntity.mnemonic + ' - ' + bankingEntity.name }}</option>
                     </select>
                     <div *ngIf="editForm.get('bankingEntityMnemonic').invalid && (editForm.get('bankingEntityMnemonic').dirty || editForm.get('bankingEntityMnemonic').touched)">

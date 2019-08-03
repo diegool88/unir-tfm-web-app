@@ -162,4 +162,18 @@ export class LoanProcessUpdateComponent implements OnInit {
     }
     return option;
   }
+  
+  queryProductByBankEntity(bankingEntityId: string){
+      this.editForm.patchValue({ bankingProductMnemonic: null });
+      this.productService
+      .queryByBankingEntity(parseInt(bankingEntityId))
+      .pipe(
+        filter((mayBeOk: HttpResponse<IProduct[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IProduct[]>) => response.body)
+      )
+      .subscribe(
+        (res: IProduct[]) => (this.products = res),
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+  }
 }
