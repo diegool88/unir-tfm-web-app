@@ -27,7 +27,8 @@ const ENTITY_STATES = [...loanProcessRoute, ...loanProcessPopupRoute];
   ],
   entryComponents: [LoanProcessComponent, LoanProcessUpdateComponent, LoanProcessDeleteDialogComponent, LoanProcessDeletePopupComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [ LoanProcessUpdateComponent ]
 })
 export class LoanMsLoanProcessModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {

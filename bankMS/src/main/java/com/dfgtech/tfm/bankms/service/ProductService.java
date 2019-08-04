@@ -70,6 +70,19 @@ public class ProductService {
         return productRepository.findByBankingEntity(bankingEntity, pageable)
             .map(productMapper::toDto);
     }
+    
+    /**
+     * Get all the products by entity mnemonic.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> findAllByBankingEntityMnemonic(String bankingEntityMnemonic, Pageable pageable) {
+        log.debug("Request to get all Products by banking entity");
+        return productRepository.findByBankingEntityMnemonic(bankingEntityMnemonic, pageable)
+            .map(productMapper::toDto);
+    }
 
 
     /**

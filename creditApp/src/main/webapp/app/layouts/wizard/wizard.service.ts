@@ -7,6 +7,7 @@ import { filter, map } from 'rxjs/operators';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { JhiAlertService } from 'ng-jhipster';
 import { Observable, Subject } from 'rxjs';
+import { ILoanProcess } from "app/shared/model/loanMS/loan-process.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,21 @@ export class WizardService {
   customer?: ICustomer = new Customer();
   steps: any[];
   currentStep?: any;
+  private newLoanProcess = new Subject<ILoanProcess>();
 
   constructor(
     protected customerService: CustomerService,
     protected accountService: AccountService,
     protected jhiAlertService: JhiAlertService
   ) {}
+  
+  setLoanProcess(newLoanProcess: ILoanProcess) {
+      this.newLoanProcess.next(newLoanProcess);
+  }
+  
+  getLoanProcess(): Observable<ILoanProcess> {
+      return this.newLoanProcess.asObservable();
+  }
 
   addFormGroup(formGroup: FormGroup) {
     this.formArray.push(formGroup);
@@ -51,6 +61,13 @@ export class WizardService {
           path: ['personal-reference'],
           queryParams: { mode: 'wizard' },
           icon: 'users'
+        },
+        {
+          index: 5,
+          label: 'creditApp.loanMsLoanProcess.home.title',
+          path: ['loan-process', 'new'],
+          queryParams: { mode: 'wizard' },
+          icon: 'th-list'
         }
       ];
     }

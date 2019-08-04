@@ -14,6 +14,8 @@ import { BankingEntityService } from 'app/entities/bankMS/banking-entity/banking
 import { IBankingEntity } from 'app/shared/model/bankMS/banking-entity.model';
 import { ProductService } from 'app/entities/bankMS/product/product.service';
 import { IProduct } from 'app/shared/model/bankMS/product.model';
+import { WizardFooterService } from "app/layouts/wizard/wizard-footer.service";
+import { WizardService } from "app/layouts/wizard/wizard.service";
 
 @Component({
   selector: 'jhi-loan-process-update',
@@ -27,16 +29,17 @@ export class LoanProcessUpdateComponent implements OnInit {
   endDateDp: any;
   bankingEntities: IBankingEntity[];
   products: IProduct[];
+  mode: any;
 
   editForm = this.fb.group({
     id: [],
-    name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z0-9s]+')]],
+    name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z0-9\\s]+')]],
     requestedAmount: [null, [Validators.required]],
     givenAmount: [],
     loanPeriod: [null, [Validators.required]],
     startDate: [null, [Validators.required]],
     endDate: [null, [Validators.required]],
-    justification: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(255), Validators.pattern('[A-Za-zs]+')]],
+    justification: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(255), Validators.pattern('[A-Za-z\\s]+')]],
     debtorIdentification: [null, [Validators.required]],
     debtorIdentificationType: [null, [Validators.required]],
     debtorCountry: [null, [Validators.required]],
@@ -52,13 +55,23 @@ export class LoanProcessUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     protected bankingEntityService: BankingEntityService,
-    protected productService: ProductService
+    protected productService: ProductService,
+    protected wizardFooterService: WizardFooterService,
+    protected wizardService: WizardService
   ) {}
 
   ngOnInit() {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ loanProcess }) => {
       this.updateForm(loanProcess);
+    });
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      if (queryParams && queryParams.mode) {
+        this.mode = queryParams.mode;
+        if (this.mode === 'wizard') {
+          this.wizardFooterService.setFormValid(false);
+        }
+      }
     });
     this.warrantyService
       .query()
@@ -80,6 +93,9 @@ export class LoanProcessUpdateComponent implements OnInit {
   }
 
   updateForm(loanProcess: ILoanProcess) {
+    if(loanProcess.bankingEntityMnemonic !== undefined && loanProcess.bankingEntityMnemonic !== null){
+      this.queryProductByBankEntity({ value: loanProcess.bankingEntityMnemonic });
+    }
     this.editForm.patchValue({
       id: loanProcess.id,
       name: loanProcess.name,
@@ -96,6 +112,7 @@ export class LoanProcessUpdateComponent implements OnInit {
       bankingProductMnemonic: loanProcess.bankingProductMnemonic,
       loanProcessStatus: loanProcess.loanProcessStatus
     });
+    
   }
 
   previousState() {
@@ -105,6 +122,11 @@ export class LoanProcessUpdateComponent implements OnInit {
   save() {
     this.isSaving = true;
     const loanProcess = this.createFromForm();
+    if (this.mode === 'wizard'){
+        this.wizardService.setLoanProcess(loanProcess);
+        this.wizardFooterService.setFormValid(true);
+        return;
+    }
     if (loanProcess.id !== undefined) {
       this.subscribeToSaveResponse(this.loanProcessService.update(loanProcess));
     } else {
@@ -138,7 +160,11 @@ export class LoanProcessUpdateComponent implements OnInit {
 
   protected onSaveSuccess() {
     this.isSaving = false;
-    this.previousState();
+    if (this.mode !== 'wizard') {
+      this.previousState();
+    } else {
+      this.wizardFooterService.setFormValid(true);
+    }
   }
 
   protected onSaveError() {
@@ -163,10 +189,10 @@ export class LoanProcessUpdateComponent implements OnInit {
     return option;
   }
   
-  queryProductByBankEntity(bankingEntityId: string){
+  queryProductByBankEntity(target: any){
       this.editForm.patchValue({ bankingProductMnemonic: null });
       this.productService
-      .queryByBankingEntity(parseInt(bankingEntityId))
+      .queryByBankingEntityMnemonic(target.value)
       .pipe(
         filter((mayBeOk: HttpResponse<IProduct[]>) => mayBeOk.ok),
         map((response: HttpResponse<IProduct[]>) => response.body)
@@ -175,5 +201,13 @@ export class LoanProcessUpdateComponent implements OnInit {
         (res: IProduct[]) => (this.products = res),
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+  }
+  
+  trackProductById(index: number, item: IProduct) {
+    return item.mnemonic;
+  }
+  
+  trackBankingEntityById(index: number, item: IBankingEntity) {
+    return item.mnemonic;
   }
 }

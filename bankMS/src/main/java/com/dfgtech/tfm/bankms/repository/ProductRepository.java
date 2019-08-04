@@ -17,4 +17,7 @@ import com.dfgtech.tfm.bankms.domain.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 	@Query("SELECT p FROM Product p INNER JOIN p.bankingEntity b WHERE b.id = ?1")
 	Page<Product> findByBankingEntity(Long bankingEntity, Pageable pageable);
+	
+	@Query("SELECT p FROM Product p INNER JOIN p.bankingEntity b WHERE b.mnemonic = ?1")
+	Page<Product> findByBankingEntityMnemonic(String bankingEntityMnemonic, Pageable pageable);
 }

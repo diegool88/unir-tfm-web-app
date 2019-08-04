@@ -13,11 +13,19 @@ import { wizardRoute  } from './wizard.route';
 import { WizardMainComponent } from './wizard-main/wizard-main.component';
 import { WizardNavbarComponent } from './wizard-main/wizard-navbar/wizard-navbar.component';
 import { WizardFooterComponent } from './wizard-main/wizard-footer/wizard-footer.component';
+import { LoanMsLoanProcessModule } from "app/entities/loanMS/loan-process/loan-process.module";
 
 const ENTITY_STATES = [ ...wizardRoute ];
 
 @NgModule({
-  imports: [CreditAppSharedModule, CreditAppCustomerModule, CreditAppAddressModule, CreditAppTelephoneNumberModule, CreditAppPersonalReferenceModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [CreditAppSharedModule,
+            CreditAppCustomerModule,
+            CreditAppAddressModule,
+            CreditAppTelephoneNumberModule,
+            CreditAppPersonalReferenceModule,
+            LoanMsLoanProcessModule,
+            RouterModule.forChild(ENTITY_STATES)
+  ],
   declarations: [
     WizardComponent,
     WizardMainComponent,

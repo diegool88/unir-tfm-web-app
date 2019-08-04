@@ -11,8 +11,9 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingEntityMnemonic" for="field_bankingEntityMnemonic">Banking Entity Mnemonic</label>
-                    <select class="form-control" #bankingEntityId name="bankingEntityMnemonic" (change)="queryProductByBankEntity(bankingEntityId.value)" formControlName="bankingEntityMnemonic" id="field_bankingEntityMnemonic">
-                        <option *ngFor="let bankingEntity of bankingEntities" [value]="bankingEntity.id">{{ bankingEntity.mnemonic + ' - ' + bankingEntity.name }}</option>
+                    <select class="form-control" #bankingEntityId name="bankingEntityMnemonic" (change)="queryProductByBankEntity($event.target)" formControlName="bankingEntityMnemonic" id="field_bankingEntityMnemonic">
+                    	<option *ngIf="!editForm.get('bankingEntityMnemonic').value" [value]="null" selected></option>
+                        <option *ngFor="let bankingEntity of bankingEntities; trackBy: trackBankingEntityById" [value]="bankingEntity.mnemonic">{{ bankingEntity.mnemonic + ' - ' + bankingEntity.name }}</option>
                     </select>
                     <div *ngIf="editForm.get('bankingEntityMnemonic').invalid && (editForm.get('bankingEntityMnemonic').dirty || editForm.get('bankingEntityMnemonic').touched)">
                         <small class="form-text text-danger"
@@ -24,7 +25,8 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingProductMnemonic" for="field_bankingProductMnemonic">Banking Product Mnemonic</label>
                     <select class="form-control" name="bankingProductMnemonic" formControlName="bankingProductMnemonic" id="field_bankingProductMnemonic">
-                        <option *ngFor="let product of products" [value]="product.id">{{ product.mnemonic + ' - ' + product.name }}</option>
+                    	<option *ngIf="!editForm.get('bankingProductMnemonic').value" [value]="null" selected></option>
+                        <option *ngFor="let product of products; trackBy: trackProductById" [value]="product.mnemonic">{{ product.mnemonic + ' - ' + product.name }}</option>
                     </select>
                     <div *ngIf="editForm.get('bankingProductMnemonic').invalid && (editForm.get('bankingProductMnemonic').dirty || editForm.get('bankingProductMnemonic').touched)">
                         <small class="form-text text-danger"
@@ -33,7 +35,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.name" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                            formControlName="name"/>
@@ -71,7 +73,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.givenAmount" for="field_givenAmount">Given Amount</label>
                     <input type="number" class="form-control" name="givenAmount" id="field_givenAmount"
                            formControlName="givenAmount"/>
@@ -106,7 +108,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.endDate" for="field_endDate">End Date</label>
                     <div class="input-group">
                         <input id="field_endDate" type="text" class="form-control" name="endDate" ngbDatepicker  #endDateDp="ngbDatepicker" formControlName="endDate"/>
@@ -144,7 +146,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.debtorIdentification" for="field_debtorIdentification">Debtor Identification</label>
                     <input type="text" class="form-control" name="debtorIdentification" id="field_debtorIdentification"
                            formControlName="debtorIdentification"/>
@@ -155,7 +157,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.debtorIdentificationType" for="field_debtorIdentificationType">Debtor Identification Type</label>
                     <input type="text" class="form-control" name="debtorIdentificationType" id="field_debtorIdentificationType"
                            formControlName="debtorIdentificationType"/>
@@ -166,7 +168,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.debtorCountry" for="field_debtorCountry">Debtor Country</label>
                     <input type="text" class="form-control" name="debtorCountry" id="field_debtorCountry"
                            formControlName="debtorCountry"/>
@@ -199,7 +201,7 @@
                         </small>
                     </div>
                 </div-->
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.loanProcessStatus" for="field_loanProcessStatus">Loan Process Status</label>
                     <select class="form-control" name="loanProcessStatus" formControlName="loanProcessStatus" id="field_loanProcessStatus">
                         <option value="APPROVED">{{'creditApp.LoanProcessStatus.APPROVED' | translate}}</option>
@@ -209,7 +211,7 @@
 
             </div>
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                <button *ngIf="mode !== 'wizard'" type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">

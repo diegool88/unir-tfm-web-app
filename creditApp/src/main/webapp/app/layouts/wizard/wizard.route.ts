@@ -26,12 +26,15 @@ import { PersonalReferenceService, PersonalReferenceComponent } from "app/entiti
 import { ITelephoneNumber, TelephoneNumber } from "app/shared/model/telephone-number.model";
 import { TelephoneNumberService, TelephoneNumberComponent } from "app/entities/telephone-number";
 import { JhiResolvePagingParams } from "ng-jhipster";
+import { LoanProcessUpdateComponent, LoanProcessService } from "app/entities/loanMS/loan-process";
+import { ILoanProcess, LoanProcess } from 'app/shared/model/loanMS/loan-process.model';
 
 
 @Injectable({ providedIn: 'root' })
 export class WizardCustomerResolve implements Resolve<any> {
   constructor(private serviceCustomer: CustomerService,
-          private serviceAddress: AddressService) {}
+          private serviceAddress: AddressService,
+          private loanProcessService: LoanProcessService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     const id = route.params['id'] ? route.params['id'] : null;
@@ -44,6 +47,14 @@ export class WizardCustomerResolve implements Resolve<any> {
             
         }
         return of(new Customer());
+    } else if (route.component === LoanProcessUpdateComponent) {
+        if (id) {
+            return this.loanProcessService.find(id).pipe(
+              filter((response: HttpResponse<LoanProcess>) => response.ok),
+              map((loanProcess: HttpResponse<LoanProcess>) => loanProcess.body)
+            );
+        }
+        return of(new LoanProcess());
     } else if (route.component === AddressComponent 
             || route.component === AddressDetailComponent
             || route.component === AddressUpdateComponent
@@ -132,6 +143,13 @@ export const wizardRoute: Routes = [
             pageTitle: 'creditApp.personalReference.home.title'
           },
           canActivate: [UserRouteAccessService]
+      },
+      {
+          path: 'loan-process/new',
+          component: LoanProcessUpdateComponent,
+          resolve: {
+            loanProcess: WizardCustomerResolve
+          }
       }
     ],
     data: {
