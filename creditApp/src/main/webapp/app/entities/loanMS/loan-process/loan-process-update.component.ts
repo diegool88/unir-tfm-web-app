@@ -16,6 +16,7 @@ import { ProductService } from 'app/entities/bankMS/product/product.service';
 import { IProduct } from 'app/shared/model/bankMS/product.model';
 import { WizardFooterService } from "app/layouts/wizard/wizard-footer.service";
 import { WizardService } from "app/layouts/wizard/wizard.service";
+import { ICustomer } from "app/shared/model/customer.model";
 
 @Component({
   selector: 'jhi-loan-process-update',
@@ -30,6 +31,7 @@ export class LoanProcessUpdateComponent implements OnInit {
   bankingEntities: IBankingEntity[];
   products: IProduct[];
   mode: any;
+  customer?: ICustomer;
 
   editForm = this.fb.group({
     id: [],
@@ -70,6 +72,8 @@ export class LoanProcessUpdateComponent implements OnInit {
         this.mode = queryParams.mode;
         if (this.mode === 'wizard') {
           this.wizardFooterService.setFormValid(false);
+          this.customer = this.wizardService.getCustomer();
+          this.initializeCustomerInformation();
         }
       }
     });
@@ -189,7 +193,7 @@ export class LoanProcessUpdateComponent implements OnInit {
     return option;
   }
   
-  queryProductByBankEntity(target: any){
+  protected queryProductByBankEntity(target: any){
       this.editForm.patchValue({ bankingProductMnemonic: null });
       this.productService
       .queryByBankingEntityMnemonic(target.value)
@@ -201,6 +205,34 @@ export class LoanProcessUpdateComponent implements OnInit {
         (res: IProduct[]) => (this.products = res),
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+  }
+  
+  protected initializeCustomerInformation(){
+      this.editForm.patchValue({
+        name: 'New Loan P C ' + this.customer.identificationNumber,
+        debtorIdentification: this.customer.identificationNumber,
+        debtorIdentificationType: this.customer.identificationType,
+        debtorCountry: this.customer.country
+      });
+  }
+  
+  changeEndDate(event: any){
+     if(this.editForm.get(['loanPeriod']).value !== undefined 
+             && this.editForm.get(['loanPeriod']).value !== null
+             && typeof event === 'object' && event instanceof moment){
+         const loanPeriodYears = parseInt(this.editForm.get(['loanPeriod']).value);
+         const startDate = event.toDate();
+         const endDate = new Date(startDate.getFullYear() + loanPeriodYears, startDate.getMonth(), startDate.getDate());
+         this.editForm.patchValue({ endDate: moment(endDate) });
+         console.log(endDate);
+     } else if (this.editForm.get(['startDate']).value !== undefined 
+             && this.editForm.get(['startDate']).value !== null
+             && typeof event === 'number') {
+         const loanPeriodYears = event;
+         const startDate = this.editForm.get(['startDate']).value.toDate();
+         const endDate = new Date(startDate.getFullYear() + loanPeriodYears, startDate.getMonth(), startDate.getDate());
+         this.editForm.patchValue({ endDate: moment(endDate) });
+     }
   }
   
   trackProductById(index: number, item: IProduct) {
