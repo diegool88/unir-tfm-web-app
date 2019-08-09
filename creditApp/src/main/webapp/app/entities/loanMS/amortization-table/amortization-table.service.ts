@@ -48,6 +48,12 @@ export class AmortizationTableService {
   delete(id: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
+  
+  calculate(requestedAmount: number, annualInterestRate: number, startDate: any, loanPeriod: number): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<IAmortizationTable[]>(`${this.resourceUrl}/simulate/${requestedAmount}/${annualInterestRate}/${startDate}/${loanPeriod}`, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
 
   protected convertDateFromClient(amortizationTable: IAmortizationTable): IAmortizationTable {
     const copy: IAmortizationTable = Object.assign({}, amortizationTable, {

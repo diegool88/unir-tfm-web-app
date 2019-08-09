@@ -13,10 +13,12 @@ import { WarrantyService } from 'app/entities/loanMS/warranty';
 import { BankingEntityService } from 'app/entities/bankMS/banking-entity/banking-entity.service';
 import { IBankingEntity } from 'app/shared/model/bankMS/banking-entity.model';
 import { ProductService } from 'app/entities/bankMS/product/product.service';
-import { IProduct } from 'app/shared/model/bankMS/product.model';
+import { IProduct, Product } from 'app/shared/model/bankMS/product.model';
 import { WizardFooterService } from "app/layouts/wizard/wizard-footer.service";
 import { WizardService } from "app/layouts/wizard/wizard.service";
 import { ICustomer } from "app/shared/model/customer.model";
+import { IAmortizationTable } from "app/shared/model/loanMS/amortization-table.model";
+import { AmortizationTableService }  from "app/entities/loanMS/amortization-table";
 
 @Component({
   selector: 'jhi-loan-process-update',
@@ -30,8 +32,10 @@ export class LoanProcessUpdateComponent implements OnInit {
   endDateDp: any;
   bankingEntities: IBankingEntity[];
   products: IProduct[];
+  selectedProduct?: IProduct;
   mode: any;
   customer?: ICustomer;
+  amortizationSchedule?: IAmortizationTable[];
 
   editForm = this.fb.group({
     id: [],
@@ -59,7 +63,8 @@ export class LoanProcessUpdateComponent implements OnInit {
     protected bankingEntityService: BankingEntityService,
     protected productService: ProductService,
     protected wizardFooterService: WizardFooterService,
-    protected wizardService: WizardService
+    protected wizardService: WizardService,
+    protected amortizationTableService: AmortizationTableService
   ) {}
 
   ngOnInit() {
@@ -233,6 +238,23 @@ export class LoanProcessUpdateComponent implements OnInit {
          const endDate = new Date(startDate.getFullYear() + loanPeriodYears, startDate.getMonth(), startDate.getDate());
          this.editForm.patchValue({ endDate: moment(endDate) });
      }
+  }
+  
+  onProductChange(target: any){
+      let productsFiltered = this.products.filter((product: IProduct) => { return product.mnemonic === target.value; });
+      this.selectedProduct = productsFiltered.length > 0 ? productsFiltered[0] : new Product(); 
+  }
+  
+  calculateAmortizationSchedule(event:any){
+      this.amortizationTableService.calculate(this.editForm.get(['requestedAmount']).value, this.selectedProduct.interestRate, this.editForm.get(['startDate']).value.format('YYYY-MM-DD'), this.editForm.get(['loanPeriod']).value)
+      .pipe(
+         filter((mayBeOk: HttpResponse<IAmortizationTable[]>) => mayBeOk.ok),
+         map((response: HttpResponse<IAmortizationTable[]>) => response.body)
+      )
+      .subscribe(
+         (res: IAmortizationTable[]) => (this.amortizationSchedule = res),
+         (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
   
   trackProductById(index: number, item: IProduct) {

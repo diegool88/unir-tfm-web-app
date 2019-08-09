@@ -1,5 +1,6 @@
 package com.dfgtech.tfm.loanms.web.rest;
 
+import com.dfgtech.tfm.loanms.business.LoanProcessUtils;
 import com.dfgtech.tfm.loanms.service.AmortizationTableService;
 import com.dfgtech.tfm.loanms.web.rest.errors.BadRequestAlertException;
 import com.dfgtech.tfm.loanms.service.dto.AmortizationTableDTO;
@@ -9,13 +10,14 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,6 +90,17 @@ public class AmortizationTableResource {
     public List<AmortizationTableDTO> getAllAmortizationTables() {
         log.debug("REST request to get all AmortizationTables");
         return amortizationTableService.findAll();
+    }
+    
+    /**
+     * {@code GET  /amortization-tables} : get all the amortizationTables.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of amortizationTables in body.
+     */
+    @GetMapping("/amortization-tables/simulate/{requestedAmount}/{annualInterestRate}/{startDate}/{loanPeriod}")
+    public List<AmortizationTableDTO> calculateAmortizationSchedule(@PathVariable Double requestedAmount, @PathVariable Double annualInterestRate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @PathVariable Long loanPeriod) {
+        log.debug("REST request to calculate amortization schedule table");
+        return LoanProcessUtils.calculateAmortizationSchedule(requestedAmount, annualInterestRate, startDate, loanPeriod);
     }
 
     /**

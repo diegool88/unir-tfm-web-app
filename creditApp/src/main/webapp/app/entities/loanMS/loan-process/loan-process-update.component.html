@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingProductMnemonic" for="field_bankingProductMnemonic">Banking Product Mnemonic</label>
-                    <select class="form-control" name="bankingProductMnemonic" formControlName="bankingProductMnemonic" id="field_bankingProductMnemonic">
+                    <select class="form-control" name="bankingProductMnemonic" (change)="onProductChange($event.target)" formControlName="bankingProductMnemonic" id="field_bankingProductMnemonic">
                     	<option *ngIf="!editForm.get('bankingProductMnemonic').value" [value]="null" selected></option>
                         <option *ngFor="let product of products; trackBy: trackProductById" [value]="product.mnemonic">{{ product.mnemonic + ' - ' + product.name }}</option>
                     </select>
@@ -208,7 +208,27 @@
                         <option value="DENIED">{{'creditApp.LoanProcessStatus.DENIED' | translate}}</option>
                     </select>
                 </div>
-
+                <div class="table-responsive" *ngIf="amortizationSchedule?.length > 0">
+			        <table class="table table-striped">
+			            <thead>
+			            <tr>
+			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.order">Order</span></th>
+			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.dueDate">Due Date</span></th>
+			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.amount">Amount</span></th>
+			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.interest">Interest</span></th>
+			            <th></th>
+			            </tr>
+			            </thead>
+			            <tbody>
+			            <tr *ngFor="let amortizationTable of amortizationSchedule">
+			                <td>{{amortizationTable.order}}</td>
+			                <td>{{amortizationTable.dueDate | date:'mediumDate'}}</td>
+			                <td>{{amortizationTable.amount}}</td>
+			                <td>{{amortizationTable.interest}}</td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </div>
             </div>
             <div>
                 <button *ngIf="mode !== 'wizard'" type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
@@ -216,6 +236,9 @@
                 </button>
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+                <button type="button" id="calculate" [disabled]="editForm.invalid || selectedProduct === undefined" class="btn btn-primary" (click)="calculateAmortizationSchedule($event)">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span >Calculate</span>
                 </button>
             </div>
         </form>
