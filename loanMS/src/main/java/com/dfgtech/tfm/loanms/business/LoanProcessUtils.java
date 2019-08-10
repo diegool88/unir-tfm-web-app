@@ -10,25 +10,23 @@ public class LoanProcessUtils {
 	
 	public static List<AmortizationTableDTO> calculateAmortizationSchedule(Double requestedAmount, Double annualInterestRate, LocalDate startDate, Long loanPeriod){
 		List<AmortizationTableDTO> amortizationSchedule = new ArrayList<AmortizationTableDTO>();
-		//Test Data
-		AmortizationTableDTO dto1 = new AmortizationTableDTO();
-		dto1.setAmount(12345.00);
-		dto1.setDueDate(LocalDate.now());
-		dto1.setInterest(123.45);
-		dto1.setOrder(1);
-		amortizationSchedule.add(dto1);
-		AmortizationTableDTO dto2 = new AmortizationTableDTO();
-		dto2.setAmount(112233.00);
-		dto2.setDueDate(LocalDate.now());
-		dto2.setInterest(345.45);
-		dto2.setOrder(2);
-		amortizationSchedule.add(dto2);
-		AmortizationTableDTO dto3 = new AmortizationTableDTO();
-		dto3.setAmount(11223355.00);
-		dto3.setDueDate(LocalDate.now());
-		dto3.setInterest(567.45);
-		dto3.setOrder(3);
-		amortizationSchedule.add(dto3);
+		Double principal = requestedAmount; 
+		Long length = loanPeriod * 12; 
+		Double interest = annualInterestRate;
+		Double monthlyInterest = interest / (12 * 100); 
+		Double monthlyPayment = principal * ( monthlyInterest / ( 1 - Math.pow((1 + monthlyInterest), (length * -1))));
+
+		for (int x = 1; x <= length; x++) { 
+			AmortizationTableDTO dto = new AmortizationTableDTO();
+			Double amountInterest = principal * monthlyInterest; 
+			Double amountPrincipal = monthlyPayment - amountInterest;
+			principal = principal - amountPrincipal;
+			dto.setAmount(amountPrincipal);
+			dto.setDueDate(startDate.plusMonths(x-1));
+			dto.setInterest(amountInterest);
+			dto.setOrder(x);
+			amortizationSchedule.add(dto);
+		}
 		
 		return amortizationSchedule;
 	}

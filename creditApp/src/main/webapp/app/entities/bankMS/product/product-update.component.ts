@@ -33,7 +33,7 @@ export class ProductUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     mnemonic: [null, [Validators.required, Validators.maxLength(10), Validators.pattern('[A-Z0-9]+')]],
-    name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z0-9s]+')]],
+    name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z0-9\\s]+')]],
     description: [],
     category: [null, [Validators.required]],
     startDate: [null, [Validators.required]],

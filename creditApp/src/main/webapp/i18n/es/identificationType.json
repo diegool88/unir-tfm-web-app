@@ -2,8 +2,8 @@
   "creditApp": {
     "IdentificationType": {
       "null": "",
-      "ID": "ID",
-      "PASSPORT": "PASSPORT"
+      "ID": "Cédula",
+      "PASSPORT": "Pasaporte"
     }
   }
 }

@@ -146,6 +146,11 @@
                         </small>
                     </div>
                 </div>
+                <div *ngIf="mode === 'wizard'" class="btn-group float-right mt-2">
+                	<button type="button" id="calculate" [disabled]="editForm.invalid || selectedProduct === undefined" class="btn btn-primary" (click)="calculateAmortizationSchedule($event)">
+	                    <fa-icon [icon]="'calculator'"></fa-icon>&nbsp;<span  jhiTranslate="creditApp.loanMsLoanProcess.home.calculate">Calculate Amortization Schedule</span>
+	                </button>                
+                </div>
                 <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.debtorIdentification" for="field_debtorIdentification">Debtor Identification</label>
                     <input type="text" class="form-control" name="debtorIdentification" id="field_debtorIdentification"
@@ -208,6 +213,8 @@
                         <option value="DENIED">{{'creditApp.LoanProcessStatus.DENIED' | translate}}</option>
                     </select>
                 </div>
+                <br><br>
+                <h2 *ngIf="amortizationSchedule?.length > 0" id="jhi-amortization-schedule-heading" jhiTranslate="creditApp.loanMsAmortizationTable.detail.title">Amortization Schedule</h2>
                 <div class="table-responsive" *ngIf="amortizationSchedule?.length > 0">
 			        <table class="table table-striped">
 			            <thead>
@@ -223,10 +230,18 @@
 			            <tr *ngFor="let amortizationTable of amortizationSchedule">
 			                <td>{{amortizationTable.order}}</td>
 			                <td>{{amortizationTable.dueDate | date:'mediumDate'}}</td>
-			                <td>{{amortizationTable.amount}}</td>
-			                <td>{{amortizationTable.interest}}</td>
+			                <td>{{amortizationTable.amount | currency }}</td>
+			                <td>{{amortizationTable.interest | currency }}</td>
 			            </tr>
 			            </tbody>
+			            <tfoot>
+						  <tr>
+						    <td></td>
+						    <td><span jhiTranslate="creditApp.loanMsAmortizationTable.totals">Totals</span></td>
+						    <td>{{ getAmortizationScheduleAmountTotal() | currency }}</td>
+						    <td>{{ getAmortizationScheduleInterestTotal() | currency }}</td>
+						  </tr>
+						</tfoot>
 			        </table>
 			    </div>
             </div>
@@ -234,11 +249,8 @@
                 <button *ngIf="mode !== 'wizard'" type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving || amortizationSchedule?.length === 0" class="btn btn-primary">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                </button>
-                <button type="button" id="calculate" [disabled]="editForm.invalid || selectedProduct === undefined" class="btn btn-primary" (click)="calculateAmortizationSchedule($event)">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span >Calculate</span>
                 </button>
             </div>
         </form>

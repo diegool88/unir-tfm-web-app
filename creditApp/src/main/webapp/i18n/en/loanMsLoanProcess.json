@@ -5,7 +5,8 @@
         "title": "Loan Processes",
         "createLabel": "Create a new Loan Process",
         "createOrEditLabel": "Create or edit a Loan Process",
-        "notFound": "No Loan Process found"
+        "notFound": "No Loan Process found",
+		"calculate": "Calculate Amortization Schedule"
       },
       "delete": {
         "question": "Are you sure you want to delete Loan Process {{ id }}?"

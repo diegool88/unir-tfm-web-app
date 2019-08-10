@@ -257,6 +257,14 @@ export class LoanProcessUpdateComponent implements OnInit {
       );
   }
   
+  getAmortizationScheduleAmountTotal(){
+      return this.amortizationSchedule.map((item) => { return item.amount; }).reduce((sum, curr) => sum + curr );
+  }
+  
+  getAmortizationScheduleInterestTotal(){
+      return this.amortizationSchedule.map((item) => { return item.interest; }).reduce((sum, curr) => sum + curr );
+  }
+  
   trackProductById(index: number, item: IProduct) {
     return item.mnemonic;
   }
