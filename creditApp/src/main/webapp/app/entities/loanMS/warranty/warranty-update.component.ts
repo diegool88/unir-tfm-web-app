@@ -1,14 +1,16 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IWarranty, Warranty } from 'app/shared/model/loanMS/warranty.model';
 import { WarrantyService } from './warranty.service';
 import { ILoanProcess } from 'app/shared/model/loanMS/loan-process.model';
 import { LoanProcessService } from 'app/entities/loanMS/loan-process';
+import { ICustomer } from "app/shared/model/customer.model";
+import { WizardService } from "app/layouts/wizard/wizard.service";
 
 @Component({
   selector: 'jhi-warranty-update',
@@ -18,10 +20,12 @@ export class WarrantyUpdateComponent implements OnInit {
   isSaving: boolean;
 
   loanprocesses: ILoanProcess[];
+  mode: any;
+  customer?: ICustomer;
 
   editForm = this.fb.group({
     id: [],
-    name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-zs]+')]],
+    name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z\\s]+')]],
     description: [],
     value: [null, [Validators.required]],
     document: [],
@@ -39,13 +43,24 @@ export class WarrantyUpdateComponent implements OnInit {
     protected loanProcessService: LoanProcessService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    protected wizardService: WizardService
   ) {}
 
   ngOnInit() {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ warranty }) => {
       this.updateForm(warranty);
+    });
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      if (queryParams && queryParams.mode) {
+        this.mode = queryParams.mode;
+        if (this.mode === 'wizard') {
+          this.customer = this.wizardService.getCustomer();
+          this.loanProcessControl.setValidators(null);
+          this.initializeCustomerInformation();
+        }
+      }
     });
     this.loanProcessService
       .query()
@@ -120,6 +135,11 @@ export class WarrantyUpdateComponent implements OnInit {
   save() {
     this.isSaving = true;
     const warranty = this.createFromForm();
+    if (this.mode === 'wizard'){
+        this.wizardService.addWarranties(warranty);
+        this.onSaveSuccess();
+        return;
+    }
     if (warranty.id !== undefined) {
       this.subscribeToSaveResponse(this.warrantyService.update(warranty));
     } else {
@@ -172,5 +192,17 @@ export class WarrantyUpdateComponent implements OnInit {
       }
     }
     return option;
+  }
+  
+  protected initializeCustomerInformation(){
+      this.editForm.patchValue({
+        debtorIdentification: this.customer.identificationNumber,
+        debtorIdentificationType: this.customer.identificationType,
+        debtorCountry: this.customer.country
+      });
+  }
+  
+  get loanProcessControl(){
+      return this.editForm.get('loanProcesses') as FormControl;
   }
 }

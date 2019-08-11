@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { JhiAlertService } from 'ng-jhipster';
@@ -25,6 +25,7 @@ import { AmortizationTableService }  from "app/entities/loanMS/amortization-tabl
   templateUrl: './loan-process-update.component.html'
 })
 export class LoanProcessUpdateComponent implements OnInit {
+  
   isSaving: boolean;
 
   warranties: IWarranty[];
@@ -78,7 +79,9 @@ export class LoanProcessUpdateComponent implements OnInit {
         if (this.mode === 'wizard') {
           this.wizardFooterService.setFormValid(false);
           this.customer = this.wizardService.getCustomer();
+          this.updateForm(this.wizardService.getLoanProcess());
           this.initializeCustomerInformation();
+          this.amortizationSchedule = this.wizardService.getAmortizationSchedule();
         }
       }
     });
@@ -133,6 +136,7 @@ export class LoanProcessUpdateComponent implements OnInit {
     const loanProcess = this.createFromForm();
     if (this.mode === 'wizard'){
         this.wizardService.setLoanProcess(loanProcess);
+        this.wizardService.setAmortizationSchedule(this.amortizationSchedule);
         this.wizardFooterService.setFormValid(true);
         return;
     }
@@ -242,7 +246,8 @@ export class LoanProcessUpdateComponent implements OnInit {
   
   onProductChange(target: any){
       let productsFiltered = this.products.filter((product: IProduct) => { return product.mnemonic === target.value; });
-      this.selectedProduct = productsFiltered.length > 0 ? productsFiltered[0] : new Product(); 
+      this.selectedProduct = productsFiltered.length > 0 ? productsFiltered[0] : new Product();
+      this.editForm.patchValue({ bankingProductMnemonic: this.selectedProduct.mnemonic });
   }
   
   calculateAmortizationSchedule(event:any){

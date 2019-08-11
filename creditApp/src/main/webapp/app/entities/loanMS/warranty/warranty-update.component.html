@@ -69,7 +69,7 @@
                     <input type="hidden" class="form-control" name="documentContentType" id="field_documentContentType"
                            formControlName="documentContentType" />
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsWarranty.debtorIdentification" for="field_debtorIdentification">Debtor Identification</label>
                     <input type="text" class="form-control" name="debtorIdentification" id="field_debtorIdentification"
                            formControlName="debtorIdentification"/>
@@ -80,7 +80,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsWarranty.debtorIdentificationType" for="field_debtorIdentificationType">Debtor Identification Type</label>
                     <input type="text" class="form-control" name="debtorIdentificationType" id="field_debtorIdentificationType"
                            formControlName="debtorIdentificationType"/>
@@ -91,7 +91,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsWarranty.debtorCountry" for="field_debtorCountry">Debtor Country</label>
                     <input type="text" class="form-control" name="debtorCountry" id="field_debtorCountry"
                            formControlName="debtorCountry"/>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label jhiTranslate="creditApp.loanMsWarranty.loanProcess" for="field_loanProcesses">Loan Process</label>
                     <select class="form-control" id="field_loanProcesses" multiple name="loanProcesses" formControlName="loanProcesses">
                         <option [ngValue]="getSelected(editForm.get('loanProcesses').value, loanProcessOption)" *ngFor="let loanProcessOption of loanprocesses; trackBy: trackLoanProcessById">{{loanProcessOption.id}}</option>

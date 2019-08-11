@@ -28,13 +28,16 @@ import { TelephoneNumberService, TelephoneNumberComponent } from "app/entities/t
 import { JhiResolvePagingParams } from "ng-jhipster";
 import { LoanProcessUpdateComponent, LoanProcessService } from "app/entities/loanMS/loan-process";
 import { ILoanProcess, LoanProcess } from 'app/shared/model/loanMS/loan-process.model';
+import { WarrantyComponent, WarrantyUpdateComponent, WarrantyService } from "app/entities/loanMS/warranty";
+import { Warranty } from "app/shared/model/loanMS/warranty.model";
 
 
 @Injectable({ providedIn: 'root' })
 export class WizardCustomerResolve implements Resolve<any> {
   constructor(private serviceCustomer: CustomerService,
           private serviceAddress: AddressService,
-          private loanProcessService: LoanProcessService) {}
+          private loanProcessService: LoanProcessService,
+          private warratyService: WarrantyService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     const id = route.params['id'] ? route.params['id'] : null;
@@ -55,6 +58,14 @@ export class WizardCustomerResolve implements Resolve<any> {
             );
         }
         return of(new LoanProcess());
+    } else if (route.component === WarrantyUpdateComponent) {
+        if (id) {
+            return this.warratyService.find(id).pipe(
+              filter((response: HttpResponse<Warranty>) => response.ok),
+              map((warranty: HttpResponse<Warranty>) => warranty.body)
+            );
+        }
+        return of(new Warranty());
     } else if (route.component === AddressComponent 
             || route.component === AddressDetailComponent
             || route.component === AddressUpdateComponent
@@ -149,6 +160,22 @@ export const wizardRoute: Routes = [
           component: LoanProcessUpdateComponent,
           resolve: {
             loanProcess: WizardCustomerResolve
+          }
+      },
+      {
+          path: 'warranty',
+          component: WarrantyComponent,
+          data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'creditApp.loanMsWarranty.home.title'
+          },
+          canActivate: [UserRouteAccessService]
+      },
+      {
+          path: 'warranty/new',
+          component: WarrantyUpdateComponent,
+          resolve: {
+            warranty: WizardCustomerResolve
           }
       }
     ],

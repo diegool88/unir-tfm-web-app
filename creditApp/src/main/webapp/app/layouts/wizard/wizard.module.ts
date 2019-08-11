@@ -14,6 +14,7 @@ import { WizardMainComponent } from './wizard-main/wizard-main.component';
 import { WizardNavbarComponent } from './wizard-main/wizard-navbar/wizard-navbar.component';
 import { WizardFooterComponent } from './wizard-main/wizard-footer/wizard-footer.component';
 import { LoanMsLoanProcessModule } from "app/entities/loanMS/loan-process/loan-process.module";
+import { LoanMsWarrantyModule } from "app/entities/loanMS/warranty/warranty.module";
 
 const ENTITY_STATES = [ ...wizardRoute ];
 
@@ -24,6 +25,7 @@ const ENTITY_STATES = [ ...wizardRoute ];
             CreditAppTelephoneNumberModule,
             CreditAppPersonalReferenceModule,
             LoanMsLoanProcessModule,
+            LoanMsWarrantyModule,
             RouterModule.forChild(ENTITY_STATES)
   ],
   declarations: [

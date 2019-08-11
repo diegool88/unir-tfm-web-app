@@ -7,7 +7,9 @@ import { filter, map } from 'rxjs/operators';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { JhiAlertService } from 'ng-jhipster';
 import { Observable, Subject } from 'rxjs';
-import { ILoanProcess } from "app/shared/model/loanMS/loan-process.model";
+import { ILoanProcess, LoanProcess } from "app/shared/model/loanMS/loan-process.model";
+import { IAmortizationTable } from "app/shared/model/loanMS/amortization-table.model";
+import { IWarranty } from "app/shared/model/loanMS/warranty.model";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,9 @@ export class WizardService {
   customer?: ICustomer = new Customer();
   steps: any[];
   currentStep?: any;
-  private newLoanProcess = new Subject<ILoanProcess>();
+  newLoanProcess: ILoanProcess;
+  amortizationSchedule: IAmortizationTable[] = [];
+  warranties: IWarranty[] = [];
 
   constructor(
     protected customerService: CustomerService,
@@ -26,11 +30,31 @@ export class WizardService {
   ) {}
   
   setLoanProcess(newLoanProcess: ILoanProcess) {
-      this.newLoanProcess.next(newLoanProcess);
+      this.newLoanProcess = newLoanProcess;
   }
   
-  getLoanProcess(): Observable<ILoanProcess> {
-      return this.newLoanProcess.asObservable();
+  getLoanProcess(): ILoanProcess {
+      return this.newLoanProcess;
+  }
+  
+  setAmortizationSchedule(amortizationSchedule: IAmortizationTable[]){
+      this.amortizationSchedule = amortizationSchedule;
+  }
+  
+  getAmortizationSchedule(): IAmortizationTable[] {
+      return this.amortizationSchedule;
+  }
+  
+  addWarranties(warranty: IWarranty){
+      this.warranties.push(warranty);
+  }
+  
+  setWarranties(warranties: IWarranty[]){
+      this.warranties = warranties;
+  }
+  
+  getWarranties(): IWarranty[] {
+      return this.warranties;
   }
 
   addFormGroup(formGroup: FormGroup) {
@@ -68,6 +92,13 @@ export class WizardService {
           path: ['loan-process', 'new'],
           queryParams: { mode: 'wizard' },
           icon: 'th-list'
+        },
+        {
+          index: 6,
+          label: 'creditApp.loanMsWarranty.home.title',
+          path: ['warranty'],
+          queryParams: { mode: 'wizard' },
+          icon: 'file-contract'
         }
       ];
     }
@@ -94,6 +125,9 @@ export class WizardService {
 
   clearSteps() {
     this.steps = [];
+    this.warranties = [];
+    this.amortizationSchedule = [];
+    this.newLoanProcess = new LoanProcess;
   }
 
   protected onError(errorMessage: string) {
