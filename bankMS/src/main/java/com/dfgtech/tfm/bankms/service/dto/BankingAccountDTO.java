@@ -32,6 +32,11 @@ public class BankingAccountDTO implements Serializable {
     @NotNull
     private String customerCountry;
 
+    @NotNull
+    @Size(max = 10)
+    @Pattern(regexp = "[A-Z0-9]+")
+    private String bankingEntityMnemonic;
+
 
     public Long getId() {
         return id;
@@ -97,6 +102,14 @@ public class BankingAccountDTO implements Serializable {
         this.customerCountry = customerCountry;
     }
 
+    public String getBankingEntityMnemonic() {
+        return bankingEntityMnemonic;
+    }
+
+    public void setBankingEntityMnemonic(String bankingEntityMnemonic) {
+        this.bankingEntityMnemonic = bankingEntityMnemonic;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -129,6 +142,7 @@ public class BankingAccountDTO implements Serializable {
             ", customerIdentification='" + getCustomerIdentification() + "'" +
             ", customerIdentificationType='" + getCustomerIdentificationType() + "'" +
             ", customerCountry='" + getCustomerCountry() + "'" +
+            ", bankingEntityMnemonic='" + getBankingEntityMnemonic() + "'" +
             "}";
     }
 }

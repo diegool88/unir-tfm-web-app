@@ -58,6 +58,9 @@ public class BankingAccountResourceIT {
     private static final String DEFAULT_CUSTOMER_COUNTRY = "AAAAAAAAAA";
     private static final String UPDATED_CUSTOMER_COUNTRY = "BBBBBBBBBB";
 
+    private static final String DEFAULT_BANKING_ENTITY_MNEMONIC = "AAAAAAAAAA";
+    private static final String UPDATED_BANKING_ENTITY_MNEMONIC = "BBBBBBBBBB";
+
     @Autowired
     private BankingAccountRepository bankingAccountRepository;
 
@@ -112,7 +115,8 @@ public class BankingAccountResourceIT {
             .availableBalance(DEFAULT_AVAILABLE_BALANCE)
             .customerIdentification(DEFAULT_CUSTOMER_IDENTIFICATION)
             .customerIdentificationType(DEFAULT_CUSTOMER_IDENTIFICATION_TYPE)
-            .customerCountry(DEFAULT_CUSTOMER_COUNTRY);
+            .customerCountry(DEFAULT_CUSTOMER_COUNTRY)
+            .bankingEntityMnemonic(DEFAULT_BANKING_ENTITY_MNEMONIC);
         return bankingAccount;
     }
     /**
@@ -129,7 +133,8 @@ public class BankingAccountResourceIT {
             .availableBalance(UPDATED_AVAILABLE_BALANCE)
             .customerIdentification(UPDATED_CUSTOMER_IDENTIFICATION)
             .customerIdentificationType(UPDATED_CUSTOMER_IDENTIFICATION_TYPE)
-            .customerCountry(UPDATED_CUSTOMER_COUNTRY);
+            .customerCountry(UPDATED_CUSTOMER_COUNTRY)
+            .bankingEntityMnemonic(UPDATED_BANKING_ENTITY_MNEMONIC);
         return bankingAccount;
     }
 
@@ -161,6 +166,7 @@ public class BankingAccountResourceIT {
         assertThat(testBankingAccount.getCustomerIdentification()).isEqualTo(DEFAULT_CUSTOMER_IDENTIFICATION);
         assertThat(testBankingAccount.getCustomerIdentificationType()).isEqualTo(DEFAULT_CUSTOMER_IDENTIFICATION_TYPE);
         assertThat(testBankingAccount.getCustomerCountry()).isEqualTo(DEFAULT_CUSTOMER_COUNTRY);
+        assertThat(testBankingAccount.getBankingEntityMnemonic()).isEqualTo(DEFAULT_BANKING_ENTITY_MNEMONIC);
     }
 
     @Test
@@ -319,6 +325,25 @@ public class BankingAccountResourceIT {
 
     @Test
     @Transactional
+    public void checkBankingEntityMnemonicIsRequired() throws Exception {
+        int databaseSizeBeforeTest = bankingAccountRepository.findAll().size();
+        // set the field null
+        bankingAccount.setBankingEntityMnemonic(null);
+
+        // Create the BankingAccount, which fails.
+        BankingAccountDTO bankingAccountDTO = bankingAccountMapper.toDto(bankingAccount);
+
+        restBankingAccountMockMvc.perform(post("/api/banking-accounts")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(bankingAccountDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<BankingAccount> bankingAccountList = bankingAccountRepository.findAll();
+        assertThat(bankingAccountList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllBankingAccounts() throws Exception {
         // Initialize the database
         bankingAccountRepository.saveAndFlush(bankingAccount);
@@ -334,7 +359,8 @@ public class BankingAccountResourceIT {
             .andExpect(jsonPath("$.[*].availableBalance").value(hasItem(DEFAULT_AVAILABLE_BALANCE.doubleValue())))
             .andExpect(jsonPath("$.[*].customerIdentification").value(hasItem(DEFAULT_CUSTOMER_IDENTIFICATION.toString())))
             .andExpect(jsonPath("$.[*].customerIdentificationType").value(hasItem(DEFAULT_CUSTOMER_IDENTIFICATION_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].customerCountry").value(hasItem(DEFAULT_CUSTOMER_COUNTRY.toString())));
+            .andExpect(jsonPath("$.[*].customerCountry").value(hasItem(DEFAULT_CUSTOMER_COUNTRY.toString())))
+            .andExpect(jsonPath("$.[*].bankingEntityMnemonic").value(hasItem(DEFAULT_BANKING_ENTITY_MNEMONIC.toString())));
     }
     
     @Test
@@ -354,7 +380,8 @@ public class BankingAccountResourceIT {
             .andExpect(jsonPath("$.availableBalance").value(DEFAULT_AVAILABLE_BALANCE.doubleValue()))
             .andExpect(jsonPath("$.customerIdentification").value(DEFAULT_CUSTOMER_IDENTIFICATION.toString()))
             .andExpect(jsonPath("$.customerIdentificationType").value(DEFAULT_CUSTOMER_IDENTIFICATION_TYPE.toString()))
-            .andExpect(jsonPath("$.customerCountry").value(DEFAULT_CUSTOMER_COUNTRY.toString()));
+            .andExpect(jsonPath("$.customerCountry").value(DEFAULT_CUSTOMER_COUNTRY.toString()))
+            .andExpect(jsonPath("$.bankingEntityMnemonic").value(DEFAULT_BANKING_ENTITY_MNEMONIC.toString()));
     }
 
     @Test
@@ -384,7 +411,8 @@ public class BankingAccountResourceIT {
             .availableBalance(UPDATED_AVAILABLE_BALANCE)
             .customerIdentification(UPDATED_CUSTOMER_IDENTIFICATION)
             .customerIdentificationType(UPDATED_CUSTOMER_IDENTIFICATION_TYPE)
-            .customerCountry(UPDATED_CUSTOMER_COUNTRY);
+            .customerCountry(UPDATED_CUSTOMER_COUNTRY)
+            .bankingEntityMnemonic(UPDATED_BANKING_ENTITY_MNEMONIC);
         BankingAccountDTO bankingAccountDTO = bankingAccountMapper.toDto(updatedBankingAccount);
 
         restBankingAccountMockMvc.perform(put("/api/banking-accounts")
@@ -403,6 +431,7 @@ public class BankingAccountResourceIT {
         assertThat(testBankingAccount.getCustomerIdentification()).isEqualTo(UPDATED_CUSTOMER_IDENTIFICATION);
         assertThat(testBankingAccount.getCustomerIdentificationType()).isEqualTo(UPDATED_CUSTOMER_IDENTIFICATION_TYPE);
         assertThat(testBankingAccount.getCustomerCountry()).isEqualTo(UPDATED_CUSTOMER_COUNTRY);
+        assertThat(testBankingAccount.getBankingEntityMnemonic()).isEqualTo(UPDATED_BANKING_ENTITY_MNEMONIC);
     }
 
     @Test

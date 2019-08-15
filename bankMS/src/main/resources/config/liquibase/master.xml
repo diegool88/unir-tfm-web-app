@@ -14,16 +14,16 @@
     <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234037_added_entity_Product.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234038_added_entity_Fee.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234039_added_entity_Currency.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234040_added_entity_BankingEntity.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234041_added_entity_BankingAccount.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234042_added_entity_BankingTransaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135124_added_entity_Product.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135125_added_entity_Fee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135126_added_entity_Currency.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135127_added_entity_BankingEntity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135128_added_entity_BankingAccount.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135129_added_entity_BankingTransaction.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20190716234037_added_entity_constraints_Product.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234038_added_entity_constraints_Fee.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234039_added_entity_constraints_Currency.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234042_added_entity_constraints_BankingTransaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135124_added_entity_constraints_Product.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135125_added_entity_constraints_Fee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135126_added_entity_constraints_Currency.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135129_added_entity_constraints_BankingTransaction.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

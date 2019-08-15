@@ -33,7 +33,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190716234049",
+    "changelogDate": "20190815135136",
     "entityTableName": "telephone_number",
     "dto": "mapstruct",
     "pagination": "pagination",

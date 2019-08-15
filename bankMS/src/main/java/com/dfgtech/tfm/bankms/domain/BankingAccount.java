@@ -52,6 +52,12 @@ public class BankingAccount implements Serializable {
     @Column(name = "customer_country", nullable = false)
     private String customerCountry;
 
+    @NotNull
+    @Size(max = 10)
+    @Pattern(regexp = "[A-Z0-9]+")
+    @Column(name = "banking_entity_mnemonic", length = 10, nullable = false)
+    private String bankingEntityMnemonic;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -151,6 +157,19 @@ public class BankingAccount implements Serializable {
     public void setCustomerCountry(String customerCountry) {
         this.customerCountry = customerCountry;
     }
+
+    public String getBankingEntityMnemonic() {
+        return bankingEntityMnemonic;
+    }
+
+    public BankingAccount bankingEntityMnemonic(String bankingEntityMnemonic) {
+        this.bankingEntityMnemonic = bankingEntityMnemonic;
+        return this;
+    }
+
+    public void setBankingEntityMnemonic(String bankingEntityMnemonic) {
+        this.bankingEntityMnemonic = bankingEntityMnemonic;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -180,6 +199,7 @@ public class BankingAccount implements Serializable {
             ", customerIdentification='" + getCustomerIdentification() + "'" +
             ", customerIdentificationType='" + getCustomerIdentificationType() + "'" +
             ", customerCountry='" + getCustomerCountry() + "'" +
+            ", bankingEntityMnemonic='" + getBankingEntityMnemonic() + "'" +
             "}";
     }
 }

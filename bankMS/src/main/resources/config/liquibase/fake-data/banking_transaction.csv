@@ -1,0 +1,11 @@
+id;number;date;ammount;transaction_type;ext_origin_account;ext_origin_account_type;ext_origin_account_bank;ext_destination_account;ext_destination_account_type;ext_destination_account_bank;banking_entity_id
+1;83832;2019-08-15T12:20:28;46869;WITHDRAWAL;27340;SAVINGS;Zimbabwe parse Customer;58514;CHECKING;Falls;1
+2;12915;2019-08-15T07:49:51;95405;WITHDRAWAL;22864;CHECKING;Baby;49816;CHECKING;SAS;2
+3;55190;2019-08-14T14:38:04;56093;WITHDRAWAL;40348;SAVINGS;bluetooth payment digital;90315;CHECKING;seamless New York mesh;3
+4;43747;2019-08-15T11:40:53;90415;WITHDRAWAL;39654;CHECKING;CFP Franc back-end Via;84209;CHECKING;Berkshire concept;4
+5;63340;2019-08-14T23:57:15;24014;WITHDRAWAL;12804;SAVINGS;Mouse Rupiah;41166;CHECKING;teal Licensed Wooden Pants;5
+6;27859;2019-08-15T05:31:22;17701;DEBIT;12063;CHECKING;Granite open architecture;32158;SAVINGS;Credit Card Account Sleek;6
+7;87357;2019-08-15T10:05:53;92087;WITHDRAWAL;74825;SAVINGS;Central Polarised;75995;CHECKING;Games;7
+8;25243;2019-08-15T10:40:15;71334;DEPOSIT;10717;SAVINGS;interface;18228;SAVINGS;blue internet solution Concrete;8
+9;89052;2019-08-15T05:38:07;59359;WITHDRAWAL;49844;CHECKING;Pennsylvania Michigan;56445;SAVINGS;customized payment;9
+10;57077;2019-08-15T08:00:04;35609;DEBIT;23722;CHECKING;24/7;48780;SAVINGS;scalable;10

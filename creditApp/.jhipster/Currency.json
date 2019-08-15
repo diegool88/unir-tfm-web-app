@@ -35,7 +35,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20190716234039",
+    "changelogDate": "20190815135126",
     "entityTableName": "currency",
     "dto": "mapstruct",
     "pagination": "pagination",

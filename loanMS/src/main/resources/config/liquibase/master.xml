@@ -14,11 +14,11 @@
     <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234034_added_entity_Warranty.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234035_added_entity_AmortizationTable.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234036_added_entity_LoanProcess.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135121_added_entity_Warranty.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135122_added_entity_AmortizationTable.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135123_added_entity_LoanProcess.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20190716234034_added_entity_constraints_Warranty.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234035_added_entity_constraints_AmortizationTable.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135121_added_entity_constraints_Warranty.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135122_added_entity_constraints_AmortizationTable.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

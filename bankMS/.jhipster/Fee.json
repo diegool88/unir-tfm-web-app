@@ -50,7 +50,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20190716234038",
+    "changelogDate": "20190815135125",
     "entityTableName": "fee",
     "dto": "mapstruct",
     "pagination": "pagination",
