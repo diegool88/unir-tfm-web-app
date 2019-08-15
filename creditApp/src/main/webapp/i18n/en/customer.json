@@ -27,6 +27,7 @@
       "birthDate": "Birth Date",
       "country": "Country",
       "clientSince": "Client Since",
+      "monthlyIncome": "Monthly Income",
       "user": "User"
     }
   }

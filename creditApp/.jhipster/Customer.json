@@ -112,6 +112,13 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "monthlyIncome",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
@@ -126,7 +133,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20190716234046",
+    "changelogDate": "20190815135133",
     "entityTableName": "customer",
     "dto": "mapstruct",
     "pagination": "no",

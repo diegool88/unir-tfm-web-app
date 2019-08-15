@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity PersonalReference.
     -->
-    <changeSet id="20190716234047-2" author="jhipster">
+    <changeSet id="20190815135134-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="customer_id"
                                  baseTableName="personal_reference"

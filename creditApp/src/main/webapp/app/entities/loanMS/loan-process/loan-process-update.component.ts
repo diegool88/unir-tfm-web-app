@@ -14,18 +14,18 @@ import { BankingEntityService } from 'app/entities/bankMS/banking-entity/banking
 import { IBankingEntity } from 'app/shared/model/bankMS/banking-entity.model';
 import { ProductService } from 'app/entities/bankMS/product/product.service';
 import { IProduct, Product } from 'app/shared/model/bankMS/product.model';
-import { WizardFooterService } from "app/layouts/wizard/wizard-footer.service";
-import { WizardService } from "app/layouts/wizard/wizard.service";
-import { ICustomer } from "app/shared/model/customer.model";
-import { IAmortizationTable } from "app/shared/model/loanMS/amortization-table.model";
-import { AmortizationTableService }  from "app/entities/loanMS/amortization-table";
+import { WizardFooterService } from 'app/layouts/wizard/wizard-footer.service';
+import { WizardService } from 'app/layouts/wizard/wizard.service';
+import { ICustomer } from 'app/shared/model/customer.model';
+import { IAmortizationTable } from 'app/shared/model/loanMS/amortization-table.model';
+import { AmortizationTableService } from 'app/entities/loanMS/amortization-table';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'jhi-loan-process-update',
   templateUrl: './loan-process-update.component.html'
 })
 export class LoanProcessUpdateComponent implements OnInit {
-  
   isSaving: boolean;
 
   warranties: IWarranty[];
@@ -93,19 +93,16 @@ export class LoanProcessUpdateComponent implements OnInit {
       )
       .subscribe((res: IWarranty[]) => (this.warranties = res), (res: HttpErrorResponse) => this.onError(res.message));
     this.bankingEntityService
-    .query()
-    .pipe(
-      filter((mayBeOk: HttpResponse<IBankingEntity[]>) => mayBeOk.ok),
-      map((response: HttpResponse<IBankingEntity[]>) => response.body)
-    )
-    .subscribe(
-      (res: IBankingEntity[]) => (this.bankingEntities = res),
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IBankingEntity[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IBankingEntity[]>) => response.body)
+      )
+      .subscribe((res: IBankingEntity[]) => (this.bankingEntities = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(loanProcess: ILoanProcess) {
-    if(loanProcess.bankingEntityMnemonic !== undefined && loanProcess.bankingEntityMnemonic !== null){
+    if (loanProcess.bankingEntityMnemonic !== undefined && loanProcess.bankingEntityMnemonic !== null) {
       this.queryProductByBankEntity({ value: loanProcess.bankingEntityMnemonic });
     }
     this.editForm.patchValue({
@@ -124,7 +121,6 @@ export class LoanProcessUpdateComponent implements OnInit {
       bankingProductMnemonic: loanProcess.bankingProductMnemonic,
       loanProcessStatus: loanProcess.loanProcessStatus
     });
-    
   }
 
   previousState() {
@@ -134,11 +130,11 @@ export class LoanProcessUpdateComponent implements OnInit {
   save() {
     this.isSaving = true;
     const loanProcess = this.createFromForm();
-    if (this.mode === 'wizard'){
-        this.wizardService.setLoanProcess(loanProcess);
-        this.wizardService.setAmortizationSchedule(this.amortizationSchedule);
-        this.wizardFooterService.setFormValid(true);
-        return;
+    if (this.mode === 'wizard') {
+      this.wizardService.setLoanProcess(loanProcess);
+      this.wizardService.setAmortizationSchedule(this.amortizationSchedule);
+      this.wizardFooterService.setFormValid(true);
+      return;
     }
     if (loanProcess.id !== undefined) {
       this.subscribeToSaveResponse(this.loanProcessService.update(loanProcess));
@@ -201,79 +197,94 @@ export class LoanProcessUpdateComponent implements OnInit {
     }
     return option;
   }
-  
-  protected queryProductByBankEntity(target: any){
-      this.editForm.patchValue({ bankingProductMnemonic: null });
-      this.productService
+
+  protected queryProductByBankEntity(target: any) {
+    this.editForm.patchValue({ bankingProductMnemonic: null });
+    this.productService
       .queryByBankingEntityMnemonic(target.value)
       .pipe(
         filter((mayBeOk: HttpResponse<IProduct[]>) => mayBeOk.ok),
         map((response: HttpResponse<IProduct[]>) => response.body)
       )
-      .subscribe(
-        (res: IProduct[]) => (this.products = res),
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+      .subscribe((res: IProduct[]) => (this.products = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
-  
-  protected initializeCustomerInformation(){
-      this.editForm.patchValue({
-        name: 'New Loan P C ' + this.customer.identificationNumber,
-        debtorIdentification: this.customer.identificationNumber,
-        debtorIdentificationType: this.customer.identificationType,
-        debtorCountry: this.customer.country
-      });
+
+  protected initializeCustomerInformation() {
+    this.editForm.patchValue({
+      name: 'New Loan P C ' + this.customer.identificationNumber,
+      debtorIdentification: this.customer.identificationNumber,
+      debtorIdentificationType: this.customer.identificationType,
+      debtorCountry: this.customer.country
+    });
   }
-  
-  changeEndDate(event: any){
-     if(this.editForm.get(['loanPeriod']).value !== undefined 
-             && this.editForm.get(['loanPeriod']).value !== null
-             && typeof event === 'object' && event instanceof moment){
-         const loanPeriodYears = parseInt(this.editForm.get(['loanPeriod']).value);
-         const startDate = event.toDate();
-         const endDate = new Date(startDate.getFullYear() + loanPeriodYears, startDate.getMonth(), startDate.getDate());
-         this.editForm.patchValue({ endDate: moment(endDate) });
-         console.log(endDate);
-     } else if (this.editForm.get(['startDate']).value !== undefined 
-             && this.editForm.get(['startDate']).value !== null
-             && typeof event === 'number') {
-         const loanPeriodYears = event;
-         const startDate = this.editForm.get(['startDate']).value.toDate();
-         const endDate = new Date(startDate.getFullYear() + loanPeriodYears, startDate.getMonth(), startDate.getDate());
-         this.editForm.patchValue({ endDate: moment(endDate) });
-     }
+
+  changeEndDate(event: any) {
+    if (
+      this.editForm.get(['loanPeriod']).value !== undefined &&
+      this.editForm.get(['loanPeriod']).value !== null &&
+      typeof event === 'object' &&
+      event instanceof moment
+    ) {
+      const loanPeriodYears = parseInt(this.editForm.get(['loanPeriod']).value);
+      const startDate = (event as Moment).toDate();
+      const endDate = new Date(startDate.getFullYear() + loanPeriodYears, startDate.getMonth(), startDate.getDate());
+      this.editForm.patchValue({ endDate: moment(endDate) });
+      console.log(endDate);
+    } else if (
+      this.editForm.get(['startDate']).value !== undefined &&
+      this.editForm.get(['startDate']).value !== null &&
+      typeof event === 'number'
+    ) {
+      const loanPeriodYears = event;
+      const startDate = this.editForm.get(['startDate']).value.toDate();
+      const endDate = new Date(startDate.getFullYear() + loanPeriodYears, startDate.getMonth(), startDate.getDate());
+      this.editForm.patchValue({ endDate: moment(endDate) });
+    }
   }
-  
-  onProductChange(target: any){
-      let productsFiltered = this.products.filter((product: IProduct) => { return product.mnemonic === target.value; });
-      this.selectedProduct = productsFiltered.length > 0 ? productsFiltered[0] : new Product();
-      this.editForm.patchValue({ bankingProductMnemonic: this.selectedProduct.mnemonic });
+
+  onProductChange(target: any) {
+    let productsFiltered = this.products.filter((product: IProduct) => {
+      return product.mnemonic === target.value;
+    });
+    this.selectedProduct = productsFiltered.length > 0 ? productsFiltered[0] : new Product();
+    this.editForm.patchValue({ bankingProductMnemonic: this.selectedProduct.mnemonic });
   }
-  
-  calculateAmortizationSchedule(event:any){
-      this.amortizationTableService.calculate(this.editForm.get(['requestedAmount']).value, this.selectedProduct.interestRate, this.editForm.get(['startDate']).value.format('YYYY-MM-DD'), this.editForm.get(['loanPeriod']).value)
-      .pipe(
-         filter((mayBeOk: HttpResponse<IAmortizationTable[]>) => mayBeOk.ok),
-         map((response: HttpResponse<IAmortizationTable[]>) => response.body)
+
+  calculateAmortizationSchedule(event: any) {
+    this.amortizationTableService
+      .calculate(
+        this.editForm.get(['requestedAmount']).value,
+        this.selectedProduct.interestRate,
+        this.editForm.get(['startDate']).value.format('YYYY-MM-DD'),
+        this.editForm.get(['loanPeriod']).value
       )
-      .subscribe(
-         (res: IAmortizationTable[]) => (this.amortizationSchedule = res),
-         (res: HttpErrorResponse) => this.onError(res.message)
-      );
+      .pipe(
+        filter((mayBeOk: HttpResponse<IAmortizationTable[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IAmortizationTable[]>) => response.body)
+      )
+      .subscribe((res: IAmortizationTable[]) => (this.amortizationSchedule = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
-  
-  getAmortizationScheduleAmountTotal(){
-      return this.amortizationSchedule.map((item) => { return item.amount; }).reduce((sum, curr) => sum + curr );
+
+  getAmortizationScheduleAmountTotal() {
+    return this.amortizationSchedule
+      .map(item => {
+        return item.amount;
+      })
+      .reduce((sum, curr) => sum + curr);
   }
-  
-  getAmortizationScheduleInterestTotal(){
-      return this.amortizationSchedule.map((item) => { return item.interest; }).reduce((sum, curr) => sum + curr );
+
+  getAmortizationScheduleInterestTotal() {
+    return this.amortizationSchedule
+      .map(item => {
+        return item.interest;
+      })
+      .reduce((sum, curr) => sum + curr);
   }
-  
+
   trackProductById(index: number, item: IProduct) {
     return item.mnemonic;
   }
-  
+
   trackBankingEntityById(index: number, item: IBankingEntity) {
     return item.mnemonic;
   }

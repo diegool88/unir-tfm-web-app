@@ -37,6 +37,7 @@ export class CustomerUpdateComponent implements OnInit {
     birthDate: [null, [Validators.required]],
     country: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(20), Validators.pattern('[A-Za-z\\s]+')]],
     clientSince: [null, [Validators.required]],
+    monthlyIncome: [null, [Validators.required]],
     userId: [null, Validators.required]
   });
 
@@ -100,6 +101,7 @@ export class CustomerUpdateComponent implements OnInit {
       birthDate: customer.birthDate,
       country: customer.country,
       clientSince: customer.clientSince,
+      monthlyIncome: customer.monthlyIncome,
       userId: customer.userId
     });
   }
@@ -133,6 +135,7 @@ export class CustomerUpdateComponent implements OnInit {
       birthDate: this.editForm.get(['birthDate']).value,
       country: this.editForm.get(['country']).value,
       clientSince: this.editForm.get(['clientSince']).value,
+      monthlyIncome: this.editForm.get(['monthlyIncome']).value,
       userId: this.editForm.get(['userId']).value
     };
   }

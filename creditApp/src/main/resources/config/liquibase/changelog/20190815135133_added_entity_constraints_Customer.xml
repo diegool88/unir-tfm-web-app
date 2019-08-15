@@ -4,15 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <!--
-        Added the constraints for entity TelephoneNumber.
+        Added the constraints for entity Customer.
     -->
-    <changeSet id="20190716234049-2" author="jhipster">
+    <changeSet id="20190815135133-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="address_id"
-                                 baseTableName="telephone_number"
-                                 constraintName="fk_telephone_number_address_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="customer"
+                                 constraintName="fk_customer_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="address"/>
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

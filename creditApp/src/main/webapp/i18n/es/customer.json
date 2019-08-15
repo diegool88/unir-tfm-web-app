@@ -27,6 +27,7 @@
       "birthDate": "Fecha de Nacimiento",
       "country": "País de Origen",
       "clientSince": "Cliente Desde",
+      "monthlyIncome": "Ingreso Mensual",
       "user": "Usuario"
     }
   }

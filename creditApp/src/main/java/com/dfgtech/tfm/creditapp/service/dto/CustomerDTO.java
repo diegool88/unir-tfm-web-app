@@ -57,6 +57,9 @@ public class CustomerDTO implements Serializable {
     @NotNull
     private LocalDate clientSince;
 
+    @NotNull
+    private Double monthlyIncome;
+
     /**
      * Relaciones Microservicio administracion clientes
      */
@@ -162,6 +165,14 @@ public class CustomerDTO implements Serializable {
         this.clientSince = clientSince;
     }
 
+    public Double getMonthlyIncome() {
+        return monthlyIncome;
+    }
+
+    public void setMonthlyIncome(Double monthlyIncome) {
+        this.monthlyIncome = monthlyIncome;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -214,6 +225,7 @@ public class CustomerDTO implements Serializable {
             ", birthDate='" + getBirthDate() + "'" +
             ", country='" + getCountry() + "'" +
             ", clientSince='" + getClientSince() + "'" +
+            ", monthlyIncome=" + getMonthlyIncome() +
             ", user=" + getUserId() +
             ", user='" + getUserLogin() + "'" +
             "}";
