@@ -58,6 +58,19 @@ public class BankingAccountService {
             .map(bankingAccountMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+    
+    /**
+     * Get all the bankingAccounts by Customer.
+     *
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<BankingAccountDTO> findByCustomer(String customerIdentification, String customerIdentificationType, String customerCountry) {
+        log.debug("Request to get all BankingAccounts");
+        return bankingAccountRepository.findByCustomer(customerIdentification, customerIdentificationType, customerCountry).stream()
+            .map(bankingAccountMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
 
     /**

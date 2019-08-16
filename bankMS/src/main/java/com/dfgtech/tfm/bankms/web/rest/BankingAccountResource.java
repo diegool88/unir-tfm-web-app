@@ -89,6 +89,17 @@ public class BankingAccountResource {
         log.debug("REST request to get all BankingAccounts");
         return bankingAccountService.findAll();
     }
+    
+    /**
+     * {@code GET  /banking-accounts} : get all the bankingAccounts.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of bankingAccounts in body.
+     */
+    @GetMapping("/banking-accounts/{customerIdentification}/{customerIdentificationType}/{customerCountry}")
+    public List<BankingAccountDTO> getCustomerBankingAccounts(@PathVariable String customerIdentification, @PathVariable String customerIdentificationType, @PathVariable String customerCountry) {
+        log.debug("REST request to get all Customer Accounts BankingAccounts");
+        return bankingAccountService.findByCustomer(customerIdentification, customerIdentificationType, customerCountry);
+    }
 
     /**
      * {@code GET  /banking-accounts/:id} : get the "id" bankingAccount.

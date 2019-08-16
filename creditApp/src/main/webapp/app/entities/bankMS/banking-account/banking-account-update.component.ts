@@ -21,7 +21,8 @@ export class BankingAccountUpdateComponent implements OnInit {
     availableBalance: [null, [Validators.required]],
     customerIdentification: [null, [Validators.required]],
     customerIdentificationType: [null, [Validators.required]],
-    customerCountry: [null, [Validators.required]]
+    customerCountry: [null, [Validators.required]],
+    bankingEntityMnemonic: [null, [Validators.required, Validators.maxLength(10), Validators.pattern('[A-Z0-9]+')]]
   });
 
   constructor(protected bankingAccountService: BankingAccountService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -42,7 +43,8 @@ export class BankingAccountUpdateComponent implements OnInit {
       availableBalance: bankingAccount.availableBalance,
       customerIdentification: bankingAccount.customerIdentification,
       customerIdentificationType: bankingAccount.customerIdentificationType,
-      customerCountry: bankingAccount.customerCountry
+      customerCountry: bankingAccount.customerCountry,
+      bankingEntityMnemonic: bankingAccount.bankingEntityMnemonic
     });
   }
 
@@ -70,7 +72,8 @@ export class BankingAccountUpdateComponent implements OnInit {
       availableBalance: this.editForm.get(['availableBalance']).value,
       customerIdentification: this.editForm.get(['customerIdentification']).value,
       customerIdentificationType: this.editForm.get(['customerIdentificationType']).value,
-      customerCountry: this.editForm.get(['customerCountry']).value
+      customerCountry: this.editForm.get(['customerCountry']).value,
+      bankingEntityMnemonic: this.editForm.get(['bankingEntityMnemonic']).value
     };
   }
 

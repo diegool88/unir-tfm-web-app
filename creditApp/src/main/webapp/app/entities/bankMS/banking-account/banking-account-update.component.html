@@ -100,6 +100,25 @@
                         </small>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.bankingEntityMnemonic" for="field_bankingEntityMnemonic">Banking Entity Mnemonic</label>
+                    <input type="text" class="form-control" name="bankingEntityMnemonic" id="field_bankingEntityMnemonic"
+                           formControlName="bankingEntityMnemonic"/>
+                    <div *ngIf="editForm.get('bankingEntityMnemonic').invalid && (editForm.get('bankingEntityMnemonic').dirty || editForm.get('bankingEntityMnemonic').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankingEntityMnemonic').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankingEntityMnemonic').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 10 }">
+                        This field cannot be longer than 10 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankingEntityMnemonic').errors.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Banking Entity Mnemonic' }">
+                            This field should follow pattern for "Banking Entity Mnemonic".
+                        </small>
+                    </div>
+                </div>
 
             </div>
             <div>
