@@ -1,13 +1,18 @@
 package com.dfgtech.tfm.bankms.web.rest;
 
+import com.dfgtech.tfm.bankms.external.service.CustomerServiceClient;
+import com.dfgtech.tfm.bankms.external.service.dto.CustomerDTO;
 import com.dfgtech.tfm.bankms.service.BankingAccountService;
 import com.dfgtech.tfm.bankms.web.rest.errors.BadRequestAlertException;
 import com.dfgtech.tfm.bankms.service.dto.BankingAccountDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.micrometer.core.annotation.Timed;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +39,9 @@ public class BankingAccountResource {
     private String applicationName;
 
     private final BankingAccountService bankingAccountService;
+    
+    @Autowired
+    private CustomerServiceClient customerServiceClient;
 
     public BankingAccountResource(BankingAccountService bankingAccountService) {
         this.bankingAccountService = bankingAccountService;
@@ -99,6 +107,20 @@ public class BankingAccountResource {
     public List<BankingAccountDTO> getCustomerBankingAccounts(@PathVariable String customerIdentification, @PathVariable String customerIdentificationType, @PathVariable String customerCountry) {
         log.debug("REST request to get all Customer Accounts BankingAccounts");
         return bankingAccountService.findByCustomer(customerIdentification, customerIdentificationType, customerCountry);
+    }
+    
+    /**
+     * {@code GET  /banking-accounts} : get all the bankingAccounts.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of bankingAccounts in body.
+     */
+    @GetMapping("/banking-accounts/customer")
+    @Timed
+    public List<BankingAccountDTO> getCustomerBankingAccountsHidden() {
+        log.debug("REST request to get all Customer Accounts BankingAccounts");
+        //call the data microservice apis
+        List<CustomerDTO> result = customerServiceClient.getLoggedCustomer();
+        return result.size() > 0 ? bankingAccountService.findByCustomer(result.get(0).getIdentificationNumber(), result.get(0).getIdentificationType().toString(), result.get(0).getCountry()) : new ArrayList<BankingAccountDTO>();
     }
 
     /**

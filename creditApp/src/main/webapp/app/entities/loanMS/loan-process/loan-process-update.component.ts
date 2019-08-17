@@ -20,6 +20,8 @@ import { ICustomer } from 'app/shared/model/customer.model';
 import { IAmortizationTable } from 'app/shared/model/loanMS/amortization-table.model';
 import { AmortizationTableService } from 'app/entities/loanMS/amortization-table';
 import { Moment } from 'moment';
+import { IBankingAccount, BankingAccount } from "app/shared/model/bankMS/banking-account.model";
+import { BankingAccountService } from "app/entities/bankMS/banking-account";
 
 @Component({
   selector: 'jhi-loan-process-update',
@@ -37,6 +39,8 @@ export class LoanProcessUpdateComponent implements OnInit {
   mode: any;
   customer?: ICustomer;
   amortizationSchedule?: IAmortizationTable[];
+  customerAccounts?: IBankingAccount[];
+  selectedAccount?: IBankingAccount;
 
   editForm = this.fb.group({
     id: [],
@@ -52,7 +56,8 @@ export class LoanProcessUpdateComponent implements OnInit {
     debtorCountry: [null, [Validators.required]],
     bankingEntityMnemonic: [null, [Validators.required]],
     bankingProductMnemonic: [null, [Validators.required]],
-    loanProcessStatus: []
+    loanProcessStatus: [],
+    bankingAccount: [null, [Validators.required]] //Not part of LoanProcess Object
   });
 
   constructor(
@@ -65,7 +70,8 @@ export class LoanProcessUpdateComponent implements OnInit {
     protected productService: ProductService,
     protected wizardFooterService: WizardFooterService,
     protected wizardService: WizardService,
-    protected amortizationTableService: AmortizationTableService
+    protected amortizationTableService: AmortizationTableService,
+    protected accountService: BankingAccountService
   ) {}
 
   ngOnInit() {
@@ -80,8 +86,16 @@ export class LoanProcessUpdateComponent implements OnInit {
           this.wizardFooterService.setFormValid(false);
           this.customer = this.wizardService.getCustomer();
           this.updateForm(this.wizardService.getLoanProcess());
+          this.updateFormBankingAccount(this.wizardService.getSelectedAccount());
           this.initializeCustomerInformation();
           this.amortizationSchedule = this.wizardService.getAmortizationSchedule();
+          this.accountService
+          .queryByCustomer()
+          .pipe(
+            filter((mayBeOk: HttpResponse<IBankingAccount[]>) => mayBeOk.ok),
+            map((response: HttpResponse<IBankingAccount[]>) => response.body)
+          )
+          .subscribe((res: IBankingAccount[]) => (this.customerAccounts = res), (res: HttpErrorResponse) => this.onError(res.message));
         }
       }
     });
@@ -122,6 +136,12 @@ export class LoanProcessUpdateComponent implements OnInit {
       loanProcessStatus: loanProcess.loanProcessStatus
     });
   }
+  
+  updateFormBankingAccount(selectedBankingAccount: IBankingAccount) {
+      this.editForm.patchValue({
+          bankingAccount: selectedBankingAccount.number
+      });
+  }
 
   previousState() {
     window.history.back();
@@ -133,6 +153,7 @@ export class LoanProcessUpdateComponent implements OnInit {
     if (this.mode === 'wizard') {
       this.wizardService.setLoanProcess(loanProcess);
       this.wizardService.setAmortizationSchedule(this.amortizationSchedule);
+      this.wizardService.setSelectedAccount(this.selectedAccount);
       this.wizardFooterService.setFormValid(true);
       return;
     }
@@ -249,6 +270,14 @@ export class LoanProcessUpdateComponent implements OnInit {
     this.selectedProduct = productsFiltered.length > 0 ? productsFiltered[0] : new Product();
     this.editForm.patchValue({ bankingProductMnemonic: this.selectedProduct.mnemonic });
   }
+  
+  onBankingAccountChange(target: any) {
+      let accountsFiltered = this.customerAccounts.filter((account: IBankingAccount) => {
+        return account.number === parseInt(target.value);
+      });
+      this.selectedAccount = accountsFiltered.length > 0 ? accountsFiltered[0] : new BankingAccount();
+      this.editForm.patchValue({ bankingAccount: this.selectedAccount.number });      
+  }
 
   calculateAmortizationSchedule(event: any) {
     this.amortizationTableService
@@ -287,5 +316,9 @@ export class LoanProcessUpdateComponent implements OnInit {
 
   trackBankingEntityById(index: number, item: IBankingEntity) {
     return item.mnemonic;
+  }
+  
+  trackBankingAccountNumber(index: number, item: IBankingAccount) {
+    return item.number;
   }
 }

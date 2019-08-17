@@ -10,6 +10,7 @@ import { Observable, Subject } from 'rxjs';
 import { ILoanProcess, LoanProcess } from "app/shared/model/loanMS/loan-process.model";
 import { IAmortizationTable } from "app/shared/model/loanMS/amortization-table.model";
 import { IWarranty } from "app/shared/model/loanMS/warranty.model";
+import { IBankingAccount, BankingAccount } from "app/shared/model/bankMS/banking-account.model";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class WizardService {
   newLoanProcess: ILoanProcess;
   amortizationSchedule: IAmortizationTable[] = [];
   warranties: IWarranty[] = [];
+  selectedAccount: IBankingAccount;
 
   constructor(
     protected customerService: CustomerService,
@@ -35,6 +37,14 @@ export class WizardService {
   
   getLoanProcess(): ILoanProcess {
       return this.newLoanProcess;
+  }
+  
+  setSelectedAccount(selectedAccount: IBankingAccount) {
+      this.selectedAccount = selectedAccount;
+  }
+  
+  getSelectedAccount(): IBankingAccount {
+      return this.selectedAccount;
   }
   
   setAmortizationSchedule(amortizationSchedule: IAmortizationTable[]){
@@ -127,7 +137,8 @@ export class WizardService {
     this.steps = [];
     this.warranties = [];
     this.amortizationSchedule = [];
-    this.newLoanProcess = new LoanProcess;
+    this.newLoanProcess = new LoanProcess();
+    this.selectedAccount = new BankingAccount();
   }
 
   protected onError(errorMessage: string) {

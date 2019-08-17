@@ -146,6 +146,19 @@
                         </small>
                     </div>
                 </div>
+                <div *ngIf="mode === 'wizard'" class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.detail.title" for="field_bankingAccount">Banking Entity Mnemonic</label>
+                    <select class="form-control" #bankingAccount name="bankingAccount" (change)="onBankingAccountChange($event.target)" formControlName="bankingAccount" id="field_bankingAccount">
+                    	<option *ngIf="!editForm.get('bankingAccount').value" [value]="null" selected></option>
+                        <option *ngFor="let bankingAccount of customerAccounts; trackBy: trackBankingAccountNumber" [value]="bankingAccount.number">{{ bankingAccount.number + ' - ' + bankingAccount.bankingEntityMnemonic }}</option>
+                    </select>
+                    <div *ngIf="editForm.get('bankingAccount').invalid && (editForm.get('bankingAccount').dirty || editForm.get('bankingAccount').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankingAccount').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
                 <div *ngIf="mode === 'wizard'" class="btn-group float-right mt-2">
                 	<button type="button" id="calculate" [disabled]="editForm.invalid || selectedProduct === undefined" class="btn btn-primary" (click)="calculateAmortizationSchedule($event)">
 	                    <fa-icon [icon]="'calculator'"></fa-icon>&nbsp;<span  jhiTranslate="creditApp.loanMsLoanProcess.home.calculate">Calculate Amortization Schedule</span>
