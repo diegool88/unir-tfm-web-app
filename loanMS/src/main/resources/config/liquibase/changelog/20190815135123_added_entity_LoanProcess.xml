@@ -64,6 +64,10 @@
                 <constraints nullable="false" />
             </column>
 
+            <column name="rules_engine_result" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
             <column name="loan_process_status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -104,6 +108,7 @@
             <column name="debtor_country" type="string"/>
             <column name="banking_entity_mnemonic" type="string"/>
             <column name="banking_product_mnemonic" type="string"/>
+            <column name="rules_engine_result" type="boolean"/>
             <column name="loan_process_status" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

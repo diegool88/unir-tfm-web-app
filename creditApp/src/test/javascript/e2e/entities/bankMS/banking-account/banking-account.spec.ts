@@ -46,7 +46,8 @@ describe('BankingAccount e2e test', () => {
       bankingAccountUpdatePage.setAvailableBalanceInput('5'),
       bankingAccountUpdatePage.setCustomerIdentificationInput('customerIdentification'),
       bankingAccountUpdatePage.setCustomerIdentificationTypeInput('customerIdentificationType'),
-      bankingAccountUpdatePage.setCustomerCountryInput('customerCountry')
+      bankingAccountUpdatePage.setCustomerCountryInput('customerCountry'),
+      bankingAccountUpdatePage.setBankingEntityMnemonicInput('bankingEntityMnemonic')
     ]);
     expect(await bankingAccountUpdatePage.getNumberInput()).to.eq('5', 'Expected number value to be equals to 5');
     expect(await bankingAccountUpdatePage.getCurrentBalanceInput()).to.eq('5', 'Expected currentBalance value to be equals to 5');
@@ -62,6 +63,10 @@ describe('BankingAccount e2e test', () => {
     expect(await bankingAccountUpdatePage.getCustomerCountryInput()).to.eq(
       'customerCountry',
       'Expected CustomerCountry value to be equals to customerCountry'
+    );
+    expect(await bankingAccountUpdatePage.getBankingEntityMnemonicInput()).to.eq(
+      'bankingEntityMnemonic',
+      'Expected BankingEntityMnemonic value to be equals to bankingEntityMnemonic'
     );
     await bankingAccountUpdatePage.save();
     expect(await bankingAccountUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

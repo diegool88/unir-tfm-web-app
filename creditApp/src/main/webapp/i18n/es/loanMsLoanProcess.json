@@ -26,6 +26,7 @@
       "debtorCountry": "País del Deudor",
       "bankingEntityMnemonic": "Entidad Bancaria",
       "bankingProductMnemonic": "Producto Bancario",
+	  "rulesEngineResult": "Resultado de Reglas de Negocio",
       "loanProcessStatus": "Estado Solicitud de Crédito",
       "warranties": "Garantías"
     }

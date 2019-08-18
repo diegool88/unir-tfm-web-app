@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "jhiPrefix": "jhi",
+    "languages": [
+      "en",
+      "es"
+    ],
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "packageName": "com.dfgtech.tfm.rulesenginems",
+    "packageFolder": "com/dfgtech/tfm/rulesenginems",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
+    "skipClient": true,
+    "testFrameworks": [],
+    "websocket": false,
+    "baseName": "rulesEngineMS",
+    "applicationType": "microservice",
+    "buildTool": "maven",
+    "authenticationType": "jwt",
+    "serverPort": "8084",
+    "skipUserManagement": true,
+    "jhipsterVersion": "6.2.0",
+    "clientPackageManager": "npm",
+    "cacheProvider": "hazelcast",
+    "jwtSecretKey": "NzUwNGQ4NTJlY2E2MWY3YjFkNmRlYmU4YTUxNDUyM2I5Yzg4NmRkOGRjODlkYTI3ODQ3M2Q3M2UyYmM0NGI3NzI0Y2Y5YmY1NDcyYWRjODUyMmRiOWQzNTZkMjhkMDA0N2IyMGIxZjk1NDFiOTEzZTBlODY5M2FkNWYzYWZkZjI=",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "blueprints": []
+  },
+  "entities": []
+}

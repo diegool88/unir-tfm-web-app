@@ -75,6 +75,9 @@ public class LoanProcessResourceIT {
     private static final String DEFAULT_BANKING_PRODUCT_MNEMONIC = "AAAAAAAAAA";
     private static final String UPDATED_BANKING_PRODUCT_MNEMONIC = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_RULES_ENGINE_RESULT = false;
+    private static final Boolean UPDATED_RULES_ENGINE_RESULT = true;
+
     private static final LoanProcessStatus DEFAULT_LOAN_PROCESS_STATUS = LoanProcessStatus.APPROVED;
     private static final LoanProcessStatus UPDATED_LOAN_PROCESS_STATUS = LoanProcessStatus.DENIED;
 
@@ -138,6 +141,7 @@ public class LoanProcessResourceIT {
             .debtorCountry(DEFAULT_DEBTOR_COUNTRY)
             .bankingEntityMnemonic(DEFAULT_BANKING_ENTITY_MNEMONIC)
             .bankingProductMnemonic(DEFAULT_BANKING_PRODUCT_MNEMONIC)
+            .rulesEngineResult(DEFAULT_RULES_ENGINE_RESULT)
             .loanProcessStatus(DEFAULT_LOAN_PROCESS_STATUS);
         return loanProcess;
     }
@@ -161,6 +165,7 @@ public class LoanProcessResourceIT {
             .debtorCountry(UPDATED_DEBTOR_COUNTRY)
             .bankingEntityMnemonic(UPDATED_BANKING_ENTITY_MNEMONIC)
             .bankingProductMnemonic(UPDATED_BANKING_PRODUCT_MNEMONIC)
+            .rulesEngineResult(UPDATED_RULES_ENGINE_RESULT)
             .loanProcessStatus(UPDATED_LOAN_PROCESS_STATUS);
         return loanProcess;
     }
@@ -198,6 +203,7 @@ public class LoanProcessResourceIT {
         assertThat(testLoanProcess.getDebtorCountry()).isEqualTo(DEFAULT_DEBTOR_COUNTRY);
         assertThat(testLoanProcess.getBankingEntityMnemonic()).isEqualTo(DEFAULT_BANKING_ENTITY_MNEMONIC);
         assertThat(testLoanProcess.getBankingProductMnemonic()).isEqualTo(DEFAULT_BANKING_PRODUCT_MNEMONIC);
+        assertThat(testLoanProcess.isRulesEngineResult()).isEqualTo(DEFAULT_RULES_ENGINE_RESULT);
         assertThat(testLoanProcess.getLoanProcessStatus()).isEqualTo(DEFAULT_LOAN_PROCESS_STATUS);
     }
 
@@ -454,6 +460,7 @@ public class LoanProcessResourceIT {
             .andExpect(jsonPath("$.[*].debtorCountry").value(hasItem(DEFAULT_DEBTOR_COUNTRY.toString())))
             .andExpect(jsonPath("$.[*].bankingEntityMnemonic").value(hasItem(DEFAULT_BANKING_ENTITY_MNEMONIC.toString())))
             .andExpect(jsonPath("$.[*].bankingProductMnemonic").value(hasItem(DEFAULT_BANKING_PRODUCT_MNEMONIC.toString())))
+            .andExpect(jsonPath("$.[*].rulesEngineResult").value(hasItem(DEFAULT_RULES_ENGINE_RESULT.booleanValue())))
             .andExpect(jsonPath("$.[*].loanProcessStatus").value(hasItem(DEFAULT_LOAN_PROCESS_STATUS.toString())));
     }
     
@@ -480,6 +487,7 @@ public class LoanProcessResourceIT {
             .andExpect(jsonPath("$.debtorCountry").value(DEFAULT_DEBTOR_COUNTRY.toString()))
             .andExpect(jsonPath("$.bankingEntityMnemonic").value(DEFAULT_BANKING_ENTITY_MNEMONIC.toString()))
             .andExpect(jsonPath("$.bankingProductMnemonic").value(DEFAULT_BANKING_PRODUCT_MNEMONIC.toString()))
+            .andExpect(jsonPath("$.rulesEngineResult").value(DEFAULT_RULES_ENGINE_RESULT.booleanValue()))
             .andExpect(jsonPath("$.loanProcessStatus").value(DEFAULT_LOAN_PROCESS_STATUS.toString()));
     }
 
@@ -516,6 +524,7 @@ public class LoanProcessResourceIT {
             .debtorCountry(UPDATED_DEBTOR_COUNTRY)
             .bankingEntityMnemonic(UPDATED_BANKING_ENTITY_MNEMONIC)
             .bankingProductMnemonic(UPDATED_BANKING_PRODUCT_MNEMONIC)
+            .rulesEngineResult(UPDATED_RULES_ENGINE_RESULT)
             .loanProcessStatus(UPDATED_LOAN_PROCESS_STATUS);
         LoanProcessDTO loanProcessDTO = loanProcessMapper.toDto(updatedLoanProcess);
 
@@ -540,6 +549,7 @@ public class LoanProcessResourceIT {
         assertThat(testLoanProcess.getDebtorCountry()).isEqualTo(UPDATED_DEBTOR_COUNTRY);
         assertThat(testLoanProcess.getBankingEntityMnemonic()).isEqualTo(UPDATED_BANKING_ENTITY_MNEMONIC);
         assertThat(testLoanProcess.getBankingProductMnemonic()).isEqualTo(UPDATED_BANKING_PRODUCT_MNEMONIC);
+        assertThat(testLoanProcess.isRulesEngineResult()).isEqualTo(UPDATED_RULES_ENGINE_RESULT);
         assertThat(testLoanProcess.getLoanProcessStatus()).isEqualTo(UPDATED_LOAN_PROCESS_STATUS);
     }
 

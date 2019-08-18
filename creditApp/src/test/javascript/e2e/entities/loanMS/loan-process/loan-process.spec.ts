@@ -84,6 +84,15 @@ describe('LoanProcess e2e test', () => {
       'bankingProductMnemonic',
       'Expected BankingProductMnemonic value to be equals to bankingProductMnemonic'
     );
+    const selectedRulesEngineResult = loanProcessUpdatePage.getRulesEngineResultInput();
+    if (await selectedRulesEngineResult.isSelected()) {
+      await loanProcessUpdatePage.getRulesEngineResultInput().click();
+      expect(await loanProcessUpdatePage.getRulesEngineResultInput().isSelected(), 'Expected rulesEngineResult not to be selected').to.be
+        .false;
+    } else {
+      await loanProcessUpdatePage.getRulesEngineResultInput().click();
+      expect(await loanProcessUpdatePage.getRulesEngineResultInput().isSelected(), 'Expected rulesEngineResult to be selected').to.be.true;
+    }
     await loanProcessUpdatePage.save();
     expect(await loanProcessUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

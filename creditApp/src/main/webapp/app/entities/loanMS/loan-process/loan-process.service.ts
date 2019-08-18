@@ -11,10 +11,12 @@ import { ILoanProcess } from 'app/shared/model/loanMS/loan-process.model';
 
 type EntityResponseType = HttpResponse<ILoanProcess>;
 type EntityArrayResponseType = HttpResponse<ILoanProcess[]>;
+type RulesResultType = HttpResponse<boolean>;
 
 @Injectable({ providedIn: 'root' })
 export class LoanProcessService {
   public resourceUrl = SERVER_API_URL + 'services/loanms/api/loan-processes';
+  public rulesResourceUrl = SERVER_API_URL + 'services/rulesenginems/api/business-rules/loan-process';
 
   constructor(protected http: HttpClient) {}
 
@@ -43,6 +45,12 @@ export class LoanProcessService {
     return this.http
       .get<ILoanProcess[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+  
+  processBusinessRules(customerBirthDate: any, customerMonthlyIncome: number, customerGenre: string, loanRequestedAmmount: number, loanPeriod: number): Observable<RulesResultType> {
+    return this.http
+      .get<boolean>(`${this.rulesResourceUrl}/${customerBirthDate}/${customerMonthlyIncome}/${customerGenre}/${loanRequestedAmmount}/${loanPeriod}`, { observe: 'response' })
+      .pipe(map((res: RulesResultType) => res));
   }
 
   delete(id: number): Observable<HttpResponse<any>> {

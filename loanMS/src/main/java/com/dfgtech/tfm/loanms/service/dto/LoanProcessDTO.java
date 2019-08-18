@@ -51,6 +51,8 @@ public class LoanProcessDTO implements Serializable {
     @NotNull
     private String bankingProductMnemonic;
 
+    private Boolean rulesEngineResult;
+
     private LoanProcessStatus loanProcessStatus;
 
 
@@ -158,6 +160,14 @@ public class LoanProcessDTO implements Serializable {
         this.bankingProductMnemonic = bankingProductMnemonic;
     }
 
+    public Boolean isRulesEngineResult() {
+        return rulesEngineResult;
+    }
+
+    public void setRulesEngineResult(Boolean rulesEngineResult) {
+        this.rulesEngineResult = rulesEngineResult;
+    }
+
     public LoanProcessStatus getLoanProcessStatus() {
         return loanProcessStatus;
     }
@@ -203,6 +213,7 @@ public class LoanProcessDTO implements Serializable {
             ", debtorCountry='" + getDebtorCountry() + "'" +
             ", bankingEntityMnemonic='" + getBankingEntityMnemonic() + "'" +
             ", bankingProductMnemonic='" + getBankingProductMnemonic() + "'" +
+            ", rulesEngineResult='" + isRulesEngineResult() + "'" +
             ", loanProcessStatus='" + getLoanProcessStatus() + "'" +
             "}";
     }

@@ -95,6 +95,10 @@
             ]
         },
         {
+            "fieldName": "rulesEngineResult",
+            "fieldType": "Boolean"
+        },
+        {
             "fieldName": "loanProcessStatus",
             "fieldType": "LoanProcessStatus",
             "fieldValues": "APPROVED,DENIED,PENDING"

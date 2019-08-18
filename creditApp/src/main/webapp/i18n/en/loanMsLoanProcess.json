@@ -26,6 +26,7 @@
       "debtorCountry": "Debtor Country",
       "bankingEntityMnemonic": "Banking Entity Mnemonic",
       "bankingProductMnemonic": "Banking Product Mnemonic",
+      "rulesEngineResult": "Rules Engine Result",
       "loanProcessStatus": "Loan Process Status",
       "warranties": "Warranties"
     }

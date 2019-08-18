@@ -56,6 +56,7 @@ export class LoanProcessUpdateComponent implements OnInit {
     debtorCountry: [null, [Validators.required]],
     bankingEntityMnemonic: [null, [Validators.required]],
     bankingProductMnemonic: [null, [Validators.required]],
+    rulesEngineResult: [],
     loanProcessStatus: [],
     bankingAccount: [null, [Validators.required]] //Not part of LoanProcess Object
   });
@@ -85,8 +86,9 @@ export class LoanProcessUpdateComponent implements OnInit {
         if (this.mode === 'wizard') {
           this.wizardFooterService.setFormValid(false);
           this.customer = this.wizardService.getCustomer();
+          this.selectedAccount = this.wizardService.getSelectedAccount();
           this.updateForm(this.wizardService.getLoanProcess());
-          this.updateFormBankingAccount(this.wizardService.getSelectedAccount());
+          this.updateFormBankingAccount(this.selectedAccount);
           this.initializeCustomerInformation();
           this.amortizationSchedule = this.wizardService.getAmortizationSchedule();
           this.accountService
@@ -133,14 +135,17 @@ export class LoanProcessUpdateComponent implements OnInit {
       debtorCountry: loanProcess.debtorCountry,
       bankingEntityMnemonic: loanProcess.bankingEntityMnemonic,
       bankingProductMnemonic: loanProcess.bankingProductMnemonic,
+      rulesEngineResult: loanProcess.rulesEngineResult,
       loanProcessStatus: loanProcess.loanProcessStatus
     });
   }
   
   updateFormBankingAccount(selectedBankingAccount: IBankingAccount) {
-      this.editForm.patchValue({
-          bankingAccount: selectedBankingAccount.number
-      });
+      if(selectedBankingAccount){
+          this.editForm.patchValue({
+              bankingAccount: selectedBankingAccount.number
+          });
+      }
   }
 
   previousState() {
@@ -150,11 +155,21 @@ export class LoanProcessUpdateComponent implements OnInit {
   save() {
     this.isSaving = true;
     const loanProcess = this.createFromForm();
+    
     if (this.mode === 'wizard') {
-      this.wizardService.setLoanProcess(loanProcess);
-      this.wizardService.setAmortizationSchedule(this.amortizationSchedule);
-      this.wizardService.setSelectedAccount(this.selectedAccount);
-      this.wizardFooterService.setFormValid(true);
+      this.loanProcessService.processBusinessRules(this.customer.birthDate.format('YYYY-MM-DD'), this.customer.monthlyIncome, this.customer.genre.toString(), loanProcess.requestedAmount, loanProcess.loanPeriod)
+      .pipe(
+        filter((mayBeOk: HttpResponse<boolean>) => mayBeOk.ok),
+        map((response: HttpResponse<boolean>) => response.body)
+      )
+      .subscribe((res: boolean) => { 
+          loanProcess.rulesEngineResult = res;
+          this.wizardService.setLoanProcess(loanProcess);
+          this.wizardService.setAmortizationSchedule(this.amortizationSchedule);
+          this.wizardService.setSelectedAccount(this.selectedAccount);
+          this.wizardFooterService.setFormValid(true);
+      }, 
+      (res: HttpErrorResponse) => this.onError(res.message));
       return;
     }
     if (loanProcess.id !== undefined) {
@@ -180,6 +195,7 @@ export class LoanProcessUpdateComponent implements OnInit {
       debtorCountry: this.editForm.get(['debtorCountry']).value,
       bankingEntityMnemonic: this.editForm.get(['bankingEntityMnemonic']).value,
       bankingProductMnemonic: this.editForm.get(['bankingProductMnemonic']).value,
+      rulesEngineResult: this.editForm.get(['rulesEngineResult']).value,
       loanProcessStatus: this.editForm.get(['loanProcessStatus']).value
     };
   }

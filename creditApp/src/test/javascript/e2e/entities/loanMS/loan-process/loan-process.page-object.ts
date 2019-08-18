@@ -38,6 +38,7 @@ export class LoanProcessUpdatePage {
   debtorCountryInput = element(by.id('field_debtorCountry'));
   bankingEntityMnemonicInput = element(by.id('field_bankingEntityMnemonic'));
   bankingProductMnemonicInput = element(by.id('field_bankingProductMnemonic'));
+  rulesEngineResultInput = element(by.id('field_rulesEngineResult'));
   loanProcessStatusSelect = element(by.id('field_loanProcessStatus'));
 
   async getPageTitle() {
@@ -140,6 +141,9 @@ export class LoanProcessUpdatePage {
     return await this.bankingProductMnemonicInput.getAttribute('value');
   }
 
+  getRulesEngineResultInput(timeout?: number) {
+    return this.rulesEngineResultInput;
+  }
   async setLoanProcessStatusSelect(loanProcessStatus) {
     await this.loanProcessStatusSelect.sendKeys(loanProcessStatus);
   }

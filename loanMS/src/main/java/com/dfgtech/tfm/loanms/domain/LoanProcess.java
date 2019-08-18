@@ -78,6 +78,9 @@ public class LoanProcess implements Serializable {
     @Column(name = "banking_product_mnemonic", nullable = false)
     private String bankingProductMnemonic;
 
+    @Column(name = "rules_engine_result")
+    private Boolean rulesEngineResult;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "loan_process_status")
     private LoanProcessStatus loanProcessStatus;
@@ -252,6 +255,19 @@ public class LoanProcess implements Serializable {
         this.bankingProductMnemonic = bankingProductMnemonic;
     }
 
+    public Boolean isRulesEngineResult() {
+        return rulesEngineResult;
+    }
+
+    public LoanProcess rulesEngineResult(Boolean rulesEngineResult) {
+        this.rulesEngineResult = rulesEngineResult;
+        return this;
+    }
+
+    public void setRulesEngineResult(Boolean rulesEngineResult) {
+        this.rulesEngineResult = rulesEngineResult;
+    }
+
     public LoanProcessStatus getLoanProcessStatus() {
         return loanProcessStatus;
     }
@@ -323,6 +339,7 @@ public class LoanProcess implements Serializable {
             ", debtorCountry='" + getDebtorCountry() + "'" +
             ", bankingEntityMnemonic='" + getBankingEntityMnemonic() + "'" +
             ", bankingProductMnemonic='" + getBankingProductMnemonic() + "'" +
+            ", rulesEngineResult='" + isRulesEngineResult() + "'" +
             ", loanProcessStatus='" + getLoanProcessStatus() + "'" +
             "}";
     }

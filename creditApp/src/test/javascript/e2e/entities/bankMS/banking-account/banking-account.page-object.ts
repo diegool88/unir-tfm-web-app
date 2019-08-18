@@ -33,6 +33,7 @@ export class BankingAccountUpdatePage {
   customerIdentificationInput = element(by.id('field_customerIdentification'));
   customerIdentificationTypeInput = element(by.id('field_customerIdentificationType'));
   customerCountryInput = element(by.id('field_customerCountry'));
+  bankingEntityMnemonicInput = element(by.id('field_bankingEntityMnemonic'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -99,6 +100,14 @@ export class BankingAccountUpdatePage {
 
   async getCustomerCountryInput() {
     return await this.customerCountryInput.getAttribute('value');
+  }
+
+  async setBankingEntityMnemonicInput(bankingEntityMnemonic) {
+    await this.bankingEntityMnemonicInput.sendKeys(bankingEntityMnemonic);
+  }
+
+  async getBankingEntityMnemonicInput() {
+    return await this.bankingEntityMnemonicInput.getAttribute('value');
   }
 
   async save(timeout?: number) {
