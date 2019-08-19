@@ -1,0 +1,92 @@
+<div class="row justify-content-center">
+  <div class="col-12">
+      <div *ngIf="loanProcess">
+          <h2><span jhiTranslate="creditApp.loanMsLoanProcess.home.summary">Loan Process Summary</span></h2>
+          <hr>
+          <jhi-alert-error></jhi-alert-error>
+          <dl class="row jh-entity-details">
+              <div class="col-md-6">
+                  <dt><span jhiTranslate="creditApp.customer.firstname">Firstname</span></dt>
+                  <dd>
+                      <span>{{customer.firstname}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.lastname">Lastname</span></dt>
+                  <dd>
+                      <span>{{customer.lastname}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.identificationType">Identification Type</span></dt>
+                  <dd>
+                      <span jhiTranslate="{{'creditApp.IdentificationType.' + customer.identificationType}}">{{customer.identificationType}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.identificationNumber">Identification Number</span></dt>
+                  <dd>
+                      <span>{{customer.identificationNumber}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.genre">Genre</span></dt>
+                  <dd>
+                      <span jhiTranslate="{{'creditApp.Genre.' + customer.genre}}">{{customer.genre}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.email">Email</span></dt>
+                  <dd>
+                      <span>{{customer.email}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.birthDate">Birth Date</span></dt>
+                  <dd>
+                      <span>{{customer.birthDate}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.country">Country</span></dt>
+                  <dd>
+                      <span>{{customer.country}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.monthlyIncome">Monthly Income</span></dt>
+                  <dd>
+                      <span>{{customer.monthlyIncome}}</span>
+                  </dd>
+              </div>
+              <div class="col-md-6">
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.name">Name</span></dt>
+                  <dd>
+                      <span>{{loanProcess.name}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.requestedAmount">Requested Amount</span></dt>
+                  <dd>
+                      <span>{{loanProcess.requestedAmount}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.loanPeriod">Loan Period</span></dt>
+                  <dd>
+                      <span>{{loanProcess.loanPeriod}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.startDate">Start Date</span></dt>
+                  <dd>
+                      <span>{{loanProcess.startDate}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.endDate">End Date</span></dt>
+                  <dd>
+                      <span>{{loanProcess.endDate}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.justification">Justification</span></dt>
+                  <dd>
+                      <span>{{loanProcess.justification}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.bankingEntityMnemonic">Banking Entity Mnemonic</span></dt>
+                  <dd>
+                      <span>{{loanProcess.bankingEntityMnemonic}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.bankingProductMnemonic">Banking Product Mnemonic</span></dt>
+                  <dd>
+                      <span>{{loanProcess.bankingProductMnemonic}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.rulesEngineResult">Rules Engine Result</span></dt>
+                  <dd>
+                      <span>{{loanProcess.rulesEngineResult}}</span>
+                  </dd>
+              </div>
+          </dl>
+          <button type="button"
+                  (click)="completeLoanProcess()"
+                  class="btn btn-primary">
+              <fa-icon [icon]="'arrow-right'"></fa-icon>&nbsp;<span jhiTranslate="creditApp.loanMsLoanProcess.home.complete"> Comlpete Loan Process</span>
+          </button>
+      </div>
+  </div>
+</div>

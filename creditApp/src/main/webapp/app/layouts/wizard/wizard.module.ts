@@ -9,32 +9,29 @@ import { CreditAppAddressModule } from 'app/entities/address/address.module';
 import { CreditAppTelephoneNumberModule } from 'app/entities/telephone-number/telephone-number.module';
 import { CreditAppPersonalReferenceModule } from 'app/entities/personal-reference/personal-reference.module';
 import { WizardComponent } from './wizard.component';
-import { wizardRoute  } from './wizard.route';
+import { wizardRoute } from './wizard.route';
 import { WizardMainComponent } from './wizard-main/wizard-main.component';
 import { WizardNavbarComponent } from './wizard-main/wizard-navbar/wizard-navbar.component';
 import { WizardFooterComponent } from './wizard-main/wizard-footer/wizard-footer.component';
-import { LoanMsLoanProcessModule } from "app/entities/loanMS/loan-process/loan-process.module";
-import { LoanMsWarrantyModule } from "app/entities/loanMS/warranty/warranty.module";
+import { LoanMsLoanProcessModule } from 'app/entities/loanMS/loan-process/loan-process.module';
+import { LoanMsWarrantyModule } from 'app/entities/loanMS/warranty/warranty.module';
+import { WizardSummaryComponent } from './wizard-summary/wizard-summary.component';
 
-const ENTITY_STATES = [ ...wizardRoute ];
+const ENTITY_STATES = [...wizardRoute];
 
 @NgModule({
-  imports: [CreditAppSharedModule,
-            CreditAppCustomerModule,
-            CreditAppAddressModule,
-            CreditAppTelephoneNumberModule,
-            CreditAppPersonalReferenceModule,
-            LoanMsLoanProcessModule,
-            LoanMsWarrantyModule,
-            RouterModule.forChild(ENTITY_STATES)
+  imports: [
+    CreditAppSharedModule,
+    CreditAppCustomerModule,
+    CreditAppAddressModule,
+    CreditAppTelephoneNumberModule,
+    CreditAppPersonalReferenceModule,
+    LoanMsLoanProcessModule,
+    LoanMsWarrantyModule,
+    RouterModule.forChild(ENTITY_STATES)
   ],
-  declarations: [
-    WizardComponent,
-    WizardMainComponent,
-    WizardNavbarComponent,
-    WizardFooterComponent
-  ],
-  bootstrap: [ WizardComponent ],
+  declarations: [WizardComponent, WizardMainComponent, WizardNavbarComponent, WizardFooterComponent, WizardSummaryComponent],
+  bootstrap: [WizardComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

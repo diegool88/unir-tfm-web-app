@@ -6,7 +6,9 @@
         "createLabel": "Crear nueva Solicitud de Crédito",
         "createOrEditLabel": "Crear o editar Solicitud de Crédito",
         "notFound": "Solicitudes de Crédito no encontradas",
-		"calculate": "Calcular Tabla de Amortización"
+        "calculate": "Calcular Tabla de Amortización",
+        "summary": "Resumen Solicitud de Crédito",
+        "complete": "Completar Solicitud de Crédito"
       },
       "delete": {
         "question": "¿Seguro que quiere eliminar la Solicitud de Crédito {{ id }}?"
@@ -26,7 +28,7 @@
       "debtorCountry": "País del Deudor",
       "bankingEntityMnemonic": "Entidad Bancaria",
       "bankingProductMnemonic": "Producto Bancario",
-	  "rulesEngineResult": "Resultado de Reglas de Negocio",
+      "rulesEngineResult": "Resultado de Reglas de Negocio",
       "loanProcessStatus": "Estado Solicitud de Crédito",
       "warranties": "Garantías"
     }

@@ -44,7 +44,9 @@ import {
   faPhone,
   faUsers,
   faCalculator,
-  faFileContract
+  faFileContract,
+  faFileAlt,
+  faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 
 // Adds the SVG icon to the library so you can use it in your page
@@ -87,5 +89,7 @@ library.add(faPhone);
 library.add(faUsers);
 library.add(faCalculator);
 library.add(faFileContract);
+library.add(faFileAlt);
+library.add(faArrowRight);
 
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

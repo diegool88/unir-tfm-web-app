@@ -10,6 +10,7 @@ import { ICustomer, Customer } from 'app/shared/model/customer.model';
 import { CustomerService } from './customer.service';
 import { IUser, UserService, AccountService } from 'app/core';
 import { WizardFooterService } from 'app/layouts/wizard/wizard-footer.service';
+import { WizardService } from 'app/layouts/wizard/wizard.service';
 
 @Component({
   selector: 'jhi-customer-update',
@@ -48,7 +49,8 @@ export class CustomerUpdateComponent implements OnInit {
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder,
-    protected wizardFooterService: WizardFooterService
+    protected wizardFooterService: WizardFooterService,
+    protected wizardService: WizardService
   ) {
     this.accountService.identity().then(account => {
       this.currentAccount = account;
@@ -100,7 +102,7 @@ export class CustomerUpdateComponent implements OnInit {
       email: customer.email,
       birthDate: customer.birthDate,
       country: customer.country,
-      clientSince: customer.clientSince,
+      clientSince: customer.clientSince !== undefined && customer.clientSince !== null ? customer.clientSince : moment(),
       monthlyIncome: customer.monthlyIncome,
       userId: customer.userId
     });
@@ -141,15 +143,22 @@ export class CustomerUpdateComponent implements OnInit {
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ICustomer>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+    //result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+    result
+      .pipe(
+        filter((mayBeOk: HttpResponse<ICustomer>) => mayBeOk.ok),
+        map((response: HttpResponse<ICustomer>) => response.body)
+      )
+      .subscribe((res: ICustomer) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(res: ICustomer) {
     this.isSaving = false;
     if (this.mode !== 'wizard') {
       this.previousState();
     } else {
       this.wizardFooterService.setFormValid(true);
+      this.wizardService.setCustomer(res);
     }
   }
 

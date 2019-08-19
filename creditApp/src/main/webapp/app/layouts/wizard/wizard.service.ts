@@ -1,22 +1,14 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ICustomer, Customer } from 'app/shared/model/customer.model';
-import { CustomerService } from 'app/entities/customer';
-import { AccountService } from 'app/core';
-import { filter, map } from 'rxjs/operators';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { JhiAlertService } from 'ng-jhipster';
-import { Observable, Subject } from 'rxjs';
-import { ILoanProcess, LoanProcess } from "app/shared/model/loanMS/loan-process.model";
-import { IAmortizationTable } from "app/shared/model/loanMS/amortization-table.model";
-import { IWarranty } from "app/shared/model/loanMS/warranty.model";
-import { IBankingAccount, BankingAccount } from "app/shared/model/bankMS/banking-account.model";
+import { ILoanProcess, LoanProcess } from 'app/shared/model/loanMS/loan-process.model';
+import { IAmortizationTable } from 'app/shared/model/loanMS/amortization-table.model';
+import { IWarranty } from 'app/shared/model/loanMS/warranty.model';
+import { IBankingAccount, BankingAccount } from 'app/shared/model/bankMS/banking-account.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WizardService {
-  formArray: FormGroup[];
   customer?: ICustomer = new Customer();
   steps: any[];
   currentStep?: any;
@@ -25,50 +17,42 @@ export class WizardService {
   warranties: IWarranty[] = [];
   selectedAccount: IBankingAccount;
 
-  constructor(
-    protected customerService: CustomerService,
-    protected accountService: AccountService,
-    protected jhiAlertService: JhiAlertService
-  ) {}
-  
+  constructor() {}
+
   setLoanProcess(newLoanProcess: ILoanProcess) {
-      this.newLoanProcess = newLoanProcess;
-  }
-  
-  getLoanProcess(): ILoanProcess {
-      return this.newLoanProcess;
-  }
-  
-  setSelectedAccount(selectedAccount: IBankingAccount) {
-      this.selectedAccount = selectedAccount;
-  }
-  
-  getSelectedAccount(): IBankingAccount {
-      return this.selectedAccount;
-  }
-  
-  setAmortizationSchedule(amortizationSchedule: IAmortizationTable[]){
-      this.amortizationSchedule = amortizationSchedule;
-  }
-  
-  getAmortizationSchedule(): IAmortizationTable[] {
-      return this.amortizationSchedule;
-  }
-  
-  addWarranties(warranty: IWarranty){
-      this.warranties.push(warranty);
-  }
-  
-  setWarranties(warranties: IWarranty[]){
-      this.warranties = warranties;
-  }
-  
-  getWarranties(): IWarranty[] {
-      return this.warranties;
+    this.newLoanProcess = newLoanProcess;
   }
 
-  addFormGroup(formGroup: FormGroup) {
-    this.formArray.push(formGroup);
+  getLoanProcess(): ILoanProcess {
+    return this.newLoanProcess;
+  }
+
+  setSelectedAccount(selectedAccount: IBankingAccount) {
+    this.selectedAccount = selectedAccount;
+  }
+
+  getSelectedAccount(): IBankingAccount {
+    return this.selectedAccount;
+  }
+
+  setAmortizationSchedule(amortizationSchedule: IAmortizationTable[]) {
+    this.amortizationSchedule = amortizationSchedule;
+  }
+
+  getAmortizationSchedule(): IAmortizationTable[] {
+    return this.amortizationSchedule;
+  }
+
+  addWarranties(warranty: IWarranty) {
+    this.warranties.push(warranty);
+  }
+
+  setWarranties(warranties: IWarranty[]) {
+    this.warranties = warranties;
+  }
+
+  getWarranties(): IWarranty[] {
+    return this.warranties;
   }
 
   getSteps(): any[] {
@@ -109,6 +93,13 @@ export class WizardService {
           path: ['warranty'],
           queryParams: { mode: 'wizard' },
           icon: 'file-contract'
+        },
+        {
+          index: 7,
+          label: 'creditApp.loanMsLoanProcess.home.title',
+          path: ['summary'],
+          queryParams: { mode: 'wizard' },
+          icon: 'file-alt'
         }
       ];
     }
@@ -133,15 +124,16 @@ export class WizardService {
     return this.customer;
   }
 
+  reloadSteps() {
+    this.steps = [];
+    return this.getSteps();
+  }
+
   clearSteps() {
     this.steps = [];
     this.warranties = [];
     this.amortizationSchedule = [];
     this.newLoanProcess = new LoanProcess();
     this.selectedAccount = new BankingAccount();
-  }
-
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
   }
 }
