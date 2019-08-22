@@ -1,0 +1,4 @@
+jdbc:h2:file:C:/Users/diego/UNIR/Dev/TFM/unir-tfm-web-app/creditApp/target/h2db/db/creditApp
+jdbc:h2:file:C:/Users/diego/UNIR/Dev/TFM/unir-tfm-web-app/bankMS/target/h2db/db/bankMS
+jdbc:h2:file:C:/Users/diego/UNIR/Dev/TFM/unir-tfm-web-app/loanMS/target/h2db/db/loanMS
+jdbc:h2:file:C:/Users/diego/UNIR/Dev/TFM/unir-tfm-web-app/rulesEngineMS/target/h2db/db

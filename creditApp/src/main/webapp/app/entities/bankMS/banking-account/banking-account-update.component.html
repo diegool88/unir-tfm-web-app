@@ -37,7 +37,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <!--div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.currentBalance" for="field_currentBalance">Current Balance</label>
                     <input type="number" class="form-control" name="currentBalance" id="field_currentBalance"
                            formControlName="currentBalance"/>
@@ -66,8 +66,21 @@
                             This field should be a number.
                         </small>
                     </div>
-                </div>
+                </div-->
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.address.customer" for="field_customer">Customer</label>
+                    <select class="form-control" id="field_customer" name="customer" formControlName="customerId" (change)="onCustomerChange($event.target)">
+                        <option *ngIf="!editForm.get('customerId').value" [value]="null" selected></option>
+                        <option [value]="customerOption.id" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.firstname + ' ' + customerOption.lastname}}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('customerId').invalid && (editForm.get('customerId').dirty || editForm.get('customerId').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('customerId').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+                <!--div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.customerIdentification" for="field_customerIdentification">Customer Identification</label>
                     <input type="text" class="form-control" name="customerIdentification" id="field_customerIdentification"
                            formControlName="customerIdentification"/>
@@ -99,8 +112,21 @@
                         This field is required.
                         </small>
                     </div>
-                </div>
+                </div-->
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.bankingEntityMnemonic" for="field_bankingEntityMnemonic">Banking Entity Mnemonic</label>
+                    <select class="form-control" #bankingEntityId name="bankingEntityMnemonic" formControlName="bankingEntityMnemonic" id="field_bankingEntityMnemonic">
+                    	<option *ngIf="!editForm.get('bankingEntityMnemonic').value" [value]="null" selected></option>
+                        <option *ngFor="let bankingEntity of bankingEntities; trackBy: trackBankingEntityById" [value]="bankingEntity.mnemonic">{{ bankingEntity.mnemonic + ' - ' + bankingEntity.name }}</option>
+                    </select>
+                    <div *ngIf="editForm.get('bankingEntityMnemonic').invalid && (editForm.get('bankingEntityMnemonic').dirty || editForm.get('bankingEntityMnemonic').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankingEntityMnemonic').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <!--div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.bankingEntityMnemonic" for="field_bankingEntityMnemonic">Banking Entity Mnemonic</label>
                     <input type="text" class="form-control" name="bankingEntityMnemonic" id="field_bankingEntityMnemonic"
                            formControlName="bankingEntityMnemonic"/>
@@ -118,7 +144,7 @@
                             This field should follow pattern for "Banking Entity Mnemonic".
                         </small>
                     </div>
-                </div>
+                </div-->
 
             </div>
             <div>
