@@ -234,7 +234,7 @@
                 </div>
                 <br><br>
                 <h2 *ngIf="amortizationSchedule?.length > 0" id="jhi-amortization-schedule-heading" jhiTranslate="creditApp.loanMsAmortizationTable.detail.title">Amortization Schedule</h2>
-                <div class="table-responsive" *ngIf="amortizationSchedule?.length > 0">
+                <div class="table-responsive table-custom-scrollbar table-wrapper-scroll-y" *ngIf="amortizationSchedule?.length > 0">
 			        <table class="table table-striped">
 			            <thead>
 			            <tr>
@@ -242,7 +242,6 @@
 			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.dueDate">Due Date</span></th>
 			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.amount">Amount</span></th>
 			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.interest">Interest</span></th>
-			            <th></th>
 			            </tr>
 			            </thead>
 			            <tbody>

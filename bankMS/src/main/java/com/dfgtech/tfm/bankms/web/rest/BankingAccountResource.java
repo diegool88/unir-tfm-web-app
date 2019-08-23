@@ -2,6 +2,8 @@ package com.dfgtech.tfm.bankms.web.rest;
 
 import com.dfgtech.tfm.bankms.external.service.CustomerServiceClient;
 import com.dfgtech.tfm.bankms.external.service.dto.CustomerDTO;
+import com.dfgtech.tfm.bankms.security.AuthoritiesConstants;
+import com.dfgtech.tfm.bankms.security.SecurityUtils;
 import com.dfgtech.tfm.bankms.service.BankingAccountService;
 import com.dfgtech.tfm.bankms.web.rest.errors.BadRequestAlertException;
 import com.dfgtech.tfm.bankms.service.dto.BankingAccountDTO;
@@ -95,7 +97,12 @@ public class BankingAccountResource {
     @GetMapping("/banking-accounts")
     public List<BankingAccountDTO> getAllBankingAccounts() {
         log.debug("REST request to get all BankingAccounts");
-        return bankingAccountService.findAll();
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+        	return bankingAccountService.findAll();
+        } else {
+        	List<CustomerDTO> result = customerServiceClient.getLoggedCustomer();
+        	return result.size() > 0 ? bankingAccountService.findByCustomer(result.get(0).getIdentificationNumber(), result.get(0).getIdentificationType().toString(), result.get(0).getCountry()) : new ArrayList<BankingAccountDTO>();
+        }
     }
     
     /**

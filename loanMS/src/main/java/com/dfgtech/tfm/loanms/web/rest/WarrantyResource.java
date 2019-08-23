@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +56,27 @@ public class WarrantyResource {
         return ResponseEntity.created(new URI("/api/warranties/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+    
+    /**
+     * {@code POST  /warranties} : Create a new warranty.
+     *
+     * @param warrantyDTO the warrantyDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new warrantyDTO, or with status {@code 400 (Bad Request)} if the warranty has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/warranties-masive")
+    public List<WarrantyDTO> createWarrantiesMasive(@Valid @RequestBody List<WarrantyDTO> warrantyDTOs) throws URISyntaxException {
+        List<WarrantyDTO> warrantiesAll = new ArrayList<WarrantyDTO>();
+    	for(WarrantyDTO warrantyDTO: warrantyDTOs) {
+        	log.debug("REST request to save Warranty : {}", warrantyDTO);
+            if (warrantyDTO.getId() != null) {
+                throw new BadRequestAlertException("A new warranty cannot already have an ID", ENTITY_NAME, "idexists");
+            }
+            WarrantyDTO result = warrantyService.save(warrantyDTO);
+            warrantiesAll.add(result);
+        }
+        return warrantiesAll;
     }
 
     /**

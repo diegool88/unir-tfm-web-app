@@ -5,6 +5,17 @@ import { IBankingAccount } from 'app/shared/model/bankMS/banking-account.model';
 import { IAmortizationTable } from 'app/shared/model/loanMS/amortization-table.model';
 import { WizardService } from '../wizard.service';
 import { IWarranty } from 'app/shared/model/loanMS/warranty.model';
+import { IAddress } from "app/shared/model/address.model";
+import { AddressService } from "app/entities/address";
+import { HttpResponse, HttpErrorResponse } from "@angular/common/http";
+import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { ITelephoneNumber } from "app/shared/model/telephone-number.model";
+import { TelephoneNumberService } from "app/entities/telephone-number";
+import { IPersonalReference } from "app/shared/model/personal-reference.model";
+import { PersonalReferenceService } from "app/entities/personal-reference";
+import { Observable } from "rxjs";
+import { filter, map } from 'rxjs/operators';
+import { LoanProcessService } from "app/entities/loanMS/loan-process";
 
 @Component({
   selector: 'jhi-wizard-summary',
@@ -17,8 +28,17 @@ export class WizardSummaryComponent implements OnInit {
   selectedAccount?: IBankingAccount;
   loanProcess?: ILoanProcess;
   warranties?: IWarranty[];
+  addresses?: IAddress[];
+  telephoneNumbers?: ITelephoneNumber[];
+  personalReferences?: IPersonalReference[];
 
-  constructor(protected wizardService: WizardService) {}
+  constructor(protected wizardService: WizardService,
+          protected addressService: AddressService,
+          protected telephoneNumberService: TelephoneNumberService,
+          protected personalReferenceService: PersonalReferenceService,
+          protected loanProcessService: LoanProcessService,
+          protected dataUtils: JhiDataUtils,
+          protected jhiAlertService: JhiAlertService) {}
 
   ngOnInit() {
     this.customer = this.wizardService.getCustomer();
@@ -26,7 +46,80 @@ export class WizardSummaryComponent implements OnInit {
     this.selectedAccount = this.wizardService.getSelectedAccount();
     this.loanProcess = this.wizardService.getLoanProcess();
     this.warranties = this.wizardService.getWarranties();
+    this.addressService
+    .query()
+    .subscribe(
+      (res: HttpResponse<IAddress[]>) => { 
+          this.addresses = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+    this.telephoneNumberService
+    .query()
+    .subscribe(
+      (res: HttpResponse<ITelephoneNumber[]>) => {
+          this.telephoneNumbers = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+    this.personalReferenceService
+    .query()
+    .subscribe(
+      (res: HttpResponse<IPersonalReference[]>) => {
+          this.personalReferences = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+    
   }
 
-  completeLoanProcess() {}
+  completeLoanProcess() {
+      this.subscribeToSaveResponse(this.loanProcessService.create(this.loanProcess));
+  }
+  
+  protected onError(errorMessage: string) {
+    this.jhiAlertService.error(errorMessage, null, null);
+  }
+  
+  getAmortizationScheduleAmountTotal() {
+    return this.amortizationSchedule
+      .map(item => {
+        return item.amount;
+      })
+      .reduce((sum, curr) => sum + curr);
+  }
+
+  getAmortizationScheduleInterestTotal() {
+    return this.amortizationSchedule
+      .map(item => {
+        return item.interest;
+      })
+      .reduce((sum, curr) => sum + curr);
+  }
+  
+  byteSize(field) {
+    return this.dataUtils.byteSize(field);
+  }
+  
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<ILoanProcess>>) {
+    result
+    .pipe(
+       filter((mayBeOk: HttpResponse<ILoanProcess>) => mayBeOk.ok),
+       map((response: HttpResponse<ILoanProcess>) => response.body)
+    )
+    .subscribe((res: ILoanProcess) => { 
+        //Call other services to save amortization schedule and warranties
+        this.onSaveSuccess();
+    }
+    , (res: HttpErrorResponse) => this.onSaveError());
+  }
+
+  protected onSaveSuccess() {
+    this.jhiAlertService.success("Completed", null, null);
+  }
+
+  protected onSaveError() {
+    
+  }
+
 }

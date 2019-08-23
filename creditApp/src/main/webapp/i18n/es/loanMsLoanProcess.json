@@ -30,7 +30,11 @@
       "bankingProductMnemonic": "Producto Bancario",
       "rulesEngineResult": "Resultado de Reglas de Negocio",
       "loanProcessStatus": "Estado Solicitud de Crédito",
-      "warranties": "Garantías"
+      "warranties": "Garantías",
+	  "businessRules": {
+		"true": "Las reglas de negocio para esta solicitud de crédito se han cumplido",
+		"false": "Las reglas de negocio para esta solicitud de crédito no se han cumplido"
+	  }
     }
   },
   "loanMsApp": {

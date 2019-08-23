@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +59,27 @@ public class AmortizationTableResource {
         return ResponseEntity.created(new URI("/api/amortization-tables/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+    
+    /**
+     * {@code POST  /amortization-tables} : Create a new amortizationTable.
+     *
+     * @param amortizationTableDTO the amortizationTableDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new amortizationTableDTO, or with status {@code 400 (Bad Request)} if the amortizationTable has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/amortization-tables-masive")
+    public List<AmortizationTableDTO> createAmortizationTableMasive(@Valid @RequestBody List<AmortizationTableDTO> amortizationTableDTOs) throws URISyntaxException {
+        List<AmortizationTableDTO> amortizationTableAll = new ArrayList<AmortizationTableDTO>();
+    	for(AmortizationTableDTO amortizationTableDTO: amortizationTableDTOs) {
+        	log.debug("REST request to save AmortizationTable : {}", amortizationTableDTO);
+            if (amortizationTableDTO.getId() != null) {
+                throw new BadRequestAlertException("A new amortizationTable cannot already have an ID", ENTITY_NAME, "idexists");
+            }
+            AmortizationTableDTO result = amortizationTableService.save(amortizationTableDTO);
+            amortizationTableAll.add(result);
+        }
+    	return amortizationTableAll;
     }
 
     /**

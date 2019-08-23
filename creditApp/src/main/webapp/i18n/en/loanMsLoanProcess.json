@@ -30,7 +30,11 @@
       "bankingProductMnemonic": "Banking Product Mnemonic",
       "rulesEngineResult": "Rules Engine Result",
       "loanProcessStatus": "Loan Process Status",
-      "warranties": "Warranties"
+      "warranties": "Warranties",
+	  "businessRules": {
+		"true": "Business Rules for current Loan Process have been fulfilled",
+		"false": "Business Rules for current Loan Process haven't been fulfilled"
+	  }
     }
   },
   "loanMsApp": {
