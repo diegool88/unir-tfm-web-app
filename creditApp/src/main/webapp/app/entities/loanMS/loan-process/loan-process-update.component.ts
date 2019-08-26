@@ -57,6 +57,9 @@ export class LoanProcessUpdateComponent implements OnInit {
     bankingEntityMnemonic: [null, [Validators.required]],
     bankingProductMnemonic: [null, [Validators.required]],
     rulesEngineResult: [],
+	bankingAccountNumber: [],
+    bankingAccountType: [],
+    bankingAccountEntityMnemonic: [],
     loanProcessStatus: [],
     bankingAccount: [null, [Validators.required]] //Not part of LoanProcess Object
   });
@@ -136,6 +139,9 @@ export class LoanProcessUpdateComponent implements OnInit {
       bankingEntityMnemonic: loanProcess.bankingEntityMnemonic,
       bankingProductMnemonic: loanProcess.bankingProductMnemonic,
       rulesEngineResult: loanProcess.rulesEngineResult,
+      bankingAccountNumber: loanProcess.bankingAccountNumber,
+      bankingAccountType: loanProcess.bankingAccountType,
+      bankingAccountEntityMnemonic: loanProcess.bankingAccountEntityMnemonic,
       loanProcessStatus: loanProcess.loanProcessStatus
     });
   }
@@ -196,6 +202,9 @@ export class LoanProcessUpdateComponent implements OnInit {
       bankingEntityMnemonic: this.editForm.get(['bankingEntityMnemonic']).value,
       bankingProductMnemonic: this.editForm.get(['bankingProductMnemonic']).value,
       rulesEngineResult: this.editForm.get(['rulesEngineResult']).value,
+      bankingAccountNumber: this.editForm.get(['bankingAccountNumber']).value,
+      bankingAccountType: this.editForm.get(['bankingAccountType']).value,
+      bankingAccountEntityMnemonic: this.editForm.get(['bankingAccountEntityMnemonic']).value,
       loanProcessStatus: this.editForm.get(['loanProcessStatus']).value
     };
   }
@@ -292,7 +301,11 @@ export class LoanProcessUpdateComponent implements OnInit {
         return account.number === parseInt(target.value);
       });
       this.selectedAccount = accountsFiltered.length > 0 ? accountsFiltered[0] : new BankingAccount();
-      this.editForm.patchValue({ bankingAccount: this.selectedAccount.number });      
+      this.editForm.patchValue({ 
+        bankingAccountNumber: this.selectedAccount.number,
+        bankingAccountType: this.selectedAccount.accountType,
+        bankingAccountEntityMnemonic: this.selectedAccount.bankingEntityMnemonic
+      });      
   }
 
   calculateAmortizationSchedule(event: any) {

@@ -28,7 +28,7 @@
         {
             "fieldName": "document",
             "fieldType": "byte[]",
-            "fieldTypeBlobContent": "image"
+            "fieldTypeBlobContent": "any"
         },
         {
             "fieldName": "debtorIdentification",

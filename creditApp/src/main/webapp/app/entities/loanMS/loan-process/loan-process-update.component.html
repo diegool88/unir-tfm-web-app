@@ -224,6 +224,21 @@
                     <input type="checkbox" class="form-control" name="rulesEngineResult" id="field_rulesEngineResult"
                            formControlName="rulesEngineResult"/>
                 </div>
+				<div *ngIf="mode !== 'wizard'" class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingAccountNumber" for="field_bankingAccountNumber">Banking Account Number</label>
+                    <input type="number" class="form-control" name="bankingAccountNumber" id="field_bankingAccountNumber"
+                           formControlName="bankingAccountNumber"/>
+                </div>
+                <div *ngIf="mode !== 'wizard'" class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingAccountType" for="field_bankingAccountType">Banking Account Type</label>
+                    <input type="text" class="form-control" name="bankingAccountType" id="field_bankingAccountType"
+                           formControlName="bankingAccountType"/>
+                </div>
+                <div *ngIf="mode !== 'wizard'" class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.bankingAccountEntityMnemonic" for="field_bankingAccountEntityMnemonic">Banking Account Entity Mnemonic</label>
+                    <input type="text" class="form-control" name="bankingAccountEntityMnemonic" id="field_bankingAccountEntityMnemonic"
+                           formControlName="bankingAccountEntityMnemonic"/>
+                </div>
                 <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsLoanProcess.loanProcessStatus" for="field_loanProcessStatus">Loan Process Status</label>
                     <select class="form-control" name="loanProcessStatus" formControlName="loanProcessStatus" id="field_loanProcessStatus">

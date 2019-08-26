@@ -53,6 +53,12 @@ public class LoanProcessDTO implements Serializable {
 
     private Boolean rulesEngineResult;
 
+    private Integer bankingAccountNumber;
+
+    private String bankingAccountType;
+
+    private String bankingAccountEntityMnemonic;
+
     private LoanProcessStatus loanProcessStatus;
 
 
@@ -168,6 +174,30 @@ public class LoanProcessDTO implements Serializable {
         this.rulesEngineResult = rulesEngineResult;
     }
 
+    public Integer getBankingAccountNumber() {
+        return bankingAccountNumber;
+    }
+
+    public void setBankingAccountNumber(Integer bankingAccountNumber) {
+        this.bankingAccountNumber = bankingAccountNumber;
+    }
+
+    public String getBankingAccountType() {
+        return bankingAccountType;
+    }
+
+    public void setBankingAccountType(String bankingAccountType) {
+        this.bankingAccountType = bankingAccountType;
+    }
+
+    public String getBankingAccountEntityMnemonic() {
+        return bankingAccountEntityMnemonic;
+    }
+
+    public void setBankingAccountEntityMnemonic(String bankingAccountEntityMnemonic) {
+        this.bankingAccountEntityMnemonic = bankingAccountEntityMnemonic;
+    }
+
     public LoanProcessStatus getLoanProcessStatus() {
         return loanProcessStatus;
     }
@@ -214,6 +244,9 @@ public class LoanProcessDTO implements Serializable {
             ", bankingEntityMnemonic='" + getBankingEntityMnemonic() + "'" +
             ", bankingProductMnemonic='" + getBankingProductMnemonic() + "'" +
             ", rulesEngineResult='" + isRulesEngineResult() + "'" +
+            ", bankingAccountNumber=" + getBankingAccountNumber() +
+            ", bankingAccountType='" + getBankingAccountType() + "'" +
+            ", bankingAccountEntityMnemonic='" + getBankingAccountEntityMnemonic() + "'" +
             ", loanProcessStatus='" + getLoanProcessStatus() + "'" +
             "}";
     }

@@ -44,9 +44,7 @@
                 <td>{{warranty.description}}</td>
                 <td>{{warranty.value}}</td>
                 <td>
-                    <a *ngIf="warranty.document" (click)="openFile(warranty.documentContentType, warranty.document)">
-                        <img [src]="'data:' + warranty.documentContentType + ';base64,' + warranty.document" style="max-height: 30px;" alt="warranty image"/>
-                    </a>
+                    <a *ngIf="warranty.document" (click)="openFile(warranty.documentContentType, warranty.document)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="warranty.document">{{warranty.documentContentType}}, {{byteSize(warranty.document)}}</span>
                 </td>
                 <td *ngIf="mode !== 'wizard'">{{warranty.debtorIdentification}}</td>

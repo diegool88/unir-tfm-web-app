@@ -3,6 +3,7 @@ package com.dfgtech.tfm.loanms.web.rest;
 import com.dfgtech.tfm.loanms.business.LoanProcessUtils;
 import com.dfgtech.tfm.loanms.service.AmortizationTableService;
 import com.dfgtech.tfm.loanms.web.rest.errors.BadRequestAlertException;
+import com.dfgtech.tfm.loanms.service.dto.AmortizationScheduleWrapper;
 import com.dfgtech.tfm.loanms.service.dto.AmortizationTableDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -69,9 +70,9 @@ public class AmortizationTableResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/amortization-tables-masive")
-    public List<AmortizationTableDTO> createAmortizationTableMasive(@Valid @RequestBody List<AmortizationTableDTO> amortizationTableDTOs) throws URISyntaxException {
+    public List<AmortizationTableDTO> createAmortizationTableMasive(@RequestBody AmortizationScheduleWrapper amortizationTableDTOs) throws URISyntaxException {
         List<AmortizationTableDTO> amortizationTableAll = new ArrayList<AmortizationTableDTO>();
-    	for(AmortizationTableDTO amortizationTableDTO: amortizationTableDTOs) {
+    	for(AmortizationTableDTO amortizationTableDTO: amortizationTableDTOs.getAmortizationSchedule()) {
         	log.debug("REST request to save AmortizationTable : {}", amortizationTableDTO);
             if (amortizationTableDTO.getId() != null) {
                 throw new BadRequestAlertException("A new amortizationTable cannot already have an ID", ENTITY_NAME, "idexists");

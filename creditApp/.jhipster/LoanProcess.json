@@ -99,6 +99,18 @@
             "fieldType": "Boolean"
         },
         {
+            "fieldName": "bankingAccountNumber",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "bankingAccountType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bankingAccountEntityMnemonic",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "loanProcessStatus",
             "fieldType": "LoanProcessStatus",
             "fieldValues": "APPROVED,DENIED,PENDING"

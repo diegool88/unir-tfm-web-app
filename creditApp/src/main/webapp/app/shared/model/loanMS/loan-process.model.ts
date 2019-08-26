@@ -22,6 +22,9 @@ export interface ILoanProcess {
   bankingEntityMnemonic?: string;
   bankingProductMnemonic?: string;
   rulesEngineResult?: boolean;
+  bankingAccountNumber?: number;
+  bankingAccountType?: string;
+  bankingAccountEntityMnemonic?: string;
   loanProcessStatus?: LoanProcessStatus;
   warranties?: IWarranty[];
 }
@@ -42,6 +45,9 @@ export class LoanProcess implements ILoanProcess {
     public bankingEntityMnemonic?: string,
     public bankingProductMnemonic?: string,
     public rulesEngineResult?: boolean,
+    public bankingAccountNumber?: number,
+    public bankingAccountType?: string,
+    public bankingAccountEntityMnemonic?: string,
     public loanProcessStatus?: LoanProcessStatus,
     public warranties?: IWarranty[]
   ) {

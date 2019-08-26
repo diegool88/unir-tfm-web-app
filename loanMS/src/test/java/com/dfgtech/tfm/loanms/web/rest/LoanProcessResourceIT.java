@@ -78,6 +78,16 @@ public class LoanProcessResourceIT {
     private static final Boolean DEFAULT_RULES_ENGINE_RESULT = false;
     private static final Boolean UPDATED_RULES_ENGINE_RESULT = true;
 
+    private static final Integer DEFAULT_BANKING_ACCOUNT_NUMBER = 1;
+    private static final Integer UPDATED_BANKING_ACCOUNT_NUMBER = 2;
+    private static final Integer SMALLER_BANKING_ACCOUNT_NUMBER = 1 - 1;
+
+    private static final String DEFAULT_BANKING_ACCOUNT_TYPE = "AAAAAAAAAA";
+    private static final String UPDATED_BANKING_ACCOUNT_TYPE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_BANKING_ACCOUNT_ENTITY_MNEMONIC = "AAAAAAAAAA";
+    private static final String UPDATED_BANKING_ACCOUNT_ENTITY_MNEMONIC = "BBBBBBBBBB";
+
     private static final LoanProcessStatus DEFAULT_LOAN_PROCESS_STATUS = LoanProcessStatus.APPROVED;
     private static final LoanProcessStatus UPDATED_LOAN_PROCESS_STATUS = LoanProcessStatus.DENIED;
 
@@ -142,6 +152,9 @@ public class LoanProcessResourceIT {
             .bankingEntityMnemonic(DEFAULT_BANKING_ENTITY_MNEMONIC)
             .bankingProductMnemonic(DEFAULT_BANKING_PRODUCT_MNEMONIC)
             .rulesEngineResult(DEFAULT_RULES_ENGINE_RESULT)
+            .bankingAccountNumber(DEFAULT_BANKING_ACCOUNT_NUMBER)
+            .bankingAccountType(DEFAULT_BANKING_ACCOUNT_TYPE)
+            .bankingAccountEntityMnemonic(DEFAULT_BANKING_ACCOUNT_ENTITY_MNEMONIC)
             .loanProcessStatus(DEFAULT_LOAN_PROCESS_STATUS);
         return loanProcess;
     }
@@ -166,6 +179,9 @@ public class LoanProcessResourceIT {
             .bankingEntityMnemonic(UPDATED_BANKING_ENTITY_MNEMONIC)
             .bankingProductMnemonic(UPDATED_BANKING_PRODUCT_MNEMONIC)
             .rulesEngineResult(UPDATED_RULES_ENGINE_RESULT)
+            .bankingAccountNumber(UPDATED_BANKING_ACCOUNT_NUMBER)
+            .bankingAccountType(UPDATED_BANKING_ACCOUNT_TYPE)
+            .bankingAccountEntityMnemonic(UPDATED_BANKING_ACCOUNT_ENTITY_MNEMONIC)
             .loanProcessStatus(UPDATED_LOAN_PROCESS_STATUS);
         return loanProcess;
     }
@@ -204,6 +220,9 @@ public class LoanProcessResourceIT {
         assertThat(testLoanProcess.getBankingEntityMnemonic()).isEqualTo(DEFAULT_BANKING_ENTITY_MNEMONIC);
         assertThat(testLoanProcess.getBankingProductMnemonic()).isEqualTo(DEFAULT_BANKING_PRODUCT_MNEMONIC);
         assertThat(testLoanProcess.isRulesEngineResult()).isEqualTo(DEFAULT_RULES_ENGINE_RESULT);
+        assertThat(testLoanProcess.getBankingAccountNumber()).isEqualTo(DEFAULT_BANKING_ACCOUNT_NUMBER);
+        assertThat(testLoanProcess.getBankingAccountType()).isEqualTo(DEFAULT_BANKING_ACCOUNT_TYPE);
+        assertThat(testLoanProcess.getBankingAccountEntityMnemonic()).isEqualTo(DEFAULT_BANKING_ACCOUNT_ENTITY_MNEMONIC);
         assertThat(testLoanProcess.getLoanProcessStatus()).isEqualTo(DEFAULT_LOAN_PROCESS_STATUS);
     }
 
@@ -461,6 +480,9 @@ public class LoanProcessResourceIT {
             .andExpect(jsonPath("$.[*].bankingEntityMnemonic").value(hasItem(DEFAULT_BANKING_ENTITY_MNEMONIC.toString())))
             .andExpect(jsonPath("$.[*].bankingProductMnemonic").value(hasItem(DEFAULT_BANKING_PRODUCT_MNEMONIC.toString())))
             .andExpect(jsonPath("$.[*].rulesEngineResult").value(hasItem(DEFAULT_RULES_ENGINE_RESULT.booleanValue())))
+            .andExpect(jsonPath("$.[*].bankingAccountNumber").value(hasItem(DEFAULT_BANKING_ACCOUNT_NUMBER)))
+            .andExpect(jsonPath("$.[*].bankingAccountType").value(hasItem(DEFAULT_BANKING_ACCOUNT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].bankingAccountEntityMnemonic").value(hasItem(DEFAULT_BANKING_ACCOUNT_ENTITY_MNEMONIC.toString())))
             .andExpect(jsonPath("$.[*].loanProcessStatus").value(hasItem(DEFAULT_LOAN_PROCESS_STATUS.toString())));
     }
     
@@ -488,6 +510,9 @@ public class LoanProcessResourceIT {
             .andExpect(jsonPath("$.bankingEntityMnemonic").value(DEFAULT_BANKING_ENTITY_MNEMONIC.toString()))
             .andExpect(jsonPath("$.bankingProductMnemonic").value(DEFAULT_BANKING_PRODUCT_MNEMONIC.toString()))
             .andExpect(jsonPath("$.rulesEngineResult").value(DEFAULT_RULES_ENGINE_RESULT.booleanValue()))
+            .andExpect(jsonPath("$.bankingAccountNumber").value(DEFAULT_BANKING_ACCOUNT_NUMBER))
+            .andExpect(jsonPath("$.bankingAccountType").value(DEFAULT_BANKING_ACCOUNT_TYPE.toString()))
+            .andExpect(jsonPath("$.bankingAccountEntityMnemonic").value(DEFAULT_BANKING_ACCOUNT_ENTITY_MNEMONIC.toString()))
             .andExpect(jsonPath("$.loanProcessStatus").value(DEFAULT_LOAN_PROCESS_STATUS.toString()));
     }
 
@@ -525,6 +550,9 @@ public class LoanProcessResourceIT {
             .bankingEntityMnemonic(UPDATED_BANKING_ENTITY_MNEMONIC)
             .bankingProductMnemonic(UPDATED_BANKING_PRODUCT_MNEMONIC)
             .rulesEngineResult(UPDATED_RULES_ENGINE_RESULT)
+            .bankingAccountNumber(UPDATED_BANKING_ACCOUNT_NUMBER)
+            .bankingAccountType(UPDATED_BANKING_ACCOUNT_TYPE)
+            .bankingAccountEntityMnemonic(UPDATED_BANKING_ACCOUNT_ENTITY_MNEMONIC)
             .loanProcessStatus(UPDATED_LOAN_PROCESS_STATUS);
         LoanProcessDTO loanProcessDTO = loanProcessMapper.toDto(updatedLoanProcess);
 
@@ -550,6 +578,9 @@ public class LoanProcessResourceIT {
         assertThat(testLoanProcess.getBankingEntityMnemonic()).isEqualTo(UPDATED_BANKING_ENTITY_MNEMONIC);
         assertThat(testLoanProcess.getBankingProductMnemonic()).isEqualTo(UPDATED_BANKING_PRODUCT_MNEMONIC);
         assertThat(testLoanProcess.isRulesEngineResult()).isEqualTo(UPDATED_RULES_ENGINE_RESULT);
+        assertThat(testLoanProcess.getBankingAccountNumber()).isEqualTo(UPDATED_BANKING_ACCOUNT_NUMBER);
+        assertThat(testLoanProcess.getBankingAccountType()).isEqualTo(UPDATED_BANKING_ACCOUNT_TYPE);
+        assertThat(testLoanProcess.getBankingAccountEntityMnemonic()).isEqualTo(UPDATED_BANKING_ACCOUNT_ENTITY_MNEMONIC);
         assertThat(testLoanProcess.getLoanProcessStatus()).isEqualTo(UPDATED_LOAN_PROCESS_STATUS);
     }
 

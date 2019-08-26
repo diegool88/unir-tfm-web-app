@@ -16,6 +16,8 @@ import { PersonalReferenceService } from "app/entities/personal-reference";
 import { Observable } from "rxjs";
 import { filter, map } from 'rxjs/operators';
 import { LoanProcessService } from "app/entities/loanMS/loan-process";
+import { WarrantyService } from "app/entities/loanMS/warranty";
+import { AmortizationTableService } from "app/entities/loanMS/amortization-table";
 
 @Component({
   selector: 'jhi-wizard-summary',
@@ -37,6 +39,8 @@ export class WizardSummaryComponent implements OnInit {
           protected telephoneNumberService: TelephoneNumberService,
           protected personalReferenceService: PersonalReferenceService,
           protected loanProcessService: LoanProcessService,
+          protected warratyService: WarrantyService,
+          protected amortizationTableService: AmortizationTableService,
           protected dataUtils: JhiDataUtils,
           protected jhiAlertService: JhiAlertService) {}
 
@@ -107,19 +111,35 @@ export class WizardSummaryComponent implements OnInit {
        filter((mayBeOk: HttpResponse<ILoanProcess>) => mayBeOk.ok),
        map((response: HttpResponse<ILoanProcess>) => response.body)
     )
-    .subscribe((res: ILoanProcess) => { 
+    .subscribe((res: ILoanProcess) => {
+        this.amortizationSchedule.forEach((item) => {
+            item.loanProcessId = res.id;
+        });
+        this.warranties.forEach((item) => {
+            item.loanProcesses = [res];
+        });
         //Call other services to save amortization schedule and warranties
-        this.onSaveSuccess();
+        this.amortizationTableService.createMasive(this.amortizationSchedule)
+        .pipe(
+          filter((mayBeOk: HttpResponse<IAmortizationTable[]>) => mayBeOk.ok),
+          map((response: HttpResponse<IAmortizationTable[]>) => response.body)
+        )
+        .subscribe((res: IAmortizationTable[]) => {
+            this.warratyService.createMasive(this.warranties)
+            .pipe(
+              filter((mayBeOk: HttpResponse<IWarranty[]>) => mayBeOk.ok),
+              map((response: HttpResponse<IWarranty[]>) => response.body)
+            )
+            .subscribe((res: IWarranty[]) => {
+                this.onSaveSuccess();
+            }, (res: HttpErrorResponse) => this.onError(res.message));
+        }, (res: HttpErrorResponse) => this.onError(res.message));
     }
-    , (res: HttpErrorResponse) => this.onSaveError());
+    , (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   protected onSaveSuccess() {
     this.jhiAlertService.success("Completed", null, null);
-  }
-
-  protected onSaveError() {
-    
   }
 
 }

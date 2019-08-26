@@ -78,7 +78,7 @@
                   </dd>
                   <dt><span jhiTranslate="creditApp.loanMsLoanProcess.rulesEngineResult">Rules Engine Result</span></dt>
                   <dd>
-                      <span jhiTranslate="{{'creditApp.loanMsLoanProcess.businessRules' + loanProcess.rulesEngineResult.toString() }}">{{{loanProcess.rulesEngineResult}}</span>
+                      <span jhiTranslate="{{'creditApp.loanMsLoanProcess.businessRules.' + loanProcess.rulesEngineResult.toString() }}">{{loanProcess.rulesEngineResult}}</span>
                   </dd>
               </div>
               <div class="col-md-12">
@@ -224,10 +224,8 @@
 			                <td>{{warranty.description}}</td>
 			                <td>{{warranty.value}}</td>
 			                <td>
-			                    <a *ngIf="warranty.document">
-			                        <img [src]="'data:' + warranty.documentContentType + ';base64,' + warranty.document" style="max-height: 30px;" alt="warranty image"/>
-			                    </a>
-			                    <span *ngIf="warranty.document">{{warranty.documentContentType}}, {{byteSize(warranty.document)}}</span>
+			                    <a *ngIf="warranty.document" (click)="openFile(warranty.documentContentType, warranty.document)" jhiTranslate="entity.action.open">open</a>
+                    			<span *ngIf="warranty.document">{{warranty.documentContentType}}, {{byteSize(warranty.document)}}</span>
 			                </td>
 			            </tr>
 			            </tbody>

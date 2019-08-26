@@ -3,6 +3,7 @@ package com.dfgtech.tfm.loanms.web.rest;
 import com.dfgtech.tfm.loanms.service.WarrantyService;
 import com.dfgtech.tfm.loanms.web.rest.errors.BadRequestAlertException;
 import com.dfgtech.tfm.loanms.service.dto.WarrantyDTO;
+import com.dfgtech.tfm.loanms.service.dto.WarrantyWrapper;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -66,9 +67,9 @@ public class WarrantyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/warranties-masive")
-    public List<WarrantyDTO> createWarrantiesMasive(@Valid @RequestBody List<WarrantyDTO> warrantyDTOs) throws URISyntaxException {
+    public List<WarrantyDTO> createWarrantiesMasive(@RequestBody WarrantyWrapper warrantyDTOs) throws URISyntaxException {
         List<WarrantyDTO> warrantiesAll = new ArrayList<WarrantyDTO>();
-    	for(WarrantyDTO warrantyDTO: warrantyDTOs) {
+    	for(WarrantyDTO warrantyDTO: warrantyDTOs.getWarranties()) {
         	log.debug("REST request to save Warranty : {}", warrantyDTO);
             if (warrantyDTO.getId() != null) {
                 throw new BadRequestAlertException("A new warranty cannot already have an ID", ENTITY_NAME, "idexists");

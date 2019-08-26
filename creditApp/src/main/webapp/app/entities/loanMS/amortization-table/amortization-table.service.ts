@@ -24,6 +24,16 @@ export class AmortizationTableService {
       .post<IAmortizationTable>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
+  
+  createMasive(amortizationTable: IAmortizationTable[]): Observable<EntityArrayResponseType> {
+    const copyArray: IAmortizationTable[] = [];
+    amortizationTable.forEach((item) => {
+        copyArray.push(this.convertDateFromClient(item));
+    });
+    return this.http
+      .post<IAmortizationTable[]>(`${this.resourceUrl}-masive`, { amortizationSchedule: copyArray }, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
 
   update(amortizationTable: IAmortizationTable): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(amortizationTable);
