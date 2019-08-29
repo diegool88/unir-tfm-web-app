@@ -1,0 +1,42 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="creditApp.loanMsLoanProcess.home.title">Loan Processes</span>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="loanProcesses?.length === 0">
+        <span jhiTranslate="creditApp.loanMsLoanProcess.home.notFound">No loanProcesses found</span>
+    </div>
+    <div class="table-responsive" *ngIf="loanProcesses?.length > 0">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.name">Name</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.requestedAmount">Requested Amount</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.loanPeriod">Loan Period</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.startDate">Start Date</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.endDate">End Date</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.loanProcessStatus">Loan Process Status</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let loanProcess of loanProcesses ;trackBy: trackId">
+                <td>{{loanProcess.id}}</td>
+                <td>{{loanProcess.name}}</td>
+                <td>{{loanProcess.requestedAmount}}</td>
+                <td>{{loanProcess.loanPeriod}}</td>
+                <td>{{loanProcess.startDate | date:'dd-MM-yyyy'}}</td>
+                <td>{{loanProcess.endDate | date:'dd-MM-yyyy'}}</td>
+                <td><button class="btn btn-danger btn-sm" *ngIf="loanProcess.loanProcessStatus === 'DENIED'"
+                            style="pointer-events: none;" jhiTranslate="{{'creditApp.LoanProcessStatus.' + loanProcess.loanProcessStatus}}">{{loanProcess.loanProcessStatus}}</button>
+                    <button class="btn btn-success btn-sm" *ngIf="loanProcess.loanProcessStatus === 'APPROVED'"
+                            style="pointer-events: none;" jhiTranslate="{{'creditApp.LoanProcessStatus.' + loanProcess.loanProcessStatus}}">{{loanProcess.loanProcessStatus}}</button>
+                    <button class="btn btn-primary btn-sm" *ngIf="loanProcess.loanProcessStatus === 'PENDING' || loanProcess.loanProcessStatus === null || loanProcess.loanProcessStatus === undefined"
+                            style="pointer-events: none;" jhiTranslate="creditApp.LoanProcessStatus.PENDING">PENDING</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

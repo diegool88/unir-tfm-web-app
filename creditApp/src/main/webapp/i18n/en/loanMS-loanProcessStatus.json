@@ -3,7 +3,8 @@
     "LoanProcessStatus": {
       "null": "",
       "APPROVED": "APPROVED",
-      "DENIED": "DENIED"
+      "DENIED": "DENIED",
+      "PENDING": "PENDING"
     }
   }
 }

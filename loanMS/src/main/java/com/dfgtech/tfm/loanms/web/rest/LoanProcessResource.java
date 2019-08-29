@@ -1,5 +1,9 @@
 package com.dfgtech.tfm.loanms.web.rest;
 
+import com.dfgtech.tfm.loanms.external.service.CustomerServiceClient;
+import com.dfgtech.tfm.loanms.external.service.dto.CustomerDTO;
+import com.dfgtech.tfm.loanms.security.AuthoritiesConstants;
+import com.dfgtech.tfm.loanms.security.SecurityUtils;
 import com.dfgtech.tfm.loanms.service.LoanProcessService;
 import com.dfgtech.tfm.loanms.web.rest.errors.BadRequestAlertException;
 import com.dfgtech.tfm.loanms.service.dto.LoanProcessDTO;
@@ -8,6 +12,7 @@ import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +37,9 @@ public class LoanProcessResource {
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
+    
+    @Autowired
+    private CustomerServiceClient customerServiceClient;
 
     private final LoanProcessService loanProcessService;
 
@@ -87,7 +95,12 @@ public class LoanProcessResource {
     @GetMapping("/loan-processes")
     public List<LoanProcessDTO> getAllLoanProcesses() {
         log.debug("REST request to get all LoanProcesses");
-        return loanProcessService.findAll();
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN) || SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.OFFICER)) {
+        	return loanProcessService.findAll();
+        } else {
+        	List<CustomerDTO> result = customerServiceClient.getLoggedCustomer();
+        	return result.size() > 0 ? loanProcessService.findByCustomer(result.get(0).getIdentificationNumber(), result.get(0).getIdentificationType().toString(), result.get(0).getCountry()) : new ArrayList<LoanProcessDTO>();
+        }
     }
 
     /**

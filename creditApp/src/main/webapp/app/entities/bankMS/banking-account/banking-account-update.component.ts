@@ -147,4 +147,8 @@ export class BankingAccountUpdateComponent implements OnInit {
   trackCustomerById(index: number, item: ICustomer) {
     return item.id;
   }
+  
+  trackBankingEntityById(index: number, item: IBankingEntity) {
+    return item.mnemonic;
+  }
 }

@@ -2,8 +2,9 @@
   "creditApp": {
     "LoanProcessStatus": {
       "null": "",
-      "APPROVED": "APPROVED",
-      "DENIED": "DENIED"
+      "APPROVED": "APROBADO",
+      "DENIED": "DENEGADO",
+      "PENDING": "PENDIENTE"
     }
   }
 }

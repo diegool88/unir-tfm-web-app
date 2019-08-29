@@ -3,6 +3,7 @@
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-loan-process-heading" jhiTranslate="creditApp.loanMsLoanProcess.home.createOrEditLabel">Create or edit a Loan Process</h2>
             <div>
+            	<jhi-alert *ngIf="mode==='wizard'"></jhi-alert>
                 <jhi-alert-error></jhi-alert-error>
                 <div class="form-group" [hidden]="!editForm.get('id').value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
@@ -147,14 +148,14 @@
                     </div>
                 </div>
                 <div *ngIf="mode === 'wizard'" class="form-group">
-                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.detail.title" for="field_bankingAccount">Banking Entity Mnemonic</label>
-                    <select class="form-control" #bankingAccount name="bankingAccount" (change)="onBankingAccountChange($event.target)" formControlName="bankingAccount" id="field_bankingAccount">
-                    	<option *ngIf="!editForm.get('bankingAccount').value" [value]="null" selected></option>
+                    <label class="form-control-label" jhiTranslate="creditApp.bankMsBankingAccount.detail.title" for="field_bankingAccountNumber">Banking Account</label>
+                    <select class="form-control" #bankingAccountNumber name="bankingAccountNumber" (change)="onBankingAccountChange($event.target)" formControlName="bankingAccountNumber" id="field_bankingAccountNumber">
+                    	<option *ngIf="!editForm.get('bankingAccountNumber').value" [value]="null" selected></option>
                         <option *ngFor="let bankingAccount of customerAccounts; trackBy: trackBankingAccountNumber" [value]="bankingAccount.number">{{ bankingAccount.number + ' - ' + bankingAccount.bankingEntityMnemonic }}</option>
                     </select>
-                    <div *ngIf="editForm.get('bankingAccount').invalid && (editForm.get('bankingAccount').dirty || editForm.get('bankingAccount').touched)">
+                    <div *ngIf="editForm.get('bankingAccountNumber').invalid && (editForm.get('bankingAccountNumber').dirty || editForm.get('bankingAccountNumber').touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('bankingAccount').errors.required" jhiTranslate="entity.validation.required">
+                               *ngIf="editForm.get('bankingAccountNumber').errors.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                     </div>
@@ -282,7 +283,7 @@
                 <button *ngIf="mode !== 'wizard'" type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving || amortizationSchedule === undefined ||amortizationSchedule?.length === 0" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving || amortizationSchedule === undefined || amortizationSchedule?.length === 0" class="btn btn-primary">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

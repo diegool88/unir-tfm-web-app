@@ -16,6 +16,7 @@ export class WarrantyDeleteDialogTmpComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
   warranties: IWarranty[];
+  warranty: IWarranty;
   constructor(protected warrantyService: WarrantyService, public activeModal: NgbActiveModal, protected eventManager: JhiEventManager, protected wizardService: WizardService) { }
   
   clear() {

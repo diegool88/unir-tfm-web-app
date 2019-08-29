@@ -18,6 +18,7 @@ import { filter, map } from 'rxjs/operators';
 import { LoanProcessService } from "app/entities/loanMS/loan-process";
 import { WarrantyService } from "app/entities/loanMS/warranty";
 import { AmortizationTableService } from "app/entities/loanMS/amortization-table";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'jhi-wizard-summary',
@@ -25,6 +26,7 @@ import { AmortizationTableService } from "app/entities/loanMS/amortization-table
   styleUrls: ['./wizard-summary.component.scss']
 })
 export class WizardSummaryComponent implements OnInit {
+  isSaving: boolean;
   customer?: ICustomer;
   amortizationSchedule?: IAmortizationTable[];
   selectedAccount?: IBankingAccount;
@@ -42,7 +44,8 @@ export class WizardSummaryComponent implements OnInit {
           protected warratyService: WarrantyService,
           protected amortizationTableService: AmortizationTableService,
           protected dataUtils: JhiDataUtils,
-          protected jhiAlertService: JhiAlertService) {}
+          protected jhiAlertService: JhiAlertService,
+          private router: Router) {}
 
   ngOnInit() {
     this.customer = this.wizardService.getCustomer();
@@ -105,6 +108,10 @@ export class WizardSummaryComponent implements OnInit {
     return this.dataUtils.byteSize(field);
   }
   
+  openFile(contentType, field) {
+    return this.dataUtils.openFile(contentType, field);
+  }
+  
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ILoanProcess>>) {
     result
     .pipe(
@@ -139,7 +146,11 @@ export class WizardSummaryComponent implements OnInit {
   }
 
   protected onSaveSuccess() {
-    this.jhiAlertService.success("Completed", null, null);
+    this.isSaving = true;
+    this.jhiAlertService.success('Operacion realizada con exito', null, null);
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 1500);
   }
 
 }

@@ -57,11 +57,10 @@ export class LoanProcessUpdateComponent implements OnInit {
     bankingEntityMnemonic: [null, [Validators.required]],
     bankingProductMnemonic: [null, [Validators.required]],
     rulesEngineResult: [],
-	bankingAccountNumber: [],
+	bankingAccountNumber: [null, [Validators.required]],
     bankingAccountType: [],
     bankingAccountEntityMnemonic: [],
-    loanProcessStatus: [],
-    bankingAccount: [null, [Validators.required]] //Not part of LoanProcess Object
+    loanProcessStatus: []
   });
 
   constructor(
@@ -148,8 +147,10 @@ export class LoanProcessUpdateComponent implements OnInit {
   
   updateFormBankingAccount(selectedBankingAccount: IBankingAccount) {
       if(selectedBankingAccount){
-          this.editForm.patchValue({
-              bankingAccount: selectedBankingAccount.number
+          this.editForm.patchValue({ 
+            bankingAccountNumber: selectedBankingAccount.number,
+            bankingAccountType: selectedBankingAccount.accountType,
+            bankingAccountEntityMnemonic: selectedBankingAccount.bankingEntityMnemonic
           });
       }
   }
@@ -219,6 +220,7 @@ export class LoanProcessUpdateComponent implements OnInit {
       this.previousState();
     } else {
       this.wizardFooterService.setFormValid(true);
+      this.jhiAlertService.success("Operacion realizada con exito", null, null);
     }
   }
 
@@ -244,7 +246,7 @@ export class LoanProcessUpdateComponent implements OnInit {
     return option;
   }
 
-  protected queryProductByBankEntity(target: any) {
+  queryProductByBankEntity(target: any) {
     this.editForm.patchValue({ bankingProductMnemonic: null });
     this.productService
       .queryByBankingEntityMnemonic(target.value)
@@ -289,7 +291,7 @@ export class LoanProcessUpdateComponent implements OnInit {
   }
 
   onProductChange(target: any) {
-    let productsFiltered = this.products.filter((product: IProduct) => {
+    const productsFiltered = this.products.filter((product: IProduct) => {
       return product.mnemonic === target.value;
     });
     this.selectedProduct = productsFiltered.length > 0 ? productsFiltered[0] : new Product();
@@ -297,7 +299,7 @@ export class LoanProcessUpdateComponent implements OnInit {
   }
   
   onBankingAccountChange(target: any) {
-      let accountsFiltered = this.customerAccounts.filter((account: IBankingAccount) => {
+      const accountsFiltered = this.customerAccounts.filter((account: IBankingAccount) => {
         return account.number === parseInt(target.value);
       });
       this.selectedAccount = accountsFiltered.length > 0 ? accountsFiltered[0] : new BankingAccount();

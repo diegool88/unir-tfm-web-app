@@ -47,7 +47,19 @@
                             <span jhiTranslate="global.menu.entities.loanMsAmortizationTable">Amortization Table</span>
                         </a>
                     </li>
-                    <li>
+                    <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                        <a class="dropdown-item" routerLink="loan-process" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.loanMsLoanProcess">Loan Process</span>
+                        </a>
+                    </li>
+                    <li *jhiHasAnyAuthority="'ROLE_USER'">
+                        <a class="dropdown-item" routerLink="loan-process/customer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.loanMsLoanProcess">Loan Process</span>
+                        </a>
+                    </li>
+                    <li *jhiHasAnyAuthority="'ROLE_OFFICER'">
                         <a class="dropdown-item" routerLink="loan-process" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.entities.loanMsLoanProcess">Loan Process</span>

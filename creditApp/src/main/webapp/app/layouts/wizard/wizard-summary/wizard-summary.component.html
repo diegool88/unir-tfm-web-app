@@ -3,6 +3,7 @@
       <div *ngIf="loanProcess">
           <h2><span jhiTranslate="creditApp.loanMsLoanProcess.home.summary">Loan Process Summary</span></h2>
           <hr>
+          <jhi-alert></jhi-alert>
           <jhi-alert-error></jhi-alert-error>
           <dl class="row jh-entity-details">
               <div class="col-md-6">
@@ -235,6 +236,7 @@
           </dl>
           <button type="button"
                   (click)="completeLoanProcess()"
+                  [disabled]="isSaving"
                   class="btn btn-primary">
               <fa-icon [icon]="'arrow-right'"></fa-icon>&nbsp;<span jhiTranslate="creditApp.loanMsLoanProcess.home.complete"> Complete Loan Process</span>
           </button>
