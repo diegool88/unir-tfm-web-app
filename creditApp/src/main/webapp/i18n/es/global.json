@@ -116,7 +116,9 @@
       "edit": "Editar",
       "open": "Abrir",
       "save": "Guardar",
-      "view": "Vista"
+      "view": "Vista",
+	  "approve": "Aprobar",
+	  "deny": "Denegar"
     },
     "detail": {
       "field": "Campo",

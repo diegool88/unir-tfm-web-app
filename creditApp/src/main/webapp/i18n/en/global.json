@@ -116,7 +116,9 @@
       "edit": "Edit",
       "open": "Open",
       "save": "Save",
-      "view": "View"
+      "view": "View",
+	  "approve": "Approve",
+	  "deny": "Deny"
     },
     "detail": {
       "field": "Field",

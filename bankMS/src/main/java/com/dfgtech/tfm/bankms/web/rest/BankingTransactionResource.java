@@ -1,15 +1,19 @@
 package com.dfgtech.tfm.bankms.web.rest;
 
+import com.dfgtech.tfm.bankms.service.BankingAccountService;
 import com.dfgtech.tfm.bankms.service.BankingTransactionService;
 import com.dfgtech.tfm.bankms.web.rest.errors.BadRequestAlertException;
+import com.dfgtech.tfm.bankms.service.dto.BankingAccountDTO;
 import com.dfgtech.tfm.bankms.service.dto.BankingTransactionDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,6 +38,9 @@ public class BankingTransactionResource {
     private String applicationName;
 
     private final BankingTransactionService bankingTransactionService;
+    
+    @Autowired
+    private BankingAccountService bankingAccountService;
 
     public BankingTransactionResource(BankingTransactionService bankingTransactionService) {
         this.bankingTransactionService = bankingTransactionService;
@@ -53,6 +60,29 @@ public class BankingTransactionResource {
             throw new BadRequestAlertException("A new bankingTransaction cannot already have an ID", ENTITY_NAME, "idexists");
         }
         BankingTransactionDTO result = bankingTransactionService.save(bankingTransactionDTO);
+        return ResponseEntity.created(new URI("/api/banking-transactions/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+    
+    /**
+     * {@code POST  /banking-transactions} : Create a new bankingTransaction.
+     *
+     * @param bankingTransactionDTO the bankingTransactionDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new bankingTransactionDTO, or with status {@code 400 (Bad Request)} if the bankingTransaction has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @Transactional
+    @PostMapping("/banking-transactions-transfer")
+    public ResponseEntity<BankingTransactionDTO> createBankingTransactionWithTransfer(@Valid @RequestBody BankingTransactionDTO bankingTransactionDTO) throws URISyntaxException {
+        log.debug("REST request to save BankingTransaction : {}", bankingTransactionDTO);
+        if (bankingTransactionDTO.getId() != null) {
+            throw new BadRequestAlertException("A new bankingTransaction cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        BankingTransactionDTO result = bankingTransactionService.save(bankingTransactionDTO);
+        Optional<BankingAccountDTO> destinationAccount = this.bankingAccountService.findOne(result.getDestinationAccountId());
+        destinationAccount.get().setAvailableBalance(destinationAccount.get().getAvailableBalance() + result.getAmmount());
+        BankingAccountDTO result2 = this.bankingAccountService.save(destinationAccount.get());
         return ResponseEntity.created(new URI("/api/banking-transactions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);

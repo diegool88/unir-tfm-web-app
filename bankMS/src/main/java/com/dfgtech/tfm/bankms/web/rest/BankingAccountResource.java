@@ -117,6 +117,18 @@ public class BankingAccountResource {
     }
     
     /**
+     * {@code GET  /banking-accounts/number} : get banking account by number.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of bankingAccounts in body.
+     */
+    @GetMapping("/banking-accounts/number/{number}/{accountType}/{bankingEntityMnemonic}")
+    public ResponseEntity<BankingAccountDTO> getBankingAccountByNumber(@PathVariable Integer number, @PathVariable String accountType, @PathVariable String bankingEntityMnemonic) {
+        log.debug("REST request to get a Customer Account BankingAccount");
+        Optional<BankingAccountDTO> bankingAccountDTO = bankingAccountService.findByAccountNumber(number, accountType, bankingEntityMnemonic);
+        return ResponseUtil.wrapOrNotFound(bankingAccountDTO);
+    }
+    
+    /**
      * {@code GET  /banking-accounts} : get all the bankingAccounts.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of bankingAccounts in body.

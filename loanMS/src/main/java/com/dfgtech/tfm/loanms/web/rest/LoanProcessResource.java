@@ -4,9 +4,14 @@ import com.dfgtech.tfm.loanms.external.service.CustomerServiceClient;
 import com.dfgtech.tfm.loanms.external.service.dto.CustomerDTO;
 import com.dfgtech.tfm.loanms.security.AuthoritiesConstants;
 import com.dfgtech.tfm.loanms.security.SecurityUtils;
+import com.dfgtech.tfm.loanms.service.AmortizationTableService;
 import com.dfgtech.tfm.loanms.service.LoanProcessService;
+import com.dfgtech.tfm.loanms.service.WarrantyService;
 import com.dfgtech.tfm.loanms.web.rest.errors.BadRequestAlertException;
+import com.dfgtech.tfm.loanms.service.dto.AmortizationTableDTO;
 import com.dfgtech.tfm.loanms.service.dto.LoanProcessDTO;
+import com.dfgtech.tfm.loanms.service.dto.LoanProcessWrapper;
+import com.dfgtech.tfm.loanms.service.dto.WarrantyDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -15,14 +20,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link com.dfgtech.tfm.loanms.domain.LoanProcess}.
@@ -40,6 +48,12 @@ public class LoanProcessResource {
     
     @Autowired
     private CustomerServiceClient customerServiceClient;
+    
+    @Autowired
+    private AmortizationTableService amortizationTableService;
+    
+    @Autowired
+    private WarrantyService warrantyService;
 
     private final LoanProcessService loanProcessService;
 
@@ -61,6 +75,36 @@ public class LoanProcessResource {
             throw new BadRequestAlertException("A new loanProcess cannot already have an ID", ENTITY_NAME, "idexists");
         }
         LoanProcessDTO result = loanProcessService.save(loanProcessDTO);
+        return ResponseEntity.created(new URI("/api/loan-processes/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+    
+    /**
+     * {@code POST  /loan-processes} : Create a new loanProcess with all child objects.
+     *
+     * @param loanProcessDTO the loanProcessDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new loanProcessDTO, or with status {@code 400 (Bad Request)} if the loanProcess has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @Transactional
+    @PostMapping("/loan-processes-complete")
+    public ResponseEntity<LoanProcessDTO> createLoanProcessComplete(@Valid @RequestBody LoanProcessWrapper loanProcessWrapper) throws URISyntaxException {
+        log.debug("REST request to save LoanProcess : {}", loanProcessWrapper);
+        if (loanProcessWrapper.getLoanProcess().getId() != null) {
+            throw new BadRequestAlertException("A new loanProcess cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        LoanProcessDTO result = loanProcessService.save(loanProcessWrapper.getLoanProcess());
+        for(AmortizationTableDTO amortizationEntry : loanProcessWrapper.getAmortizationSchedule()) {
+        	amortizationEntry.setLoanProcessId(result.getId());
+        	this.amortizationTableService.save(amortizationEntry);
+        }
+        for(WarrantyDTO warrantyEntry : loanProcessWrapper.getWarranties()) {
+        	Set<LoanProcessDTO> loanProcessDTOSet = new HashSet<LoanProcessDTO>();
+        	loanProcessDTOSet.add(result);
+        	warrantyEntry.setLoanProcesses(loanProcessDTOSet);
+        	this.warrantyService.save(warrantyEntry);
+        }
         return ResponseEntity.created(new URI("/api/loan-processes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -114,6 +158,29 @@ public class LoanProcessResource {
         log.debug("REST request to get LoanProcess : {}", id);
         Optional<LoanProcessDTO> loanProcessDTO = loanProcessService.findOne(id);
         return ResponseUtil.wrapOrNotFound(loanProcessDTO);
+    }
+    
+    /**
+     * {@code GET  /loan-processes/:id} : get the "id" loanProcess.
+     *
+     * @param id the id of the loanProcessDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the loanProcessDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/loan-processes-complete/{id}")
+    public ResponseEntity<LoanProcessWrapper> getLoanProcessComplete(@PathVariable Long id) {
+        log.debug("REST request to get LoanProcess : {}", id);
+        LoanProcessWrapper loanProcessWrapper = new LoanProcessWrapper();
+        Optional<LoanProcessWrapper> loanProcessWrapperOpt = Optional.empty();
+        Optional<LoanProcessDTO> loanProcessDTO = loanProcessService.findOne(id);
+        if(loanProcessDTO.isPresent()) {
+        	loanProcessWrapper.setLoanProcess(loanProcessDTO.get());
+        	List<AmortizationTableDTO> amortizationTable = this.amortizationTableService.findAllByLoanProcessId(loanProcessDTO.get().getId());
+        	loanProcessWrapper.setAmortizationSchedule(amortizationTable);
+        	List<WarrantyDTO> warranties = this.warrantyService.findAllWarrantiesByLoanProcessId(loanProcessDTO.get().getId());
+        	loanProcessWrapper.setWarranties(warranties);
+        	loanProcessWrapperOpt = Optional.of(loanProcessWrapper);
+        }
+        return ResponseUtil.wrapOrNotFound(loanProcessWrapperOpt);
     }
 
     /**

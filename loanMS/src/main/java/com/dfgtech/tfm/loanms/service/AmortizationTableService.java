@@ -58,6 +58,19 @@ public class AmortizationTableService {
             .map(amortizationTableMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+    
+    /**
+     * Get all the amortizationEntries for specific loan process.
+     *
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<AmortizationTableDTO> findAllByLoanProcessId(Long loanProcessId) {
+        log.debug("Request to get all AmortizationTables");
+        return amortizationTableRepository.findAllByLoanProcessId(loanProcessId).stream()
+            .map(amortizationTableMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
 
     /**

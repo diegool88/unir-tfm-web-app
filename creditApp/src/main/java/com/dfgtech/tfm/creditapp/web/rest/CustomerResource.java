@@ -109,6 +109,19 @@ public class CustomerResource {
         Optional<CustomerDTO> customerDTO = customerService.findOne(id);
         return ResponseUtil.wrapOrNotFound(customerDTO);
     }
+    
+    /**
+     * {@code GET  /customers/:id} : get the "id" customer.
+     *
+     * @param id the id of the customerDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/customers/{identificationType}/{identificationNumber}/{country}")
+    public ResponseEntity<CustomerDTO> getCustomerByIdentification(@PathVariable String identificationType, @PathVariable String identificationNumber, @PathVariable String country) {
+    	log.debug("REST Request to get Customer : {} - {} - {}", identificationType, identificationNumber, country);
+    	Optional<CustomerDTO> customerDTO = customerService.findByIdentification(identificationType, identificationNumber, country);
+        return ResponseUtil.wrapOrNotFound(customerDTO);
+    }
 
     /**
      * {@code DELETE  /customers/:id} : delete the "id" customer.

@@ -114,6 +114,19 @@ public class BankingEntityResource {
         Optional<BankingEntityDTO> bankingEntityDTO = bankingEntityService.findOne(id);
         return ResponseUtil.wrapOrNotFound(bankingEntityDTO);
     }
+    
+    /**
+     * {@code GET  /banking-entities/mnemonic/:mnemonic} : get the "mnemonic" bankingEntity.
+     *
+     * @param id the id of the bankingEntityDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the bankingEntityDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/banking-entities/mnemonic/{mnemonic}")
+    public ResponseEntity<BankingEntityDTO> getBankingEntityByMnemonic(@PathVariable String mnemonic) {
+        log.debug("REST request to get BankingEntity : {}", mnemonic);
+        Optional<BankingEntityDTO> bankingEntityDTO = bankingEntityService.findByMnemonic(mnemonic);
+        return ResponseUtil.wrapOrNotFound(bankingEntityDTO);
+    }
 
     /**
      * {@code DELETE  /banking-entities/:id} : delete the "id" bankingEntity.

@@ -116,6 +116,23 @@ public class AddressResource {
 	        return ResponseEntity.ok().headers(headers).body(page.getContent());
         }
     }
+    
+    /**
+     * {@code GET  /addresses-customer} : get all the addresses by customer.
+     *
+     * @param pageable the pagination information.
+     * @param queryParams a {@link MultiValueMap} query parameters.
+     * @param uriBuilder a {@link UriComponentsBuilder} URI builder.
+     * @param id the customer id.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of addresses in body.
+     */
+    @GetMapping("/addresses-customer/{id}")
+    public ResponseEntity<List<AddressDTO>> getAllAddressesByCustomer(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder, @PathVariable Long id) {
+        log.debug("REST request to get a page of Addresses by customer id");
+    	Page<AddressDTO> page = addressService.findAllByCustomer(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 
     /**
      * {@code GET  /addresses/:id} : get the "id" address.

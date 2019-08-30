@@ -26,6 +26,10 @@ export class BankingAccountService {
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IBankingAccount>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
+  
+  findByNumber(accountNumber: number, accountType: string, bankingEntityMnemonic: string): Observable<EntityResponseType> {
+    return this.http.get<IBankingAccount>(`${this.resourceUrl}/number/${accountNumber}/${accountType}/${bankingEntityMnemonic}`, { observe: 'response' });
+  }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);

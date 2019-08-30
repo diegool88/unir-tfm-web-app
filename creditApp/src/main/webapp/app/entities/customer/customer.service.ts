@@ -43,6 +43,12 @@ export class CustomerService {
         .get<ICustomer>(`${this.resourceUrl}/login/${login}`, { observe: 'response' })
         .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
+  
+  findByIdentification(identificationType: string, identificationNumber: string, country: string): Observable<EntityResponseType> {
+      return this.http
+        .get<ICustomer>(`${this.resourceUrl}/${identificationType}/${identificationNumber}/${country}`, { observe: 'response' })
+        .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);

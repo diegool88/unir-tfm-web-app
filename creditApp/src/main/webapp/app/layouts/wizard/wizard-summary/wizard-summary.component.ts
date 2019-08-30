@@ -19,6 +19,7 @@ import { LoanProcessService } from "app/entities/loanMS/loan-process";
 import { WarrantyService } from "app/entities/loanMS/warranty";
 import { AmortizationTableService } from "app/entities/loanMS/amortization-table";
 import { Router } from "@angular/router";
+import { ILoanProcessWrapper, LoanProcessWrapper } from 'app/shared/model/loanMS/loan-process-wrapper.model';
 
 @Component({
   selector: 'jhi-wizard-summary',
@@ -35,6 +36,7 @@ export class WizardSummaryComponent implements OnInit {
   addresses?: IAddress[];
   telephoneNumbers?: ITelephoneNumber[];
   personalReferences?: IPersonalReference[];
+  loanProcessWrapper?: ILoanProcessWrapper = new LoanProcessWrapper();
 
   constructor(protected wizardService: WizardService,
           protected addressService: AddressService,
@@ -81,7 +83,11 @@ export class WizardSummaryComponent implements OnInit {
   }
 
   completeLoanProcess() {
-      this.subscribeToSaveResponse(this.loanProcessService.create(this.loanProcess));
+      //this.subscribeToSaveResponse(this.loanProcessService.create(this.loanProcess));
+      this.loanProcessWrapper.loanProcess = this.loanProcess;
+      this.loanProcessWrapper.amortizationSchedule = this.amortizationSchedule;
+      this.loanProcessWrapper.warranties = this.warranties;
+      this.subscribeToSaveResponseComplete(this.loanProcessService.createComplete(this.loanProcessWrapper));
   }
   
   protected onError(errorMessage: string) {
@@ -110,6 +116,19 @@ export class WizardSummaryComponent implements OnInit {
   
   openFile(contentType, field) {
     return this.dataUtils.openFile(contentType, field);
+  }
+  
+  protected subscribeToSaveResponseComplete(result: Observable<HttpResponse<ILoanProcess>>) {
+      result
+      .pipe(
+         filter((mayBeOk: HttpResponse<ILoanProcess>) => mayBeOk.ok),
+         map((response: HttpResponse<ILoanProcess>) => response.body)
+      )
+      .subscribe((res: ILoanProcess) => {
+         this.loanProcess = res;
+         this.onSaveSuccess();
+      }
+      , (res: HttpErrorResponse) => this.onError(res.message));
   }
   
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ILoanProcess>>) {

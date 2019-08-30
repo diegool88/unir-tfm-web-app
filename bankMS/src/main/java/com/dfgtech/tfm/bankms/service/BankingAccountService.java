@@ -1,6 +1,7 @@
 package com.dfgtech.tfm.bankms.service;
 
 import com.dfgtech.tfm.bankms.domain.BankingAccount;
+import com.dfgtech.tfm.bankms.domain.enumeration.AccountType;
 import com.dfgtech.tfm.bankms.repository.BankingAccountRepository;
 import com.dfgtech.tfm.bankms.service.dto.BankingAccountDTO;
 import com.dfgtech.tfm.bankms.service.mapper.BankingAccountMapper;
@@ -70,6 +71,18 @@ public class BankingAccountService {
         return bankingAccountRepository.findByCustomer(customerIdentification, customerIdentificationType, customerCountry).stream()
             .map(bankingAccountMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+    
+    /**
+     * Get all the bankingAccounts by Customer.
+     *
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public Optional<BankingAccountDTO> findByAccountNumber(Integer number, String accountType, String bankingEntityMnemonic) {
+        log.debug("Request to get BankingAccount  by number");
+        return bankingAccountRepository.findByAccountNumber(number, AccountType.valueOf(accountType), bankingEntityMnemonic)
+            .map(bankingAccountMapper::toDto);
     }
 
 

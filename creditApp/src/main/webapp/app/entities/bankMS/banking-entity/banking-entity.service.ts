@@ -26,6 +26,10 @@ export class BankingEntityService {
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IBankingEntity>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
+  
+  findByMnemonic(mnemonic: string): Observable<EntityResponseType> {
+    return this.http.get<IBankingEntity>(`${this.resourceUrl}/mnemonic/${mnemonic}`, { observe: 'response' });
+  }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
