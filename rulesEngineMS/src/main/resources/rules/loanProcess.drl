@@ -1,0 +1,38 @@
+package KieRule;
+import com.dfgtech.tfm.rulesenginems.service.dto.LoanProcessRulesDTO;
+
+dialect "java"
+
+global org.slf4j.Logger logger;
+
+rule "Man above age with 2000+ salary, up to 35000 requested amount and more than 3 years loan period"
+	when
+		$loanProcessObject : LoanProcessRulesDTO(customerAge >= 18, customerGenre == "MALE", customerMonthlyIncome >= 2000.0, loanRequestedAmmount <= 35000.0, loanPeriod > 3);
+	then
+		$loanProcessObject.setRulesResult(true);
+		logger.debug("Man above age with 2000+ salary, up to 35000 requested amount and more than 3 years loan period");
+end;
+
+rule "Man above age with 2500+ salary, upper than 35000 requested amount and more than 5 years loan period"
+	when
+		$loanProcessObject : LoanProcessRulesDTO(customerAge >= 18, customerGenre == "MALE", customerMonthlyIncome >= 2500.0, loanRequestedAmmount > 35000.0, loanPeriod > 5);
+	then
+		$loanProcessObject.setRulesResult(true);
+		logger.debug("Man above age with 2500+ salary, upper than 35000 requested amount and more than 5 years loan period");
+end;
+
+rule "Woman above age with 2000+ salary, up to 30000 requested amount and more than 4 years loan period"
+	when
+		$loanProcessObject : LoanProcessRulesDTO(customerAge >= 18, customerGenre == "FEMALE", customerMonthlyIncome >= 2000.0, loanRequestedAmmount <= 30000.0, loanPeriod > 4);
+	then
+		$loanProcessObject.setRulesResult(true);
+		logger.debug("Woman above age with 2000+ salary, up to 30000 requested amount and more than 4 years loan period");
+end;
+
+rule "Woman above age with 2600+ salary, from 30000 up to 65000 requested amount and more than 7 years loan period"
+	when
+		$loanProcessObject : LoanProcessRulesDTO(customerAge >= 18, customerGenre == "FEMALE", customerMonthlyIncome >= 2600.0, loanRequestedAmmount > 30000.0, loanRequestedAmmount < 65000.0, loanPeriod > 7);
+	then
+		$loanProcessObject.setRulesResult(true);
+		logger.debug("Woman above age with 2600+ salary, from 30000 up to 65000 requested amount and more than 7 years loan period");
+end;

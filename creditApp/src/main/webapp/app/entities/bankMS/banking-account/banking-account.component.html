@@ -25,6 +25,7 @@
             <th><span jhiTranslate="creditApp.bankMsBankingAccount.customerIdentification">Customer Identification</span></th>
             <th><span jhiTranslate="creditApp.bankMsBankingAccount.customerIdentificationType">Customer Identification Type</span></th>
             <th><span jhiTranslate="creditApp.bankMsBankingAccount.customerCountry">Customer Country</span></th>
+            <th><span jhiTranslate="creditApp.bankMsBankingAccount.bankingEntityMnemonic">Banking Entity Mnemonic</span></th>
             <th></th>
             </tr>
             </thead>
@@ -38,6 +39,7 @@
                 <td>{{bankingAccount.customerIdentification}}</td>
                 <td>{{bankingAccount.customerIdentificationType}}</td>
                 <td>{{bankingAccount.customerCountry}}</td>
+                <td>{{bankingAccount.bankingEntityMnemonic}}</td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"
@@ -52,7 +54,7 @@
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                        <button type="submit"
+                        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit"
                                 [routerLink]="['/', 'banking-account', { outlets: { popup: bankingAccount.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"

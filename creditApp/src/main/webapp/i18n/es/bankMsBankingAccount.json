@@ -19,7 +19,8 @@
       "availableBalance": "Available Balance",
       "customerIdentification": "Customer Identification",
       "customerIdentificationType": "Customer Identification Type",
-      "customerCountry": "Customer Country"
+      "customerCountry": "Customer Country",
+      "bankingEntityMnemonic": "Entidad Bancaria"
     }
   },
   "bankMsApp": {

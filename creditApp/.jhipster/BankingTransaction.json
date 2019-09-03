@@ -81,7 +81,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190716234042",
+    "changelogDate": "20190815135129",
     "entityTableName": "banking_transaction",
     "dto": "mapstruct",
     "pagination": "no",

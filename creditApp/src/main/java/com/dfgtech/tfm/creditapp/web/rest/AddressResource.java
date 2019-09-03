@@ -1,14 +1,19 @@
 package com.dfgtech.tfm.creditapp.web.rest;
 
+import com.dfgtech.tfm.creditapp.security.AuthoritiesConstants;
+import com.dfgtech.tfm.creditapp.security.SecurityUtils;
 import com.dfgtech.tfm.creditapp.service.AddressService;
+import com.dfgtech.tfm.creditapp.service.CustomerService;
 import com.dfgtech.tfm.creditapp.web.rest.errors.BadRequestAlertException;
 import com.dfgtech.tfm.creditapp.service.dto.AddressDTO;
+import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +46,9 @@ public class AddressResource {
     private String applicationName;
 
     private final AddressService addressService;
+    
+    @Autowired
+    private CustomerService customerService;
 
     public AddressResource(AddressService addressService) {
         this.addressService = addressService;
@@ -97,7 +105,31 @@ public class AddressResource {
     @GetMapping("/addresses")
     public ResponseEntity<List<AddressDTO>> getAllAddresses(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get a page of Addresses");
-        Page<AddressDTO> page = addressService.findAll(pageable);
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+	        Page<AddressDTO> page = addressService.findAll(pageable);
+	        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+	        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        } else {
+        	Optional<CustomerDTO> customerDTO = customerService.findByUserLogin(SecurityUtils.getCurrentUserLogin().get());
+        	Page<AddressDTO> page = customerDTO.isPresent() ? addressService.findAllByCustomer(customerDTO.get().getId(), pageable) : Page.empty();
+	        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+	        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        }
+    }
+    
+    /**
+     * {@code GET  /addresses-customer} : get all the addresses by customer.
+     *
+     * @param pageable the pagination information.
+     * @param queryParams a {@link MultiValueMap} query parameters.
+     * @param uriBuilder a {@link UriComponentsBuilder} URI builder.
+     * @param id the customer id.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of addresses in body.
+     */
+    @GetMapping("/addresses-customer/{id}")
+    public ResponseEntity<List<AddressDTO>> getAllAddressesByCustomer(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder, @PathVariable Long id) {
+        log.debug("REST request to get a page of Addresses by customer id");
+    	Page<AddressDTO> page = addressService.findAllByCustomer(id, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

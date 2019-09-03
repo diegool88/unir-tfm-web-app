@@ -95,9 +95,25 @@
             ]
         },
         {
+            "fieldName": "rulesEngineResult",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "bankingAccountNumber",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "bankingAccountType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bankingAccountEntityMnemonic",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "loanProcessStatus",
             "fieldType": "LoanProcessStatus",
-            "fieldValues": "APPROVED,DENIED"
+            "fieldValues": "APPROVED,DENIED,PENDING"
         }
     ],
     "relationships": [
@@ -110,7 +126,7 @@
             "ownerSide": false
         }
     ],
-    "changelogDate": "20190716234036",
+    "changelogDate": "20190815135123",
     "entityTableName": "loan_process",
     "dto": "mapstruct",
     "pagination": "no",

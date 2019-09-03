@@ -52,6 +52,9 @@ describe('LoanProcess e2e test', () => {
       loanProcessUpdatePage.setDebtorCountryInput('debtorCountry'),
       loanProcessUpdatePage.setBankingEntityMnemonicInput('bankingEntityMnemonic'),
       loanProcessUpdatePage.setBankingProductMnemonicInput('bankingProductMnemonic'),
+      loanProcessUpdatePage.setBankingAccountNumberInput('5'),
+      loanProcessUpdatePage.setBankingAccountTypeInput('bankingAccountType'),
+      loanProcessUpdatePage.setBankingAccountEntityMnemonicInput('bankingAccountEntityMnemonic'),
       loanProcessUpdatePage.loanProcessStatusSelectLastOption()
     ]);
     expect(await loanProcessUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
@@ -83,6 +86,24 @@ describe('LoanProcess e2e test', () => {
     expect(await loanProcessUpdatePage.getBankingProductMnemonicInput()).to.eq(
       'bankingProductMnemonic',
       'Expected BankingProductMnemonic value to be equals to bankingProductMnemonic'
+    );
+    const selectedRulesEngineResult = loanProcessUpdatePage.getRulesEngineResultInput();
+    if (await selectedRulesEngineResult.isSelected()) {
+      await loanProcessUpdatePage.getRulesEngineResultInput().click();
+      expect(await loanProcessUpdatePage.getRulesEngineResultInput().isSelected(), 'Expected rulesEngineResult not to be selected').to.be
+        .false;
+    } else {
+      await loanProcessUpdatePage.getRulesEngineResultInput().click();
+      expect(await loanProcessUpdatePage.getRulesEngineResultInput().isSelected(), 'Expected rulesEngineResult to be selected').to.be.true;
+    }
+    expect(await loanProcessUpdatePage.getBankingAccountNumberInput()).to.eq('5', 'Expected bankingAccountNumber value to be equals to 5');
+    expect(await loanProcessUpdatePage.getBankingAccountTypeInput()).to.eq(
+      'bankingAccountType',
+      'Expected BankingAccountType value to be equals to bankingAccountType'
+    );
+    expect(await loanProcessUpdatePage.getBankingAccountEntityMnemonicInput()).to.eq(
+      'bankingAccountEntityMnemonic',
+      'Expected BankingAccountEntityMnemonic value to be equals to bankingAccountEntityMnemonic'
     );
     await loanProcessUpdatePage.save();
     expect(await loanProcessUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

@@ -25,7 +25,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190716234045",
+    "changelogDate": "20190815135132",
     "entityTableName": "city",
     "dto": "mapstruct",
     "pagination": "pagination",

@@ -27,7 +27,8 @@ const ENTITY_STATES = [...addressRoute, ...addressPopupRoute];
   ],
   entryComponents: [AddressComponent, AddressUpdateComponent, AddressDeleteDialogComponent, AddressDeletePopupComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [ AddressComponent, AddressDetailComponent, AddressUpdateComponent, AddressDeleteDialogComponent, AddressDeletePopupComponent ]
 })
 export class CreditAppAddressModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {

@@ -16,8 +16,8 @@ export class BankingEntityUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     mnemonic: [null, [Validators.required, Validators.maxLength(10), Validators.pattern('[A-Z0-9]+')]],
-    name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(40), Validators.pattern('[A-Za-z0-9s]+')]],
-    description: [null, [Validators.minLength(5), Validators.maxLength(60), Validators.pattern('[A-Za-z0-9s]+')]]
+    name: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(40), Validators.pattern('[A-Za-z0-9\\s]+')]],
+    description: [null, [Validators.minLength(5), Validators.maxLength(60), Validators.pattern('[A-Za-z0-9\\s]+')]]
   });
 
   constructor(protected bankingEntityService: BankingEntityService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}

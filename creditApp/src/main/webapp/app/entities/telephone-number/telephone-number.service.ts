@@ -31,6 +31,11 @@ export class TelephoneNumberService {
     const options = createRequestOption(req);
     return this.http.get<ITelephoneNumber[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
+  
+  queryByCustomer(id: number): Observable<EntityArrayResponseType> {
+    const options = createRequestOption();
+    return this.http.get<ITelephoneNumber[]>(`${this.resourceUrl}-customer/${id}`, { params: options, observe: 'response' });
+  }
 
   delete(id: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });

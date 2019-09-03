@@ -14,14 +14,14 @@
     <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234046_added_entity_Customer.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234047_added_entity_PersonalReference.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234048_added_entity_Address.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234049_added_entity_TelephoneNumber.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135133_added_entity_Customer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135134_added_entity_PersonalReference.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135135_added_entity_Address.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135136_added_entity_TelephoneNumber.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20190716234046_added_entity_constraints_Customer.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234047_added_entity_constraints_PersonalReference.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234048_added_entity_constraints_Address.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190716234049_added_entity_constraints_TelephoneNumber.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135133_added_entity_constraints_Customer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135134_added_entity_constraints_PersonalReference.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135135_added_entity_constraints_Address.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190815135136_added_entity_constraints_TelephoneNumber.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

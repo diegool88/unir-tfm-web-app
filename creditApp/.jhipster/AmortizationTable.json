@@ -41,7 +41,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190716234035",
+    "changelogDate": "20190815135122",
     "entityTableName": "amortization_table",
     "dto": "mapstruct",
     "pagination": "no",

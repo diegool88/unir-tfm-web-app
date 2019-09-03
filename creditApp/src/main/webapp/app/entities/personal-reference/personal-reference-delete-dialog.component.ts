@@ -41,21 +41,30 @@ export class PersonalReferenceDeleteDialogComponent {
 })
 export class PersonalReferenceDeletePopupComponent implements OnInit, OnDestroy {
   protected ngbModalRef: NgbModalRef;
+  mode: any;
 
   constructor(protected activatedRoute: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {}
 
   ngOnInit() {
+    //Wizard
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      if (queryParams && queryParams.mode) {
+        this.mode = queryParams.mode;
+      }
+    });
     this.activatedRoute.data.subscribe(({ personalReference }) => {
       setTimeout(() => {
         this.ngbModalRef = this.modalService.open(PersonalReferenceDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
         this.ngbModalRef.componentInstance.personalReference = personalReference;
         this.ngbModalRef.result.then(
           result => {
-            this.router.navigate(['/personal-reference', { outlets: { popup: null } }]);
+            if (this.mode !== 'wizard') this.router.navigate(['/personal-reference', { outlets: { popup: null } }]);
+            else this.router.navigate(['/wizard-main/personal-reference', { outlets: { popup: null } }]);
             this.ngbModalRef = null;
           },
           reason => {
-            this.router.navigate(['/personal-reference', { outlets: { popup: null } }]);
+            if (this.mode !== 'wizard') this.router.navigate(['/personal-reference', { outlets: { popup: null } }]);
+            else this.router.navigate(['/wizard-main/personal-reference', { outlets: { popup: null } }]);
             this.ngbModalRef = null;
           }
         );

@@ -31,6 +31,11 @@ export class AddressService {
     const options = createRequestOption(req);
     return this.http.get<IAddress[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
+  
+  queryByCustomer(id: number): Observable<EntityArrayResponseType> {
+    const options = createRequestOption();
+    return this.http.get<IAddress[]>(`${this.resourceUrl}-customer/${id}`, { params: options, observe: 'response' });
+  }
 
   delete(id: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });

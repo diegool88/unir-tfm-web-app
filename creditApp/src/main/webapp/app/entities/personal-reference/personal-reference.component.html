@@ -58,6 +58,7 @@
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', 'personal-reference', { outlets: { popup: personalReference.id + '/delete'} }]"
+                                [queryParams]="{ mode: mode }"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

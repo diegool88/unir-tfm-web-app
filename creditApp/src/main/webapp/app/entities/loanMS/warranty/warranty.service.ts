@@ -18,6 +18,10 @@ export class WarrantyService {
   create(warranty: IWarranty): Observable<EntityResponseType> {
     return this.http.post<IWarranty>(this.resourceUrl, warranty, { observe: 'response' });
   }
+  
+  createMasive(warranties: IWarranty[]): Observable<EntityArrayResponseType> {
+    return this.http.post<IWarranty[]>(`${this.resourceUrl}-masive`, { warranties: warranties }, { observe: 'response' });
+  }
 
   update(warranty: IWarranty): Observable<EntityResponseType> {
     return this.http.put<IWarranty>(this.resourceUrl, warranty, { observe: 'response' });

@@ -39,7 +39,8 @@ describe('Service Tests', () => {
         'AAAAAAA',
         currentDate,
         'AAAAAAA',
-        currentDate
+        currentDate,
+        0
       );
     });
 
@@ -100,7 +101,8 @@ describe('Service Tests', () => {
             email: 'BBBBBB',
             birthDate: currentDate.format(DATE_FORMAT),
             country: 'BBBBBB',
-            clientSince: currentDate.format(DATE_FORMAT)
+            clientSince: currentDate.format(DATE_FORMAT),
+            monthlyIncome: 1
           },
           elemDefault
         );
@@ -134,7 +136,8 @@ describe('Service Tests', () => {
             email: 'BBBBBB',
             birthDate: currentDate.format(DATE_FORMAT),
             country: 'BBBBBB',
-            clientSince: currentDate.format(DATE_FORMAT)
+            clientSince: currentDate.format(DATE_FORMAT),
+            monthlyIncome: 1
           },
           elemDefault
         );

@@ -1,13 +1,21 @@
 package com.dfgtech.tfm.creditapp.web.rest;
 
-import com.dfgtech.tfm.creditapp.CreditApp;
-import com.dfgtech.tfm.creditapp.domain.Customer;
-import com.dfgtech.tfm.creditapp.domain.User;
-import com.dfgtech.tfm.creditapp.repository.CustomerRepository;
-import com.dfgtech.tfm.creditapp.service.CustomerService;
-import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
-import com.dfgtech.tfm.creditapp.service.mapper.CustomerMapper;
-import com.dfgtech.tfm.creditapp.web.rest.errors.ExceptionTranslator;
+import static com.dfgtech.tfm.creditapp.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,19 +30,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.dfgtech.tfm.creditapp.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.dfgtech.tfm.creditapp.domain.enumeration.IdentificationType;
+import com.dfgtech.tfm.creditapp.CreditApp;
+import com.dfgtech.tfm.creditapp.domain.Customer;
+import com.dfgtech.tfm.creditapp.domain.User;
 import com.dfgtech.tfm.creditapp.domain.enumeration.Genre;
+import com.dfgtech.tfm.creditapp.domain.enumeration.IdentificationType;
+import com.dfgtech.tfm.creditapp.repository.CustomerRepository;
+import com.dfgtech.tfm.creditapp.service.CustomerService;
+import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
+import com.dfgtech.tfm.creditapp.service.mapper.CustomerMapper;
+import com.dfgtech.tfm.creditapp.web.rest.errors.ExceptionTranslator;
 /**
  * Integration tests for the {@Link CustomerResource} REST controller.
  */
@@ -67,12 +72,18 @@ public class CustomerResourceIT {
 
     private static final LocalDate DEFAULT_BIRTH_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_BIRTH_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_BIRTH_DATE = LocalDate.ofEpochDay(-1L);
 
     private static final String DEFAULT_COUNTRY = "AAAAAAAAAA";
     private static final String UPDATED_COUNTRY = "BBBBBBBBBB";
 
     private static final LocalDate DEFAULT_CLIENT_SINCE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_CLIENT_SINCE = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_CLIENT_SINCE = LocalDate.ofEpochDay(-1L);
+
+    private static final Double DEFAULT_MONTHLY_INCOME = 1D;
+    private static final Double UPDATED_MONTHLY_INCOME = 2D;
+    private static final Double SMALLER_MONTHLY_INCOME = 1D - 1D;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -132,7 +143,8 @@ public class CustomerResourceIT {
             .email(DEFAULT_EMAIL)
             .birthDate(DEFAULT_BIRTH_DATE)
             .country(DEFAULT_COUNTRY)
-            .clientSince(DEFAULT_CLIENT_SINCE);
+            .clientSince(DEFAULT_CLIENT_SINCE)
+            .monthlyIncome(DEFAULT_MONTHLY_INCOME);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -158,7 +170,8 @@ public class CustomerResourceIT {
             .email(UPDATED_EMAIL)
             .birthDate(UPDATED_BIRTH_DATE)
             .country(UPDATED_COUNTRY)
-            .clientSince(UPDATED_CLIENT_SINCE);
+            .clientSince(UPDATED_CLIENT_SINCE)
+            .monthlyIncome(UPDATED_MONTHLY_INCOME);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -199,6 +212,7 @@ public class CustomerResourceIT {
         assertThat(testCustomer.getBirthDate()).isEqualTo(DEFAULT_BIRTH_DATE);
         assertThat(testCustomer.getCountry()).isEqualTo(DEFAULT_COUNTRY);
         assertThat(testCustomer.getClientSince()).isEqualTo(DEFAULT_CLIENT_SINCE);
+        assertThat(testCustomer.getMonthlyIncome()).isEqualTo(DEFAULT_MONTHLY_INCOME);
     }
 
     @Test
@@ -376,6 +390,25 @@ public class CustomerResourceIT {
 
     @Test
     @Transactional
+    public void checkMonthlyIncomeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = customerRepository.findAll().size();
+        // set the field null
+        customer.setMonthlyIncome(null);
+
+        // Create the Customer, which fails.
+        CustomerDTO customerDTO = customerMapper.toDto(customer);
+
+        restCustomerMockMvc.perform(post("/api/customers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(customerDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Customer> customerList = customerRepository.findAll();
+        assertThat(customerList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllCustomers() throws Exception {
         // Initialize the database
         customerRepository.saveAndFlush(customer);
@@ -395,7 +428,8 @@ public class CustomerResourceIT {
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].birthDate").value(hasItem(DEFAULT_BIRTH_DATE.toString())))
             .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY.toString())))
-            .andExpect(jsonPath("$.[*].clientSince").value(hasItem(DEFAULT_CLIENT_SINCE.toString())));
+            .andExpect(jsonPath("$.[*].clientSince").value(hasItem(DEFAULT_CLIENT_SINCE.toString())))
+            .andExpect(jsonPath("$.[*].monthlyIncome").value(hasItem(DEFAULT_MONTHLY_INCOME.doubleValue())));
     }
     
     @Test
@@ -419,7 +453,8 @@ public class CustomerResourceIT {
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
             .andExpect(jsonPath("$.birthDate").value(DEFAULT_BIRTH_DATE.toString()))
             .andExpect(jsonPath("$.country").value(DEFAULT_COUNTRY.toString()))
-            .andExpect(jsonPath("$.clientSince").value(DEFAULT_CLIENT_SINCE.toString()));
+            .andExpect(jsonPath("$.clientSince").value(DEFAULT_CLIENT_SINCE.toString()))
+            .andExpect(jsonPath("$.monthlyIncome").value(DEFAULT_MONTHLY_INCOME.doubleValue()));
     }
 
     @Test
@@ -453,7 +488,8 @@ public class CustomerResourceIT {
             .email(UPDATED_EMAIL)
             .birthDate(UPDATED_BIRTH_DATE)
             .country(UPDATED_COUNTRY)
-            .clientSince(UPDATED_CLIENT_SINCE);
+            .clientSince(UPDATED_CLIENT_SINCE)
+            .monthlyIncome(UPDATED_MONTHLY_INCOME);
         CustomerDTO customerDTO = customerMapper.toDto(updatedCustomer);
 
         restCustomerMockMvc.perform(put("/api/customers")
@@ -476,6 +512,7 @@ public class CustomerResourceIT {
         assertThat(testCustomer.getBirthDate()).isEqualTo(UPDATED_BIRTH_DATE);
         assertThat(testCustomer.getCountry()).isEqualTo(UPDATED_COUNTRY);
         assertThat(testCustomer.getClientSince()).isEqualTo(UPDATED_CLIENT_SINCE);
+        assertThat(testCustomer.getMonthlyIncome()).isEqualTo(UPDATED_MONTHLY_INCOME);
     }
 
     @Test

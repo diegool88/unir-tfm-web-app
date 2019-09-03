@@ -23,7 +23,7 @@ describe('Service Tests', () => {
       service = injector.get(BankingAccountService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new BankingAccount(0, 0, AccountType.SAVINGS, 0, 0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new BankingAccount(0, 0, AccountType.SAVINGS, 0, 0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -65,7 +65,8 @@ describe('Service Tests', () => {
             availableBalance: 1,
             customerIdentification: 'BBBBBB',
             customerIdentificationType: 'BBBBBB',
-            customerCountry: 'BBBBBB'
+            customerCountry: 'BBBBBB',
+            bankingEntityMnemonic: 'BBBBBB'
           },
           elemDefault
         );
@@ -89,7 +90,8 @@ describe('Service Tests', () => {
             availableBalance: 1,
             customerIdentification: 'BBBBBB',
             customerIdentificationType: 'BBBBBB',
-            customerCountry: 'BBBBBB'
+            customerCountry: 'BBBBBB',
+            bankingEntityMnemonic: 'BBBBBB'
           },
           elemDefault
         );

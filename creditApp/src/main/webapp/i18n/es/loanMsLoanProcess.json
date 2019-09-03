@@ -2,38 +2,46 @@
   "creditApp": {
     "loanMsLoanProcess": {
       "home": {
-        "title": "Loan Processes",
-        "createLabel": "Crear nuevo Loan Process",
-        "createOrEditLabel": "Crear o editar Loan Process",
-        "notFound": "No Loan Process found"
+        "title": "Solicitud de Crédito",
+        "createLabel": "Crear nueva Solicitud de Crédito",
+        "createOrEditLabel": "Crear o editar Solicitud de Crédito",
+        "notFound": "Solicitudes de Crédito no encontradas",
+        "calculate": "Calcular Tabla de Amortización",
+        "summary": "Resumen Solicitud de Crédito",
+        "complete": "Completar Solicitud de Crédito"
       },
       "delete": {
-        "question": "¿Seguro que quiere eliminar Loan Process {{ id }}?"
+        "question": "¿Seguro que quiere eliminar la Solicitud de Crédito {{ id }}?"
       },
       "detail": {
-        "title": "Loan Process"
+        "title": "Solicitud de Crédito"
       },
-      "name": "Name",
-      "requestedAmount": "Requested Amount",
-      "givenAmount": "Given Amount",
-      "loanPeriod": "Loan Period",
-      "startDate": "Start Date",
-      "endDate": "End Date",
-      "justification": "Justification",
-      "debtorIdentification": "Debtor Identification",
-      "debtorIdentificationType": "Debtor Identification Type",
-      "debtorCountry": "Debtor Country",
-      "bankingEntityMnemonic": "Banking Entity Mnemonic",
-      "bankingProductMnemonic": "Banking Product Mnemonic",
-      "loanProcessStatus": "Loan Process Status",
-      "warranties": "Warranties"
+      "name": "Nombre",
+      "requestedAmount": "Monto Solicitado",
+      "givenAmount": "Monto Entregado",
+      "loanPeriod": "Tiempo crédito en años",
+      "startDate": "Fecha Inicio",
+      "endDate": "Fecha Fin",
+      "justification": "Justificación",
+      "debtorIdentification": "Identificación del Deudor",
+      "debtorIdentificationType": "Tipo de Identificación del Deudor",
+      "debtorCountry": "País del Deudor",
+      "bankingEntityMnemonic": "Entidad Bancaria",
+      "bankingProductMnemonic": "Producto Bancario",
+      "rulesEngineResult": "Resultado de Reglas de Negocio",
+      "loanProcessStatus": "Estado Solicitud de Crédito",
+      "warranties": "Garantías",
+	  "businessRules": {
+		"true": "Las reglas de negocio para esta solicitud de crédito se han cumplido",
+		"false": "Las reglas de negocio para esta solicitud de crédito no se han cumplido"
+	  }
     }
   },
   "loanMsApp": {
     "loanMsLoanProcess": {
-      "created": "Un nuevo Loan Process ha sido creado con el identificador {{ param }}",
-      "updated": "Un Loan Process ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Loan Process ha sido eliminado con el identificador {{ param }}"
+      "created": "Una nueva Solicitud de Crédito ha sido creada con el identificador {{ param }}",
+      "updated": "Una Solicitud de Crédito ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Una Solicitud de Crédito ha sido eliminada con el identificador {{ param }}"
     }
   }
 }

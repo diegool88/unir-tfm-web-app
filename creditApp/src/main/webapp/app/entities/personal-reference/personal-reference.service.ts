@@ -44,6 +44,13 @@ export class PersonalReferenceService {
       .get<IPersonalReference[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
+  
+  queryByCustomer(id: number): Observable<EntityArrayResponseType> {
+    const options = createRequestOption();
+    return this.http
+      .get<IPersonalReference[]>(`${this.resourceUrl}-customer/${id}`, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
 
   delete(id: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });

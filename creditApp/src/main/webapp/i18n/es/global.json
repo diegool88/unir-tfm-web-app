@@ -4,6 +4,7 @@
     "browsehappy": "Está usando un navegador <strong>no actualizado</strong>. Por favor, <a href=\"http://browsehappy.com/?locale=es\">actualice su navegador</a> para mejorar su experiencia.",
     "menu": {
       "home": "Inicio",
+      "loanProcess": "Proceso de Crédito",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entidades",
@@ -115,7 +116,9 @@
       "edit": "Editar",
       "open": "Abrir",
       "save": "Guardar",
-      "view": "Vista"
+      "view": "Vista",
+	  "approve": "Aprobar",
+	  "deny": "Denegar"
     },
     "detail": {
       "field": "Campo",
@@ -148,5 +151,5 @@
     "idexists": "Un/a nuevo/a {{entityName}} no puede tener ID",
     "idnull": "ID inválido"
   },
-  "footer": "Pie de página"
+  "footer": "Copyright &copy; Smart Credit 2019"
 }

@@ -41,21 +41,30 @@ export class TelephoneNumberDeleteDialogComponent {
 })
 export class TelephoneNumberDeletePopupComponent implements OnInit, OnDestroy {
   protected ngbModalRef: NgbModalRef;
+  mode: any;
 
   constructor(protected activatedRoute: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {}
 
   ngOnInit() {
+    //Wizard
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      if (queryParams && queryParams.mode) {
+        this.mode = queryParams.mode;
+      }
+    });
     this.activatedRoute.data.subscribe(({ telephoneNumber }) => {
       setTimeout(() => {
         this.ngbModalRef = this.modalService.open(TelephoneNumberDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
         this.ngbModalRef.componentInstance.telephoneNumber = telephoneNumber;
         this.ngbModalRef.result.then(
           result => {
-            this.router.navigate(['/telephone-number', { outlets: { popup: null } }]);
+            if (this.mode !== 'wizard') this.router.navigate(['/telephone-number', { outlets: { popup: null } }]);
+            else this.router.navigate(['/wizard-main/telephone-number', { outlets: { popup: null } }]);
             this.ngbModalRef = null;
           },
           reason => {
-            this.router.navigate(['/telephone-number', { outlets: { popup: null } }]);
+            if (this.mode !== 'wizard') this.router.navigate(['/telephone-number', { outlets: { popup: null } }]);
+            else this.router.navigate(['/wizard-main/telephone-number', { outlets: { popup: null } }]);
             this.ngbModalRef = null;
           }
         );

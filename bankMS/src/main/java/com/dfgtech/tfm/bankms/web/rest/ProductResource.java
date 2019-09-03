@@ -114,6 +114,34 @@ public class ProductResource {
         Optional<ProductDTO> productDTO = productService.findOne(id);
         return ResponseUtil.wrapOrNotFound(productDTO);
     }
+    
+    /**
+     * {@code GET  /products/bankEntity/:id} : get the "id" banking entity.
+     *
+     * @param id the id of the productDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the productDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/products/bankEntity/{id}")
+    public ResponseEntity<List<ProductDTO>> getProductsByBankingEntity(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder, @PathVariable Long id) {
+    	log.debug("REST request to get a page of Products");
+        Page<ProductDTO> page = productService.findAllByBankingEntity(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+    
+    /**
+     * {@code GET  /products/:id} : get the "id" product.
+     *
+     * @param id the id of the productDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the productDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/products/bankEntityM/{mnemonic}")
+    public ResponseEntity<List<ProductDTO>> getProductsByBankingEntityMnemonic(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder, @PathVariable String mnemonic) {
+    	log.debug("REST request to get a page of Products");
+        Page<ProductDTO> page = productService.findAllByBankingEntityMnemonic(mnemonic, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 
     /**
      * {@code DELETE  /products/:id} : delete the "id" product.

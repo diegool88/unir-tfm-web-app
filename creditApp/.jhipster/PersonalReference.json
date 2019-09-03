@@ -71,7 +71,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190716234047",
+    "changelogDate": "20190815135134",
     "entityTableName": "personal_reference",
     "dto": "mapstruct",
     "pagination": "pagination",

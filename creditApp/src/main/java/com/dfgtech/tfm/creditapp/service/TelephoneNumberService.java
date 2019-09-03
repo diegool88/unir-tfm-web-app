@@ -57,6 +57,19 @@ public class TelephoneNumberService {
         return telephoneNumberRepository.findAll(pageable)
             .map(telephoneNumberMapper::toDto);
     }
+    
+    /**
+     * Get all the telephoneNumbers by Customer Id.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public Page<TelephoneNumberDTO> findAllByCustomer(Long customer, Pageable pageable) {
+        log.debug("Request to get all TelephoneNumbers by customer");
+        return telephoneNumberRepository.findByCustomerId(customer, pageable)
+            .map(telephoneNumberMapper::toDto);
+    }
 
 
     /**

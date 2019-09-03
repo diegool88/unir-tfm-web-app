@@ -21,12 +21,12 @@ export class AddressUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    mainStreet: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(40), Validators.pattern('[A-Za-z0-9s]+')]],
-    secondaryStreet: [null, [Validators.minLength(5), Validators.maxLength(40), Validators.pattern('[A-Za-z0-9s]+')]],
+    mainStreet: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(40), Validators.pattern('[A-Za-z0-9\\s]+')]],
+    secondaryStreet: [null, [Validators.minLength(5), Validators.maxLength(40), Validators.pattern('[A-Za-z0-9\\s]+')]],
     number: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(15), Validators.pattern('[A-Za-z0-9]+')]],
-    city: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-zs]+')]],
-    province: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-zs]+')]],
-    country: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-zs]+')]],
+    city: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z\\s]+')]],
+    province: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z\\s]+')]],
+    country: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z\\s]+')]],
     postalCode: [null, [Validators.required]],
     addressType: [null, [Validators.required]],
     customerId: [null, Validators.required]

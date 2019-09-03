@@ -12,6 +12,7 @@ export interface IBankingAccount {
   customerIdentification?: string;
   customerIdentificationType?: string;
   customerCountry?: string;
+  bankingEntityMnemonic?: string;
 }
 
 export class BankingAccount implements IBankingAccount {
@@ -23,6 +24,7 @@ export class BankingAccount implements IBankingAccount {
     public availableBalance?: number,
     public customerIdentification?: string,
     public customerIdentificationType?: string,
-    public customerCountry?: string
+    public customerCountry?: string,
+    public bankingEntityMnemonic?: string
   ) {}
 }

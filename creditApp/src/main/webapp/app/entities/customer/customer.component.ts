@@ -16,13 +16,18 @@ export class CustomerComponent implements OnInit, OnDestroy {
   customers: ICustomer[];
   currentAccount: any;
   eventSubscriber: Subscription;
+  customer: ICustomer;
 
   constructor(
     protected customerService: CustomerService,
     protected jhiAlertService: JhiAlertService,
     protected eventManager: JhiEventManager,
     protected accountService: AccountService
-  ) {}
+  ) {
+      this.accountService.identity().then(account => {
+        this.currentAccount = account;
+      });
+  }
 
   loadAll() {
     this.customerService
@@ -41,9 +46,6 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadAll();
-    this.accountService.identity().then(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInCustomers();
   }
 

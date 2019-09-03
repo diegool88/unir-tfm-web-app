@@ -1,7 +1,10 @@
 package com.dfgtech.tfm.creditapp.service;
 
 import com.dfgtech.tfm.creditapp.domain.Customer;
+import com.dfgtech.tfm.creditapp.domain.User;
+import com.dfgtech.tfm.creditapp.domain.enumeration.IdentificationType;
 import com.dfgtech.tfm.creditapp.repository.CustomerRepository;
+import com.dfgtech.tfm.creditapp.security.SecurityUtils;
 import com.dfgtech.tfm.creditapp.service.dto.CustomerDTO;
 import com.dfgtech.tfm.creditapp.service.mapper.CustomerMapper;
 import org.slf4j.Logger;
@@ -71,6 +74,34 @@ public class CustomerService {
         log.debug("Request to get Customer : {}", id);
         return customerRepository.findById(id)
             .map(customerMapper::toDto);
+    }
+    
+    /**
+     * Get one customer by user login.
+     *
+     * @param user the login of the current authenticated user.
+     * @return the entity.
+     */
+    @Transactional(readOnly = true)
+    public Optional<CustomerDTO> findByUserLogin(String login) {
+        log.debug("Request to get Customer : {}", login);
+        return customerRepository.findByUserLogin(SecurityUtils.getCurrentUserLogin().get())
+        		.map(customerMapper::toDto);
+    }
+    
+    /**
+     * Get one customer by customer identification.
+     *
+     * @param identificationType the identification type of the requested customer.
+     * @param identificationNumber the identification number of the requested customer.
+     * @param country the identification country of the requested customer.
+     * @return the entity.
+     */
+    @Transactional(readOnly = true)
+    public Optional<CustomerDTO> findByIdentification(String identificationType, String identificationNumber, String country) {
+        log.debug("Request to get Customer : {} - {} - {}", identificationType, identificationNumber, country);
+        return customerRepository.findByIdentification(IdentificationType.valueOf(identificationType),identificationNumber,country)
+        		.map(customerMapper::toDto);
     }
 
     /**

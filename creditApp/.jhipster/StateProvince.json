@@ -26,7 +26,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190716234044",
+    "changelogDate": "20190815135131",
     "entityTableName": "state_province",
     "dto": "mapstruct",
     "pagination": "pagination",

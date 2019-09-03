@@ -51,6 +51,7 @@ describe('Customer e2e test', () => {
             customerUpdatePage.setBirthDateInput('2000-12-31'),
             customerUpdatePage.setCountryInput('country'),
             customerUpdatePage.setClientSinceInput('2000-12-31'),
+            customerUpdatePage.setMonthlyIncomeInput('5'),
             customerUpdatePage.userSelectLastOption(),
         ]);
         expect(await customerUpdatePage.getFirstnameInput()).to.eq('firstname', 'Expected Firstname value to be equals to firstname');
@@ -62,6 +63,7 @@ describe('Customer e2e test', () => {
         expect(await customerUpdatePage.getBirthDateInput()).to.eq('2000-12-31', 'Expected birthDate value to be equals to 2000-12-31');
         expect(await customerUpdatePage.getCountryInput()).to.eq('country', 'Expected Country value to be equals to country');
         expect(await customerUpdatePage.getClientSinceInput()).to.eq('2000-12-31', 'Expected clientSince value to be equals to 2000-12-31');
+        expect(await customerUpdatePage.getMonthlyIncomeInput()).to.eq('5', 'Expected monthlyIncome value to be equals to 5');
         await customerUpdatePage.save();
         expect(await customerUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

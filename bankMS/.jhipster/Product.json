@@ -88,7 +88,7 @@
             "ownerSide": false
         }
     ],
-    "changelogDate": "20190716234037",
+    "changelogDate": "20190815135124",
     "entityTableName": "product",
     "dto": "mapstruct",
     "pagination": "pagination",

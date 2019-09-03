@@ -2,32 +2,33 @@
   "creditApp": {
     "customer": {
       "home": {
-        "title": "Customers",
-        "createLabel": "Crear nuevo Customer",
-        "createOrEditLabel": "Crear o editar Customer",
-        "notFound": "No Customer found"
+        "title": "Clientes",
+        "createLabel": "Crear nuevo Cliente",
+        "createOrEditLabel": "Crear o editar Cliente",
+        "notFound": "Clientes no encontrados"
       },
-      "created": "Un nuevo Customer ha sido creado con el identificador {{ param }}",
-      "updated": "Un Customer ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Customer ha sido eliminado con el identificador {{ param }}",
+      "created": "Un nuevo Cliente ha sido creado con el identificador {{ param }}",
+      "updated": "Un Cliente ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Cliente ha sido eliminado con el identificador {{ param }}",
       "delete": {
         "question": "¿Seguro que quiere eliminar Customer {{ id }}?"
       },
       "detail": {
-        "title": "Customer"
+        "title": "Cliente"
       },
-      "firstname": "Firstname",
-      "secondName": "Second Name",
-      "lastname": "Lastname",
-      "secondLastname": "Second Lastname",
-      "identificationType": "Identification Type",
-      "identificationNumber": "Identification Number",
-      "genre": "Genre",
-      "email": "Email",
-      "birthDate": "Birth Date",
-      "country": "Country",
-      "clientSince": "Client Since",
-      "user": "User"
+      "firstname": "Primer Nombre",
+      "secondName": "Segundo Nombre",
+      "lastname": "Primer Apellido",
+      "secondLastname": "Segundo Apellido",
+      "identificationType": "Tipo de Identificación",
+      "identificationNumber": "Número de Identificación",
+      "genre": "Género",
+      "email": "Correo Electrónico",
+      "birthDate": "Fecha de Nacimiento",
+      "country": "País de Origen",
+      "clientSince": "Cliente Desde",
+      "monthlyIncome": "Ingreso Mensual",
+      "user": "Usuario"
     }
   }
 }

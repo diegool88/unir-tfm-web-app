@@ -23,6 +23,7 @@ export interface ICustomer {
   birthDate?: Moment;
   country?: string;
   clientSince?: Moment;
+  monthlyIncome?: number;
   userLogin?: string;
   userId?: number;
 }
@@ -41,6 +42,7 @@ export class Customer implements ICustomer {
     public birthDate?: Moment,
     public country?: string,
     public clientSince?: Moment,
+    public monthlyIncome?: number,
     public userLogin?: string,
     public userId?: number
   ) {}

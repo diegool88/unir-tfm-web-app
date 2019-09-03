@@ -3,7 +3,8 @@ import { IWarranty } from 'app/shared/model/loanMS/warranty.model';
 
 export const enum LoanProcessStatus {
   APPROVED = 'APPROVED',
-  DENIED = 'DENIED'
+  DENIED = 'DENIED',
+  PENDING = 'PENDING'
 }
 
 export interface ILoanProcess {
@@ -20,6 +21,10 @@ export interface ILoanProcess {
   debtorCountry?: string;
   bankingEntityMnemonic?: string;
   bankingProductMnemonic?: string;
+  rulesEngineResult?: boolean;
+  bankingAccountNumber?: number;
+  bankingAccountType?: string;
+  bankingAccountEntityMnemonic?: string;
   loanProcessStatus?: LoanProcessStatus;
   warranties?: IWarranty[];
 }
@@ -39,7 +44,13 @@ export class LoanProcess implements ILoanProcess {
     public debtorCountry?: string,
     public bankingEntityMnemonic?: string,
     public bankingProductMnemonic?: string,
+    public rulesEngineResult?: boolean,
+    public bankingAccountNumber?: number,
+    public bankingAccountType?: string,
+    public bankingAccountEntityMnemonic?: string,
     public loanProcessStatus?: LoanProcessStatus,
     public warranties?: IWarranty[]
-  ) {}
+  ) {
+    this.rulesEngineResult = this.rulesEngineResult || false;
+  }
 }

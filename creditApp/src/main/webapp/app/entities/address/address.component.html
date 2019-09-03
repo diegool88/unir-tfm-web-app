@@ -62,6 +62,7 @@
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', 'address', { outlets: { popup: address.id + '/delete'} }]"
+                                [queryParams]="{ mode: mode }"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

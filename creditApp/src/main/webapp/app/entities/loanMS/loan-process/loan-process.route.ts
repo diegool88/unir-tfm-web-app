@@ -11,6 +11,8 @@ import { LoanProcessDetailComponent } from './loan-process-detail.component';
 import { LoanProcessUpdateComponent } from './loan-process-update.component';
 import { LoanProcessDeletePopupComponent } from './loan-process-delete-dialog.component';
 import { ILoanProcess } from 'app/shared/model/loanMS/loan-process.model';
+import { LoanProcessCustomerComponent } from "app/entities/loanMS/loan-process/loan-process-customer/loan-process-customer.component";
+import { LoanProcessOfficialComponent } from "app/entities/loanMS/loan-process/loan-process-official/loan-process-official.component";
 
 @Injectable({ providedIn: 'root' })
 export class LoanProcessResolve implements Resolve<ILoanProcess> {
@@ -70,6 +72,24 @@ export const loanProcessRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
+      pageTitle: 'creditApp.loanMsLoanProcess.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'customer',
+    component: LoanProcessCustomerComponent,
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'creditApp.loanMsLoanProcess.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'officer',
+    component: LoanProcessOfficialComponent,
+    data: {
+      authorities: ['ROLE_OFFICER'],
       pageTitle: 'creditApp.loanMsLoanProcess.home.title'
     },
     canActivate: [UserRouteAccessService]

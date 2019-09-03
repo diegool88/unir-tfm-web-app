@@ -78,6 +78,18 @@ public class LoanProcess implements Serializable {
     @Column(name = "banking_product_mnemonic", nullable = false)
     private String bankingProductMnemonic;
 
+    @Column(name = "rules_engine_result")
+    private Boolean rulesEngineResult;
+
+    @Column(name = "banking_account_number")
+    private Integer bankingAccountNumber;
+
+    @Column(name = "banking_account_type")
+    private String bankingAccountType;
+
+    @Column(name = "banking_account_entity_mnemonic")
+    private String bankingAccountEntityMnemonic;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "loan_process_status")
     private LoanProcessStatus loanProcessStatus;
@@ -252,6 +264,58 @@ public class LoanProcess implements Serializable {
         this.bankingProductMnemonic = bankingProductMnemonic;
     }
 
+    public Boolean isRulesEngineResult() {
+        return rulesEngineResult;
+    }
+
+    public LoanProcess rulesEngineResult(Boolean rulesEngineResult) {
+        this.rulesEngineResult = rulesEngineResult;
+        return this;
+    }
+
+    public void setRulesEngineResult(Boolean rulesEngineResult) {
+        this.rulesEngineResult = rulesEngineResult;
+    }
+
+    public Integer getBankingAccountNumber() {
+        return bankingAccountNumber;
+    }
+
+    public LoanProcess bankingAccountNumber(Integer bankingAccountNumber) {
+        this.bankingAccountNumber = bankingAccountNumber;
+        return this;
+    }
+
+    public void setBankingAccountNumber(Integer bankingAccountNumber) {
+        this.bankingAccountNumber = bankingAccountNumber;
+    }
+
+    public String getBankingAccountType() {
+        return bankingAccountType;
+    }
+
+    public LoanProcess bankingAccountType(String bankingAccountType) {
+        this.bankingAccountType = bankingAccountType;
+        return this;
+    }
+
+    public void setBankingAccountType(String bankingAccountType) {
+        this.bankingAccountType = bankingAccountType;
+    }
+
+    public String getBankingAccountEntityMnemonic() {
+        return bankingAccountEntityMnemonic;
+    }
+
+    public LoanProcess bankingAccountEntityMnemonic(String bankingAccountEntityMnemonic) {
+        this.bankingAccountEntityMnemonic = bankingAccountEntityMnemonic;
+        return this;
+    }
+
+    public void setBankingAccountEntityMnemonic(String bankingAccountEntityMnemonic) {
+        this.bankingAccountEntityMnemonic = bankingAccountEntityMnemonic;
+    }
+
     public LoanProcessStatus getLoanProcessStatus() {
         return loanProcessStatus;
     }
@@ -323,6 +387,10 @@ public class LoanProcess implements Serializable {
             ", debtorCountry='" + getDebtorCountry() + "'" +
             ", bankingEntityMnemonic='" + getBankingEntityMnemonic() + "'" +
             ", bankingProductMnemonic='" + getBankingProductMnemonic() + "'" +
+            ", rulesEngineResult='" + isRulesEngineResult() + "'" +
+            ", bankingAccountNumber=" + getBankingAccountNumber() +
+            ", bankingAccountType='" + getBankingAccountType() + "'" +
+            ", bankingAccountEntityMnemonic='" + getBankingAccountEntityMnemonic() + "'" +
             ", loanProcessStatus='" + getLoanProcessStatus() + "'" +
             "}";
     }

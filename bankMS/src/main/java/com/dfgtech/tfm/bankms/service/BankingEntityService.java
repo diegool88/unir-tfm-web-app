@@ -71,6 +71,19 @@ public class BankingEntityService {
         return bankingEntityRepository.findById(id)
             .map(bankingEntityMapper::toDto);
     }
+    
+    /**
+     * Get one bankingEntity by mnemonic.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    @Transactional(readOnly = true)
+    public Optional<BankingEntityDTO> findByMnemonic(String mnemonic) {
+        log.debug("Request to get BankingEntity : {}", mnemonic);
+        return bankingEntityRepository.findByMnemonic(mnemonic)
+            .map(bankingEntityMapper::toDto);
+    }
 
     /**
      * Delete the bankingEntity by id.

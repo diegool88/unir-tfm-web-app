@@ -13,6 +13,7 @@ import {
   warrantyRoute,
   warrantyPopupRoute
 } from './';
+import { WarrantyDeleteDialogTmpComponent, WarrantyDeletePopupTmpComponent } from './warranty-delete-dialog-tmp/warranty-delete-dialog-tmp.component';
 
 const ENTITY_STATES = [...warrantyRoute, ...warrantyPopupRoute];
 
@@ -23,11 +24,20 @@ const ENTITY_STATES = [...warrantyRoute, ...warrantyPopupRoute];
     WarrantyDetailComponent,
     WarrantyUpdateComponent,
     WarrantyDeleteDialogComponent,
-    WarrantyDeletePopupComponent
+    WarrantyDeletePopupComponent,
+    WarrantyDeleteDialogTmpComponent,
+    WarrantyDeletePopupTmpComponent
   ],
-  entryComponents: [WarrantyComponent, WarrantyUpdateComponent, WarrantyDeleteDialogComponent, WarrantyDeletePopupComponent],
+  entryComponents: [WarrantyComponent, WarrantyUpdateComponent, WarrantyDeleteDialogComponent, WarrantyDeletePopupComponent, WarrantyDeleteDialogTmpComponent, WarrantyDeletePopupTmpComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [WarrantyComponent,
+            WarrantyDetailComponent,
+            WarrantyUpdateComponent,
+            WarrantyDeleteDialogComponent,
+            WarrantyDeletePopupComponent,
+            WarrantyDeleteDialogTmpComponent,
+            WarrantyDeletePopupTmpComponent]
 })
 export class LoanMsWarrantyModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {

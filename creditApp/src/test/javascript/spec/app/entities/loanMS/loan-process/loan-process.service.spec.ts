@@ -41,6 +41,10 @@ describe('Service Tests', () => {
         'AAAAAAA',
         'AAAAAAA',
         'AAAAAAA',
+        false,
+        0,
+        'AAAAAAA',
+        'AAAAAAA',
         LoanProcessStatus.APPROVED
       );
     });
@@ -104,6 +108,10 @@ describe('Service Tests', () => {
             debtorCountry: 'BBBBBB',
             bankingEntityMnemonic: 'BBBBBB',
             bankingProductMnemonic: 'BBBBBB',
+            rulesEngineResult: true,
+            bankingAccountNumber: 1,
+            bankingAccountType: 'BBBBBB',
+            bankingAccountEntityMnemonic: 'BBBBBB',
             loanProcessStatus: 'BBBBBB'
           },
           elemDefault
@@ -140,6 +148,10 @@ describe('Service Tests', () => {
             debtorCountry: 'BBBBBB',
             bankingEntityMnemonic: 'BBBBBB',
             bankingProductMnemonic: 'BBBBBB',
+            rulesEngineResult: true,
+            bankingAccountNumber: 1,
+            bankingAccountType: 'BBBBBB',
+            bankingAccountEntityMnemonic: 'BBBBBB',
             loanProcessStatus: 'BBBBBB'
           },
           elemDefault

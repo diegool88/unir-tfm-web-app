@@ -50,10 +50,21 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "bankingEntityMnemonic",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength",
+                "pattern"
+            ],
+            "fieldValidateRulesMaxlength": 10,
+            "fieldValidateRulesPattern": "[A-Z0-9]+"
         }
     ],
     "relationships": [],
-    "changelogDate": "20190716234041",
+    "changelogDate": "20190815135128",
     "entityTableName": "banking_account",
     "dto": "mapstruct",
     "pagination": "no",

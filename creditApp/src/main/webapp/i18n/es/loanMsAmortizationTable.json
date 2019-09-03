@@ -2,29 +2,30 @@
   "creditApp": {
     "loanMsAmortizationTable": {
       "home": {
-        "title": "Amortization Tables",
-        "createLabel": "Crear nuevo Amortization Table",
-        "createOrEditLabel": "Crear o editar Amortization Table",
-        "notFound": "No Amortization Table found"
+        "title": "Tablas de Amortización",
+        "createLabel": "Crear nueva Tabla de Amortización",
+        "createOrEditLabel": "Crear o editar Tabla de Amortización",
+        "notFound": "Tablas de Amortización no encontradas"
       },
       "delete": {
-        "question": "¿Seguro que quiere eliminar Amortization Table {{ id }}?"
+        "question": "¿Seguro que quiere eliminar la Tabla de Amortización {{ id }}?"
       },
       "detail": {
-        "title": "Amortization Table"
+        "title": "Tabla de Amortización"
       },
-      "order": "Order",
-      "dueDate": "Due Date",
-      "amount": "Amount",
-      "interest": "Interest",
-      "loanProcess": "Loan Process"
+      "order": "Orden",
+      "dueDate": "Fecha de Pago",
+      "amount": "Cuota",
+      "interest": "Interés",
+      "loanProcess": "Solicitud de Crédito",
+	  "totals": "Totales"
     }
   },
   "loanMsApp": {
     "loanMsAmortizationTable": {
-      "created": "Un nuevo Amortization Table ha sido creado con el identificador {{ param }}",
-      "updated": "Un Amortization Table ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Amortization Table ha sido eliminado con el identificador {{ param }}"
+      "created": "Una nueva Tabla de Amortización ha sido creada con el identificador {{ param }}",
+      "updated": "Una Tabla de Amortización ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Una Tabla de Amortización ha sido eliminada con el identificador {{ param }}"
     }
   }
 }

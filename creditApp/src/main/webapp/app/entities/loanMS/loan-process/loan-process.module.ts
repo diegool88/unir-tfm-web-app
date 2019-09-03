@@ -13,6 +13,8 @@ import {
   loanProcessRoute,
   loanProcessPopupRoute
 } from './';
+import { LoanProcessCustomerComponent } from './loan-process-customer/loan-process-customer.component';
+import { LoanProcessOfficialComponent } from './loan-process-official/loan-process-official.component';
 
 const ENTITY_STATES = [...loanProcessRoute, ...loanProcessPopupRoute];
 
@@ -23,11 +25,14 @@ const ENTITY_STATES = [...loanProcessRoute, ...loanProcessPopupRoute];
     LoanProcessDetailComponent,
     LoanProcessUpdateComponent,
     LoanProcessDeleteDialogComponent,
-    LoanProcessDeletePopupComponent
+    LoanProcessDeletePopupComponent,
+    LoanProcessCustomerComponent,
+    LoanProcessOfficialComponent
   ],
   entryComponents: [LoanProcessComponent, LoanProcessUpdateComponent, LoanProcessDeleteDialogComponent, LoanProcessDeletePopupComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [ LoanProcessUpdateComponent ]
 })
 export class LoanMsLoanProcessModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {

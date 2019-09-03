@@ -28,7 +28,7 @@
         {
             "fieldName": "document",
             "fieldType": "byte[]",
-            "fieldTypeBlobContent": "image"
+            "fieldTypeBlobContent": "any"
         },
         {
             "fieldName": "debtorIdentification",
@@ -64,7 +64,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20190716234034",
+    "changelogDate": "20190815135121",
     "javadoc": "Entidades",
     "entityTableName": "warranty",
     "dto": "mapstruct",

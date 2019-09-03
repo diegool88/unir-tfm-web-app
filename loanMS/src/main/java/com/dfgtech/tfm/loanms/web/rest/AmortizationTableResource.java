@@ -1,7 +1,9 @@
 package com.dfgtech.tfm.loanms.web.rest;
 
+import com.dfgtech.tfm.loanms.business.LoanProcessUtils;
 import com.dfgtech.tfm.loanms.service.AmortizationTableService;
 import com.dfgtech.tfm.loanms.web.rest.errors.BadRequestAlertException;
+import com.dfgtech.tfm.loanms.service.dto.AmortizationScheduleWrapper;
 import com.dfgtech.tfm.loanms.service.dto.AmortizationTableDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -9,13 +11,15 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +61,27 @@ public class AmortizationTableResource {
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
+    
+    /**
+     * {@code POST  /amortization-tables} : Create a new amortizationTable.
+     *
+     * @param amortizationTableDTO the amortizationTableDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new amortizationTableDTO, or with status {@code 400 (Bad Request)} if the amortizationTable has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/amortization-tables-masive")
+    public List<AmortizationTableDTO> createAmortizationTableMasive(@RequestBody AmortizationScheduleWrapper amortizationTableDTOs) throws URISyntaxException {
+        List<AmortizationTableDTO> amortizationTableAll = new ArrayList<AmortizationTableDTO>();
+    	for(AmortizationTableDTO amortizationTableDTO: amortizationTableDTOs.getAmortizationSchedule()) {
+        	log.debug("REST request to save AmortizationTable : {}", amortizationTableDTO);
+            if (amortizationTableDTO.getId() != null) {
+                throw new BadRequestAlertException("A new amortizationTable cannot already have an ID", ENTITY_NAME, "idexists");
+            }
+            AmortizationTableDTO result = amortizationTableService.save(amortizationTableDTO);
+            amortizationTableAll.add(result);
+        }
+    	return amortizationTableAll;
+    }
 
     /**
      * {@code PUT  /amortization-tables} : Updates an existing amortizationTable.
@@ -88,6 +113,17 @@ public class AmortizationTableResource {
     public List<AmortizationTableDTO> getAllAmortizationTables() {
         log.debug("REST request to get all AmortizationTables");
         return amortizationTableService.findAll();
+    }
+    
+    /**
+     * {@code GET  /amortization-tables} : get all the amortizationTables.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of amortizationTables in body.
+     */
+    @GetMapping("/amortization-tables/simulate/{requestedAmount}/{annualInterestRate}/{startDate}/{loanPeriod}")
+    public List<AmortizationTableDTO> calculateAmortizationSchedule(@PathVariable Double requestedAmount, @PathVariable Double annualInterestRate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @PathVariable Long loanPeriod) {
+        log.debug("REST request to calculate amortization schedule table");
+        return LoanProcessUtils.calculateAmortizationSchedule(requestedAmount, annualInterestRate, startDate, loanPeriod);
     }
 
     /**

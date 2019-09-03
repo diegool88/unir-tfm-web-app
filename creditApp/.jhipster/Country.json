@@ -29,7 +29,7 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20190716234043",
+    "changelogDate": "20190815135130",
     "entityTableName": "country",
     "dto": "mapstruct",
     "pagination": "pagination",

@@ -2,32 +2,32 @@
   "creditApp": {
     "loanMsWarranty": {
       "home": {
-        "title": "Warranties",
-        "createLabel": "Crear nuevo Warranty",
-        "createOrEditLabel": "Crear o editar Warranty",
-        "notFound": "No Warranty found"
+        "title": "Garantías",
+        "createLabel": "Crear nueva Garantía",
+        "createOrEditLabel": "Crear o editar Garantía",
+        "notFound": "Garantías no encontradas"
       },
       "delete": {
-        "question": "¿Seguro que quiere eliminar Warranty {{ id }}?"
+        "question": "¿Seguro que quiere eliminar Garantía {{ id }}?"
       },
       "detail": {
-        "title": "Warranty"
+        "title": "Garantía"
       },
-      "name": "Name",
-      "description": "Description",
-      "value": "Value",
-      "document": "Document",
-      "debtorIdentification": "Debtor Identification",
-      "debtorIdentificationType": "Debtor Identification Type",
-      "debtorCountry": "Debtor Country",
-      "loanProcess": "Loan Process"
+      "name": "Nombre",
+      "description": "Descripción",
+      "value": "Monto",
+      "document": "Documento",
+      "debtorIdentification": "Identificación del Deudor",
+      "debtorIdentificationType": "Tipo de Identificación del Deudor",
+      "debtorCountry": "País del Deudor",
+      "loanProcess": "Solicitud de Crédito"
     }
   },
   "loanMsApp": {
     "loanMsWarranty": {
-      "created": "Un nuevo Warranty ha sido creado con el identificador {{ param }}",
-      "updated": "Un Warranty ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Warranty ha sido eliminado con el identificador {{ param }}"
+      "created": "Una nueva Garantía ha sido creada con el identificador {{ param }}",
+      "updated": "Una Garantía ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Una Garantía ha sido eliminada con el identificador {{ param }}"
     }
   }
 }

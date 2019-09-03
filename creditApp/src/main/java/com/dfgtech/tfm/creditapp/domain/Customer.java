@@ -82,6 +82,10 @@ public class Customer implements Serializable {
     @Column(name = "client_since", nullable = false)
     private LocalDate clientSince;
 
+    @NotNull
+    @Column(name = "monthly_income", nullable = false)
+    private Double monthlyIncome;
+
     /**
      * Relaciones Microservicio administracion clientes
      */
@@ -242,6 +246,19 @@ public class Customer implements Serializable {
         this.clientSince = clientSince;
     }
 
+    public Double getMonthlyIncome() {
+        return monthlyIncome;
+    }
+
+    public Customer monthlyIncome(Double monthlyIncome) {
+        this.monthlyIncome = monthlyIncome;
+        return this;
+    }
+
+    public void setMonthlyIncome(Double monthlyIncome) {
+        this.monthlyIncome = monthlyIncome;
+    }
+
     public User getUser() {
         return user;
     }
@@ -287,6 +304,7 @@ public class Customer implements Serializable {
             ", birthDate='" + getBirthDate() + "'" +
             ", country='" + getCountry() + "'" +
             ", clientSince='" + getClientSince() + "'" +
+            ", monthlyIncome=" + getMonthlyIncome() +
             "}";
     }
 }

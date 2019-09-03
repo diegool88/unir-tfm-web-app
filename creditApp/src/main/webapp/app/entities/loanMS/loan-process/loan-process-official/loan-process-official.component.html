@@ -1,0 +1,310 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="creditApp.loanMsLoanProcess.home.title">Loan Processes</span>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="loanProcesses?.length === 0">
+        <span jhiTranslate="creditApp.loanMsLoanProcess.home.notFound">No loanProcesses found</span>
+    </div>
+    <div class="table-responsive" *ngIf="loanProcesses?.length > 0">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.name">Name</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.requestedAmount">Requested Amount</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.loanPeriod">Loan Period</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.startDate">Start Date</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.endDate">End Date</span></th>
+            <th><span jhiTranslate="creditApp.loanMsLoanProcess.loanProcessStatus">Loan Process Status</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let loanProcess of loanProcesses ;trackBy: trackId">
+                <td>{{loanProcess.id}}</td>
+                <td>{{loanProcess.name}}</td>
+                <td>{{loanProcess.requestedAmount}}</td>
+                <td>{{loanProcess.loanPeriod}}</td>
+                <td>{{loanProcess.startDate | date:'dd-MM-yyyy'}}</td>
+                <td>{{loanProcess.endDate | date:'dd-MM-yyyy'}}</td>
+                <td><button class="btn btn-danger btn-sm" *ngIf="loanProcess.loanProcessStatus === 'DENIED'"
+                            style="pointer-events: none;" jhiTranslate="{{'creditApp.LoanProcessStatus.' + loanProcess.loanProcessStatus}}">{{loanProcess.loanProcessStatus}}</button>
+                    <button class="btn btn-success btn-sm" *ngIf="loanProcess.loanProcessStatus === 'APPROVED'"
+                            style="pointer-events: none;" jhiTranslate="{{'creditApp.LoanProcessStatus.' + loanProcess.loanProcessStatus}}">{{loanProcess.loanProcessStatus}}</button>
+                    <button class="btn btn-primary btn-sm" *ngIf="loanProcess.loanProcessStatus === 'PENDING' || loanProcess.loanProcessStatus === null || loanProcess.loanProcessStatus === undefined"
+                            style="pointer-events: none;" jhiTranslate="creditApp.LoanProcessStatus.PENDING">PENDING</button>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="button"
+                        		(click)="showLoanDetail(loanProcess)"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12">
+      <div *ngIf="selectedLoanProcess && customer">
+          <h2><span jhiTranslate="creditApp.loanMsLoanProcess.home.summary">Loan Process Summary</span></h2>
+          <hr>
+          <jhi-alert></jhi-alert>
+          <jhi-alert-error></jhi-alert-error>
+          <dl class="row jh-entity-details">
+              <div class="col-md-6">
+                  <dt><span jhiTranslate="creditApp.customer.firstname">Firstname</span></dt>
+                  <dd>
+                      <span>{{customer.firstname}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.lastname">Lastname</span></dt>
+                  <dd>
+                      <span>{{customer.lastname}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.identificationType">Identification Type</span></dt>
+                  <dd>
+                      <span jhiTranslate="{{'creditApp.IdentificationType.' + customer.identificationType}}">{{customer.identificationType}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.identificationNumber">Identification Number</span></dt>
+                  <dd>
+                      <span>{{customer.identificationNumber}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.genre">Genre</span></dt>
+                  <dd>
+                      <span jhiTranslate="{{'creditApp.Genre.' + customer.genre}}">{{customer.genre}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.email">Email</span></dt>
+                  <dd>
+                      <span>{{customer.email}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.birthDate">Birth Date</span></dt>
+                  <dd>
+                      <span>{{customer.birthDate | date:'dd-MM-yyyy' }}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.country">Country</span></dt>
+                  <dd>
+                      <span>{{customer.country}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.customer.monthlyIncome">Monthly Income</span></dt>
+                  <dd>
+                      <span>{{customer.monthlyIncome | currency }}</span>
+                  </dd>
+              </div>
+              <div class="col-md-6">
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.name">Name</span></dt>
+                  <dd>
+                      <span>{{selectedLoanProcess.loanProcess.name}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.requestedAmount">Requested Amount</span></dt>
+                  <dd>
+                      <span>{{selectedLoanProcess.loanProcess.requestedAmount | currency }}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.loanPeriod">Loan Period</span></dt>
+                  <dd>
+                      <span>{{selectedLoanProcess.loanProcess.loanPeriod}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.startDate">Start Date</span></dt>
+                  <dd>
+                      <span>{{selectedLoanProcess.loanProcess.startDate | date:'dd-MM-yyyy' }}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.endDate">End Date</span></dt>
+                  <dd>
+                      <span>{{selectedLoanProcess.loanProcess.endDate | date:'dd-MM-yyyy' }}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.justification">Justification</span></dt>
+                  <dd>
+                      <span>{{selectedLoanProcess.loanProcess.justification}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.bankingEntityMnemonic">Banking Entity Mnemonic</span></dt>
+                  <dd>
+                      <span>{{selectedLoanProcess.loanProcess.bankingEntityMnemonic}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.bankingProductMnemonic">Banking Product Mnemonic</span></dt>
+                  <dd>
+                      <span>{{selectedLoanProcess.loanProcess.bankingProductMnemonic}}</span>
+                  </dd>
+                  <dt><span jhiTranslate="creditApp.loanMsLoanProcess.rulesEngineResult">Rules Engine Result</span></dt>
+                  <dd>
+                      <span jhiTranslate="{{'creditApp.loanMsLoanProcess.businessRules.' + selectedLoanProcess.loanProcess.rulesEngineResult.toString() }}">{{ selectedLoanProcess.loanProcess.rulesEngineResult }}</span>
+                  </dd>
+              </div>
+              <div class="col-md-12">
+              	<h2 *ngIf="selectedLoanProcess && selectedLoanProcess.amortizationSchedule?.length > 0" id="jhi-amortization-schedule-heading" jhiTranslate="creditApp.loanMsAmortizationTable.detail.title">Amortization Schedule</h2>
+                <hr>
+                <div class="table-responsive table-custom-scrollbar table-wrapper-scroll-y" *ngIf="selectedLoanProcess && selectedLoanProcess.amortizationSchedule?.length > 0">
+			        <table class="table table-striped">
+			            <thead>
+			            <tr>
+			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.order">Order</span></th>
+			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.dueDate">Due Date</span></th>
+			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.amount">Amount</span></th>
+			            <th><span jhiTranslate="creditApp.loanMsAmortizationTable.interest">Interest</span></th>
+			            </tr>
+			            </thead>
+			            <tbody>
+			            <tr *ngFor="let amortizationTable of selectedLoanProcess.amortizationSchedule">
+			                <td>{{amortizationTable.order}}</td>
+			                <td>{{amortizationTable.dueDate | date:'dd-MM-yyyy'}}</td>
+			                <td>{{amortizationTable.amount | currency }}</td>
+			                <td>{{amortizationTable.interest | currency }}</td>
+			            </tr>
+			            </tbody>
+			            <tfoot>
+						  <tr>
+						    <td></td>
+						    <td><span jhiTranslate="creditApp.loanMsAmortizationTable.totals">Totals</span></td>
+						    <td>{{ getAmortizationScheduleAmountTotal() | currency }}</td>
+						    <td>{{ getAmortizationScheduleInterestTotal() | currency }}</td>
+						  </tr>
+						</tfoot>
+			        </table>
+			    </div>
+              </div>
+              <div class="col-md-12">
+              	<h2><span jhiTranslate="creditApp.address.home.title">Addresses</span></h2>
+          		<hr>
+          		<div class="table-responsive" *ngIf="addresses?.length > 0">
+			        <table class="table table-striped">
+			            <thead>
+			            <tr>
+			            <th><span jhiTranslate="global.field.id">ID</span></th>
+			            <th><span jhiTranslate="creditApp.address.mainStreet">Main Street</span></th>
+			            <th><span jhiTranslate="creditApp.address.secondaryStreet">Secondary Street</span></th>
+			            <th><span jhiTranslate="creditApp.address.number">Number</span></th>
+			            <th><span jhiTranslate="creditApp.address.city">City</span></th>
+			            <th><span jhiTranslate="creditApp.address.province">Province</span></th>
+			            <th><span jhiTranslate="creditApp.address.country">Country</span></th>
+			            <th><span jhiTranslate="creditApp.address.postalCode">Postal Code</span></th>
+			            <th><span jhiTranslate="creditApp.address.addressType">Address Type</span></th>
+			            </tr>
+			            </thead>
+			            <tbody>
+			            <tr *ngFor="let address of addresses">
+			                <td>{{address.id}}</td>
+			                <td>{{address.mainStreet}}</td>
+			                <td>{{address.secondaryStreet}}</td>
+			                <td>{{address.number}}</td>
+			                <td>{{address.city}}</td>
+			                <td>{{address.province}}</td>
+			                <td>{{address.country}}</td>
+			                <td>{{address.postalCode}}</td>
+			                <td jhiTranslate="{{'creditApp.AddressType.' + address.addressType}}">{{address.addressType}}</td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </div>
+              </div>
+              <div class="col-md-12">
+              	<h2><span jhiTranslate="creditApp.telephoneNumber.home.title">Telephone Numbers</span></h2>
+          		<hr>
+          		<div class="table-responsive" *ngIf="telephoneNumbers?.length > 0">
+			        <table class="table table-striped">
+			            <thead>
+			            <tr>
+			            <th><span jhiTranslate="global.field.id">ID</span></th>
+			            <th><span jhiTranslate="creditApp.telephoneNumber.countryCode">Country Code</span></th>
+			            <th><span jhiTranslate="creditApp.telephoneNumber.regionCode">Region Code</span></th>
+			            <th><span jhiTranslate="creditApp.telephoneNumber.number">Number</span></th>
+			            <th><span jhiTranslate="creditApp.telephoneNumber.address">Address</span></th>
+			            </tr>
+			            </thead>
+			            <tbody>
+			            <tr *ngFor="let telephoneNumber of telephoneNumbers">
+			                <td>{{telephoneNumber.id}}</td>
+			                <td>{{telephoneNumber.countryCode}}</td>
+			                <td>{{telephoneNumber.regionCode}}</td>
+			                <td>{{telephoneNumber.number}}</td>
+			                <td>{{telephoneNumber.addressId}}</td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </div>
+              </div>
+              <div class="col-md-12">
+              	<h2><span jhiTranslate="creditApp.personalReference.home.title">Personal References</span></h2>
+          		<hr>
+          		<div class="table-responsive" *ngIf="personalReferences?.length > 0">
+			        <table class="table table-striped">
+			            <thead>
+			            <tr>
+			            <th><span jhiTranslate="global.field.id">ID</span></th>
+			            <th><span jhiTranslate="creditApp.personalReference.name">Name</span></th>
+			            <th><span jhiTranslate="creditApp.personalReference.lastname">Lastname</span></th>
+			            <th><span jhiTranslate="creditApp.personalReference.genre">Genre</span></th>
+			            <th><span jhiTranslate="creditApp.personalReference.email">Email</span></th>
+			            <th><span jhiTranslate="creditApp.personalReference.birthDate">Birth Date</span></th>
+			            <th><span jhiTranslate="creditApp.personalReference.relation">Relation</span></th>
+			            <th><span jhiTranslate="creditApp.personalReference.customer">Customer</span></th>
+			            </tr>
+			            </thead>
+			            <tbody>
+			            <tr *ngFor="let personalReference of personalReferences">
+			                <td>{{personalReference.id}}</td>
+			                <td>{{personalReference.name}}</td>
+			                <td>{{personalReference.lastname}}</td>
+			                <td jhiTranslate="{{'creditApp.Genre.' + personalReference.genre}}">{{personalReference.genre}}</td>
+			                <td>{{personalReference.email}}</td>
+			                <td>{{personalReference.birthDate | date:'mediumDate'}}</td>
+			                <td jhiTranslate="{{'creditApp.Relation.' + personalReference.relation}}">{{personalReference.relation}}</td>
+			                <td>{{personalReference.customerId}}</td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </div>
+              </div>
+              <div class="col-md-12">
+              	<h2><span jhiTranslate="creditApp.loanMsWarranty.home.title">Warranties</span></h2>
+          		<hr>
+          		<div class="table-responsive" *ngIf="selectedLoanProcess && selectedLoanProcess.warranties?.length > 0">
+			        <table class="table table-striped">
+			            <thead>
+			            <tr>
+			            <th><span jhiTranslate="creditApp.loanMsWarranty.name">Name</span></th>
+			            <th><span jhiTranslate="creditApp.loanMsWarranty.description">Description</span></th>
+			            <th><span jhiTranslate="creditApp.loanMsWarranty.value">Value</span></th>
+			            <th><span jhiTranslate="creditApp.loanMsWarranty.document">Document</span></th>
+			            </tr>
+			            </thead>
+			            <tbody>
+			            <tr *ngFor="let warranty of selectedLoanProcess.warranties">
+			                <td>{{warranty.name}}</td>
+			                <td>{{warranty.description}}</td>
+			                <td>{{warranty.value}}</td>
+			                <td>
+			                    <a *ngIf="warranty.document" (click)="openFile(warranty.documentContentType, warranty.document)" jhiTranslate="entity.action.open">open</a>
+                    			<span *ngIf="warranty.document">{{warranty.documentContentType}}, {{byteSize(warranty.document)}}</span>
+			                </td>
+			            </tr>
+			            </tbody>
+			        </table>
+			    </div>
+              </div>
+          </dl>
+          <div class="btn-group">
+              <button type="button"
+                      (click)="onCancel()"
+                      class="btn btn-info">
+                  <fa-icon [icon]="'arrow-left'"></fa-icon>
+                  <span jhiTranslate="entity.action.cancel">Cancel</span>
+              </button>
+              <button type="button"
+                      (click)="onApprove()"
+                      class="btn btn-success">
+                  <fa-icon [icon]="'check'"></fa-icon>
+                  <span jhiTranslate="entity.action.approve">Approve</span>
+              </button>
+              <button type="button"
+                      (click)="onDeny()"
+                      class="btn btn-danger">
+                  <fa-icon [icon]="'ban'"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.deny">Deny</span>
+              </button>
+          </div>
+      </div>
+  </div>
+</div>

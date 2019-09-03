@@ -1,6 +1,9 @@
 package com.dfgtech.tfm.loanms.repository;
 
 import com.dfgtech.tfm.loanms.domain.AmortizationTable;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +14,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface AmortizationTableRepository extends JpaRepository<AmortizationTable, Long> {
-
+	List<AmortizationTable> findAllByLoanProcessId(Long loanProcessId);
 }

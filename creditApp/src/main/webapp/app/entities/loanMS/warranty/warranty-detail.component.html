@@ -20,9 +20,7 @@
                 <dt><span jhiTranslate="creditApp.loanMsWarranty.document">Document</span></dt>
                 <dd>
                     <div *ngIf="warranty.document">
-                        <a (click)="openFile(warranty.documentContentType, warranty.document)">
-                            <img [src]="'data:' + warranty.documentContentType + ';base64,' + warranty.document" style="max-width: 100%;" alt="warranty image"/>
-                        </a>
+                        <a (click)="openFile(warranty.documentContentType, warranty.document)" jhiTranslate="entity.action.open">open</a>
                         {{warranty.documentContentType}}, {{byteSize(warranty.document)}}
                     </div>
                 </dd>

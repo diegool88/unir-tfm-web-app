@@ -60,6 +60,19 @@ public class WarrantyService {
             .map(warrantyMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+    
+    /**
+     * Get all the warranties by loan process id.
+     *
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<WarrantyDTO> findAllWarrantiesByLoanProcessId(Long id) {
+        log.debug("Request to get all Warranties by loan process id");
+        return warrantyRepository.findAllWarrantiesByLoanProcessId(id).stream()
+            .map(warrantyMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
     /**
      * Get all the warranties with eager load of many-to-many relationships.

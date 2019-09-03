@@ -38,6 +38,10 @@ export class LoanProcessUpdatePage {
   debtorCountryInput = element(by.id('field_debtorCountry'));
   bankingEntityMnemonicInput = element(by.id('field_bankingEntityMnemonic'));
   bankingProductMnemonicInput = element(by.id('field_bankingProductMnemonic'));
+  rulesEngineResultInput = element(by.id('field_rulesEngineResult'));
+  bankingAccountNumberInput = element(by.id('field_bankingAccountNumber'));
+  bankingAccountTypeInput = element(by.id('field_bankingAccountType'));
+  bankingAccountEntityMnemonicInput = element(by.id('field_bankingAccountEntityMnemonic'));
   loanProcessStatusSelect = element(by.id('field_loanProcessStatus'));
 
   async getPageTitle() {
@@ -138,6 +142,33 @@ export class LoanProcessUpdatePage {
 
   async getBankingProductMnemonicInput() {
     return await this.bankingProductMnemonicInput.getAttribute('value');
+  }
+
+  getRulesEngineResultInput(timeout?: number) {
+    return this.rulesEngineResultInput;
+  }
+  async setBankingAccountNumberInput(bankingAccountNumber) {
+    await this.bankingAccountNumberInput.sendKeys(bankingAccountNumber);
+  }
+
+  async getBankingAccountNumberInput() {
+    return await this.bankingAccountNumberInput.getAttribute('value');
+  }
+
+  async setBankingAccountTypeInput(bankingAccountType) {
+    await this.bankingAccountTypeInput.sendKeys(bankingAccountType);
+  }
+
+  async getBankingAccountTypeInput() {
+    return await this.bankingAccountTypeInput.getAttribute('value');
+  }
+
+  async setBankingAccountEntityMnemonicInput(bankingAccountEntityMnemonic) {
+    await this.bankingAccountEntityMnemonicInput.sendKeys(bankingAccountEntityMnemonic);
+  }
+
+  async getBankingAccountEntityMnemonicInput() {
+    return await this.bankingAccountEntityMnemonicInput.getAttribute('value');
   }
 
   async setLoanProcessStatusSelect(loanProcessStatus) {

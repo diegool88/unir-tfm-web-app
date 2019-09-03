@@ -25,5 +25,8 @@ public interface WarrantyRepository extends JpaRepository<Warranty, Long> {
 
     @Query("select warranty from Warranty warranty left join fetch warranty.loanProcesses where warranty.id =:id")
     Optional<Warranty> findOneWithEagerRelationships(@Param("id") Long id);
+    
+    @Query("select distinct warranty from Warranty warranty left join fetch warranty.loanProcesses loanProcess where loanProcess.id =:id")
+    List<Warranty> findAllWarrantiesByLoanProcessId(@Param("id") Long id);
 
 }

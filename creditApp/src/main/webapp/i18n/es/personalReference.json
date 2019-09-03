@@ -2,27 +2,27 @@
   "creditApp": {
     "personalReference": {
       "home": {
-        "title": "Personal References",
-        "createLabel": "Crear nuevo Personal Reference",
-        "createOrEditLabel": "Crear o editar Personal Reference",
-        "notFound": "No Personal Reference found"
+        "title": "Referencias Personales",
+        "createLabel": "Crear nueva Referencia Personal",
+        "createOrEditLabel": "Crear o editar Referencia Personal",
+        "notFound": "Referencias Personales no encontradas"
       },
-      "created": "Un nuevo Personal Reference ha sido creado con el identificador {{ param }}",
-      "updated": "Un Personal Reference ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Personal Reference ha sido eliminado con el identificador {{ param }}",
+      "created": "Una nueva Referencia Personal ha sido creado con el identificador {{ param }}",
+      "updated": "Una Referencia Personal ha sido actualizada con el identificador {{ param }}",
+      "deleted": "Una Referencia Personal ha sido eliminado con el identificador {{ param }}",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Personal Reference {{ id }}?"
+        "question": "¿Seguro que quiere eliminar la Referencia Personal {{ id }}?"
       },
       "detail": {
-        "title": "Personal Reference"
+        "title": "Referencia Personal"
       },
-      "name": "Name",
-      "lastname": "Lastname",
-      "genre": "Genre",
-      "email": "Email",
-      "birthDate": "Birth Date",
-      "relation": "Relation",
-      "customer": "Customer"
+      "name": "Nombre",
+      "lastname": "Apellido",
+      "genre": "Género",
+      "email": "Correo Electrónico",
+      "birthDate": "Fecha de Nacimiento",
+      "relation": "Relación",
+      "customer": "Cliente"
     }
   }
 }

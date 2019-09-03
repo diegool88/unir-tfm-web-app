@@ -55,21 +55,22 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsWarranty.document" for="field_document">Document</label>
                     <div>
-                        <img [src]="'data:' + editForm.get('documentContentType').value + ';base64,' + editForm.get('document').value" style="max-height: 100px;" *ngIf="editForm.get('document').value" alt="warranty image"/>
                         <div *ngIf="editForm.get('document').value" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(editForm.get('documentContentType').value, editForm.get('document').value)" jhiTranslate="entity.action.open">open</a><br>
                             <span class="pull-left">{{editForm.get('documentContentType').value}}, {{byteSize(editForm.get('document').value)}}</span>
-                            <button type="button" (click)="clearInputImage('document', 'documentContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                            <button type="button" (click)="editForm.patchValue({document: null});editForm.patchValue({documentContentType: null});"
+                                    class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>
                             </button>
                         </div>
-                        <input type="file" id="file_document" (change)="setFileData($event, 'document', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                        <input type="file" id="file_document" (change)="setFileData($event, 'document', false)" jhiTranslate="entity.action.addblob"/>
                     </div>
                     <input type="hidden" class="form-control" name="document" id="field_document"
                            formControlName="document"/>
                     <input type="hidden" class="form-control" name="documentContentType" id="field_documentContentType"
                            formControlName="documentContentType" />
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsWarranty.debtorIdentification" for="field_debtorIdentification">Debtor Identification</label>
                     <input type="text" class="form-control" name="debtorIdentification" id="field_debtorIdentification"
                            formControlName="debtorIdentification"/>
@@ -80,7 +81,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsWarranty.debtorIdentificationType" for="field_debtorIdentificationType">Debtor Identification Type</label>
                     <input type="text" class="form-control" name="debtorIdentificationType" id="field_debtorIdentificationType"
                            formControlName="debtorIdentificationType"/>
@@ -91,7 +92,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.loanMsWarranty.debtorCountry" for="field_debtorCountry">Debtor Country</label>
                     <input type="text" class="form-control" name="debtorCountry" id="field_debtorCountry"
                            formControlName="debtorCountry"/>
@@ -103,7 +104,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div *ngIf="mode !== 'wizard'" class="form-group">
                     <label jhiTranslate="creditApp.loanMsWarranty.loanProcess" for="field_loanProcesses">Loan Process</label>
                     <select class="form-control" id="field_loanProcesses" multiple name="loanProcesses" formControlName="loanProcesses">
                         <option [ngValue]="getSelected(editForm.get('loanProcesses').value, loanProcessOption)" *ngFor="let loanProcessOption of loanprocesses; trackBy: trackLoanProcessById">{{loanProcessOption.id}}</option>

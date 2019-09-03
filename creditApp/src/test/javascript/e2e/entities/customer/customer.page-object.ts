@@ -37,6 +37,7 @@ export class CustomerUpdatePage {
   birthDateInput = element(by.id('field_birthDate'));
   countryInput = element(by.id('field_country'));
   clientSinceInput = element(by.id('field_clientSince'));
+  monthlyIncomeInput = element(by.id('field_monthlyIncome'));
   userSelect = element(by.id('field_user'));
 
   async getPageTitle() {
@@ -143,6 +144,14 @@ export class CustomerUpdatePage {
 
   async getClientSinceInput() {
     return await this.clientSinceInput.getAttribute('value');
+  }
+
+  async setMonthlyIncomeInput(monthlyIncome) {
+    await this.monthlyIncomeInput.sendKeys(monthlyIncome);
+  }
+
+  async getMonthlyIncomeInput() {
+    return await this.monthlyIncomeInput.getAttribute('value');
   }
 
   async userSelectLastOption(timeout?: number) {

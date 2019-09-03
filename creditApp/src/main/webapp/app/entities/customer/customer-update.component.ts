@@ -8,7 +8,9 @@ import * as moment from 'moment';
 import { JhiAlertService } from 'ng-jhipster';
 import { ICustomer, Customer } from 'app/shared/model/customer.model';
 import { CustomerService } from './customer.service';
-import { IUser, UserService } from 'app/core';
+import { IUser, UserService, AccountService } from 'app/core';
+import { WizardFooterService } from 'app/layouts/wizard/wizard-footer.service';
+import { WizardService } from 'app/layouts/wizard/wizard.service';
 
 @Component({
   selector: 'jhi-customer-update',
@@ -20,20 +22,23 @@ export class CustomerUpdateComponent implements OnInit {
   users: IUser[];
   birthDateDp: any;
   clientSinceDp: any;
+  currentAccount: any;
+  mode: any;
 
   editForm = this.fb.group({
     id: [],
-    firstname: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-zs]+')]],
-    secondName: [null, [Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-zs]+')]],
-    lastname: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-zs]+')]],
-    secondLastname: [null, [Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-zs]+')]],
+    firstname: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z\\s]+')]],
+    secondName: [null, [Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z\\s]+')]],
+    lastname: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z\\s]+')]],
+    secondLastname: [null, [Validators.minLength(1), Validators.maxLength(30), Validators.pattern('[A-Za-z\\s]+')]],
     identificationType: [],
     identificationNumber: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(20), Validators.pattern('[A-Z0-9]+')]],
     genre: [null, [Validators.required]],
     email: [null, [Validators.required, Validators.pattern('[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}')]],
     birthDate: [null, [Validators.required]],
-    country: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(20), Validators.pattern('[A-Za-zs]+')]],
+    country: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(20), Validators.pattern('[A-Za-z\\s]+')]],
     clientSince: [null, [Validators.required]],
+    monthlyIncome: [null, [Validators.required]],
     userId: [null, Validators.required]
   });
 
@@ -41,22 +46,47 @@ export class CustomerUpdateComponent implements OnInit {
     protected jhiAlertService: JhiAlertService,
     protected customerService: CustomerService,
     protected userService: UserService,
+    protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
-  ) {}
+    protected fb: FormBuilder,
+    protected wizardFooterService: WizardFooterService,
+    protected wizardService: WizardService
+  ) {
+    this.accountService.identity().then(account => {
+      this.currentAccount = account;
+    });
+  }
 
   ngOnInit() {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ customer }) => {
       this.updateForm(customer);
     });
-    this.userService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IUser[]>) => response.body)
-      )
-      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
+    this.activatedRoute.queryParams.subscribe(queryParams => {
+      if (queryParams && queryParams.mode) {
+        this.mode = queryParams.mode;
+        if (this.mode === 'wizard') {
+          this.wizardFooterService.setFormValid(false);
+        }
+      }
+    });
+    if (this.currentAccount.authorities.includes('ROLE_ADMIN')) {
+      this.userService
+        .query()
+        .pipe(
+          filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+          map((response: HttpResponse<IUser[]>) => response.body)
+        )
+        .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
+    } else {
+      this.userService
+        .find(this.currentAccount.login)
+        .pipe(
+          filter((mayBeOk: HttpResponse<IUser>) => mayBeOk.ok),
+          map((response: HttpResponse<IUser>) => response.body)
+        )
+        .subscribe((res: IUser) => (this.users = [res]), (res: HttpErrorResponse) => this.onError(res.message));
+    }
   }
 
   updateForm(customer: ICustomer) {
@@ -72,7 +102,8 @@ export class CustomerUpdateComponent implements OnInit {
       email: customer.email,
       birthDate: customer.birthDate,
       country: customer.country,
-      clientSince: customer.clientSince,
+      clientSince: customer.clientSince !== undefined && customer.clientSince !== null ? customer.clientSince : moment(),
+      monthlyIncome: customer.monthlyIncome,
       userId: customer.userId
     });
   }
@@ -106,17 +137,29 @@ export class CustomerUpdateComponent implements OnInit {
       birthDate: this.editForm.get(['birthDate']).value,
       country: this.editForm.get(['country']).value,
       clientSince: this.editForm.get(['clientSince']).value,
+      monthlyIncome: this.editForm.get(['monthlyIncome']).value,
       userId: this.editForm.get(['userId']).value
     };
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ICustomer>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+    //result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+    result
+      .pipe(
+        filter((mayBeOk: HttpResponse<ICustomer>) => mayBeOk.ok),
+        map((response: HttpResponse<ICustomer>) => response.body)
+      )
+      .subscribe((res: ICustomer) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(res: ICustomer) {
     this.isSaving = false;
-    this.previousState();
+    if (this.mode !== 'wizard') {
+      this.previousState();
+    } else {
+      this.wizardFooterService.setFormValid(true);
+      this.wizardService.setCustomer(res);
+    }
   }
 
   protected onSaveError() {

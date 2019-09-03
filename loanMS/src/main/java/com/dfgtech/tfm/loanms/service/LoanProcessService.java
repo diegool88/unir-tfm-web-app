@@ -58,6 +58,19 @@ public class LoanProcessService {
             .map(loanProcessMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+    
+    /**
+     * Get all the loanProcesses by customer.
+     *
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<LoanProcessDTO> findByCustomer(String debtorIdentification, String debtorIdentificationType, String debtorCountry) {
+        log.debug("Request to get all LoanProcesses by customer");
+        return loanProcessRepository.findByCustomer(debtorIdentification, debtorIdentificationType, debtorCountry).stream()
+            .map(loanProcessMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
 
     /**

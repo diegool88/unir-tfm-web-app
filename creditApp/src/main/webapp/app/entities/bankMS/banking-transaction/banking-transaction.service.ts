@@ -24,6 +24,13 @@ export class BankingTransactionService {
       .post<IBankingTransaction>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
+  
+  createWithTransfer(bankingTransaction: IBankingTransaction): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(bankingTransaction);
+    return this.http
+      .post<IBankingTransaction>(`${this.resourceUrl}-transfer`, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 
   update(bankingTransaction: IBankingTransaction): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(bankingTransaction);

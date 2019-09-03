@@ -3,6 +3,7 @@
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-customer-heading" jhiTranslate="creditApp.customer.home.createOrEditLabel">Create or edit a Customer</h2>
             <div>
+            	<jhi-alert *ngIf="mode==='wizard'"></jhi-alert>
                 <jhi-alert-error></jhi-alert-error>
                 <div class="form-group" [hidden]="!editForm.get('id').value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
@@ -189,7 +190,7 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="form-group">
                     <label class="form-control-label" jhiTranslate="creditApp.customer.clientSince" for="field_clientSince">Client Since</label>
                     <div class="input-group">
                         <input id="field_clientSince" type="text" class="form-control" name="clientSince" ngbDatepicker  #clientSinceDp="ngbDatepicker" formControlName="clientSince"/>
@@ -201,6 +202,21 @@
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('clientSince').errors.required" jhiTranslate="entity.validation.required">
                         This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="creditApp.customer.monthlyIncome" for="field_monthlyIncome">Monthly Income</label>
+                    <input type="number" class="form-control" name="monthlyIncome" id="field_monthlyIncome"
+                           formControlName="monthlyIncome"/>
+                    <div *ngIf="editForm.get('monthlyIncome').invalid && (editForm.get('monthlyIncome').dirty || editForm.get('monthlyIncome').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('monthlyIncome').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('monthlyIncome')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
                         </small>
                     </div>
                 </div>
@@ -220,7 +236,7 @@
                 </div>
             </div>
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                <button *ngIf="mode!=='wizard'" type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
